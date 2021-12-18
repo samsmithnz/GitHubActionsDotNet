@@ -5,6 +5,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="TestResults\**" />
+	  <EmbeddedResource Remove="TestResults\**" />
+	  <None Remove="TestResults\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="System.IO" Version="4.3.0" />
+		<PackageReference Include="System.Text.Json" Version="6.0.1" />
 		<PackageReference Include="YamlDotNet" Version="11.2.1" />
 	</ItemGroup>
 
