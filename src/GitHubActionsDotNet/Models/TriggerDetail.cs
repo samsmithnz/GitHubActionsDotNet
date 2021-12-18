@@ -17,11 +17,11 @@
         //    tags-ignore:        
         //    - v1             
         //    - v1.*           
-        public string[] branches { get; set; }
-        public string[] branches_ignore { get; set; }
-        public string[] paths { get; set; }
-        public string[] paths_ignore { get; set; }
-        public string[] tags { get; set; }
-        public string[] tags_ignore { get; set; }
+        public string[]? branches { get; set; }
+        public string[]? branches_ignore { get; set; }
+        public string[]? paths { get; set; }
+        public string[]? paths_ignore { get; set; }
+        public string[]? tags { get; set; }
+        public string[]? tags_ignore { get; set; }
     }
 }

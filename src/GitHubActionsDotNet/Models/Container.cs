@@ -13,10 +13,10 @@ namespace GitHubActionsDotNet.Models
     //      options: --cpus 1
     public class Container
     {
-        public string image { get; set; }
-        public Dictionary<string, string> env { get; set; }
-        public string[] ports { get; set; }
-        public string[] volumes { get; set; }
-        public string options { get; set; }
+        public string? image { get; set; }
+        public Dictionary<string, string>? env { get; set; }
+        public string[]? ports { get; set; }
+        public string[]? volumes { get; set; }
+        public string? options { get; set; }
     }
 }

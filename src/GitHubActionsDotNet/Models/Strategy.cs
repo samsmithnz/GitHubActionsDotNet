@@ -22,7 +22,7 @@ namespace GitHubActionsDotNet.Models
         //    with:
         //      node-version: ${{ matrix.node }}
 
-        public Dictionary<string, string[]> matrix { get; set; }
-        public string max_parallel { get; set; }
+        public Dictionary<string, string[]>? matrix { get; set; }
+        public string? max_parallel { get; set; }
     }
 }

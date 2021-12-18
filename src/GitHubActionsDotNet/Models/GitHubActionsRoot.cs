@@ -5,10 +5,10 @@ namespace GitHubActionsDotNet.Models
 {
     public class GitHubActionsRoot
     {
-        public string name { get; set; }
-        public Trigger on { get; set; }
-        public Dictionary<string, string> env { get; set; }
-        public Dictionary<string, Job> jobs { get; set; }
+        public string? name { get; set; }
+        public Trigger? on { get; set; }
+        public Dictionary<string, string>? env { get; set; }
+        public Dictionary<string, Job>? jobs { get; set; }
 
         //This is used for tracking errors, so we don't want it to convert to YAML
         [YamlIgnore]

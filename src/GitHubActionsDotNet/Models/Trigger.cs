@@ -30,9 +30,9 @@
         //  - cron:  '*/15 * * * *' # * is a special character in YAML so you have to quote this string
         //  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
 
-        public TriggerDetail push { get; set; }
-        public TriggerDetail pull_request { get; set; }
-        public string[] schedule { get; set; }
-        public string workflow_dispatch { get; set; }
+        public TriggerDetail? push { get; set; }
+        public TriggerDetail? pull_request { get; set; }
+        public string[]? schedule { get; set; }
+        public string? workflow_dispatch { get; set; }
     }
 }
