@@ -1,5 +1,4 @@
-﻿using GitHubActionsDotNet.Extensions;
-using GitHubActionsDotNet.Common;
+﻿using GitHubActionsDotNet.Common;
 using GitHubActionsDotNet.Models;
 using System.Collections.Generic;
 using System.IO;
