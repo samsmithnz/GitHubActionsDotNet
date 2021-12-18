@@ -5,4 +5,4 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "<Pending>", Scope = "member", Target = "~P:GitHubActionsDotNet.Models.Container.image")]
+[assembly: SuppressMessage("Style", "IDE1006:Naming Styles", Justification = "lower case is correct casing for GitHub Actions", Scope = "namespaceanddescendants", Target = "~N:GitHubActionsDotNet")]

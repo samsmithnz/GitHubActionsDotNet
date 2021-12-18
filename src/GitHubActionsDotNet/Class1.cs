@@ -1,5 +1,7 @@
-﻿namespace GitHubActionsDotNet;
-public class Class1
+﻿namespace GitHubActionsDotNet
 {
+    public class Class1
+    {
 
+    }
 }
