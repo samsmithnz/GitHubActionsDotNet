@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AzurePipelinesToGitHubActionsConverter.Core.GitHubActions
+namespace GitHubActionsDotNet.Models
 {
     //    container:
     //      image: node:10.16-jessie

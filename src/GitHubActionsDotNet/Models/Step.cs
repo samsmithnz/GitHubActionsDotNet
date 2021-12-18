@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AzurePipelinesToGitHubActionsConverter.Core.GitHubActions
+namespace GitHubActionsDotNet.Models
 {
     public class Step
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace AzurePipelinesToGitHubActionsConverter.Core.GitHubActions
+namespace GitHubActionsDotNet.Models
 {
     ////https://devblogs.microsoft.com/devops/i-need-manual-approvers-for-github-actions-and-i-got-them-now/
     //environment:

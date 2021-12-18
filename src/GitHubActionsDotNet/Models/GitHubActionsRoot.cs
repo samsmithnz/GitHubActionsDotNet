@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using YamlDotNet.Serialization;
 
-namespace AzurePipelinesToGitHubActionsConverter.Core.GitHubActions
+namespace GitHubActionsDotNet.Models
 {
     public class GitHubActionsRoot
     {

@@ -1,4 +1,4 @@
-﻿namespace AzurePipelinesToGitHubActionsConverter.Core.GitHubActions
+﻿namespace GitHubActionsDotNet.Models
 {
     public class Trigger
     {
