@@ -2,7 +2,7 @@
 using System.IO;
 using YamlDotNet.Serialization;
 
-namespace AzurePipelinesToGitHubActionsConverter.Core.Serialization
+namespace GitHubActionsDotNet.Serialization
 {
     public static class JsonSerialization
     {
