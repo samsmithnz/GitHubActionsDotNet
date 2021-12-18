@@ -9,7 +9,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        os: [ubuntu-latest] #windows-latest, 
     runs-on: ${{matrix.os}}
     outputs: # https://stackoverflow.com/questions/59175332/using-output-from-a-previous-job-in-a-new-one-in-a-github-action
       Version: ${{ steps.gitversion.outputs.SemVer }}
