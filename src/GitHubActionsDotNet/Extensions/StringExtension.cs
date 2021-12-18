@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AzurePipelinesToGitHubActionsConverter.Core.Extensions
+namespace GitHubActionsDotNet.Extensions
 {
     public static class StringExtension
     {

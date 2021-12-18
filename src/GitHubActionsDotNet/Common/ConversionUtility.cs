@@ -1,4 +1,4 @@
-﻿using AzurePipelinesToGitHubActionsConverter.Core.Extensions;
+﻿using GitHubActionsDotNet.Extensions;
 using System;
 using System.Diagnostics;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using AzurePipelinesToGitHubActionsConverter.Core.Extensions;
+﻿using GitHubActionsDotNet.Extensions;
 using GitHubActionsDotNet.Common;
 using GitHubActionsDotNet.Models;
 using System.Collections.Generic;
@@ -6,7 +6,7 @@ using System.IO;
 using System.Text;
 using Environment = System.Environment;
 
-namespace AzurePipelinesToGitHubActionsConverter.Core.Serialization
+namespace GitHubActionsDotNet.Serialization
 {
     public static class GitHubActionsSerialization
     {
@@ -100,11 +100,7 @@ namespace AzurePipelinesToGitHubActionsConverter.Core.Serialization
         }
 
         private static string PrepareYamlPropertiesForGitHubSerialization(string yaml)
-        {
-            //TODO move in AzurePipelinesCode
-            //Fix system variables
-            //yaml = SystemVariableProcessing.ProcessSystemVariables(yaml);
-
+        { 
             //Fix some variables that we can't use for property names because the "-" character is not allowed in c# properties, or it's a reserved word (e.g. if)
             yaml = yaml.Replace("runs_on", "runs-on");
             yaml = yaml.Replace("_if", "if");
