@@ -1,20 +1,20 @@
+using GitHubActionsDotNet.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using GitHubActionsDotNet;
 
 namespace GitHubActionsDotNet.Tests;
 
 [TestClass]
-public class UnitTest1
+public class ModelTests
 {
     [TestMethod]
-    public void TestMethod1()
+    public void EnvironmentTest()
     {
         //arrange
-        Class1 obj = new();
+        Environment environment = new();
 
         //act
 
         //assert
-        Assert.IsNotNull(obj);
+        Assert.IsNotNull(environment);
     }
 }

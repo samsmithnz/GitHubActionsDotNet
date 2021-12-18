@@ -1,9 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netstandard2.0</TargetFramework>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="YamlDotNet" Version="11.2.1" />
+	</ItemGroup>
+
+	<PropertyGroup>
+		<IsPackable>true</IsPackable>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/samsmithnz/GitHubActionsDotNet</PackageProjectUrl>
+		<PackageDescription>A tool to generate GitHub Actions YAML in .NET</PackageDescription>
+		<PackageTags>yaml;serialization;github;github actions;dotnet;.NET;c#</PackageTags>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+	</PropertyGroup>
 
 </Project>
