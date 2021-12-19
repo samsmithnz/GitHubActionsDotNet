@@ -35,9 +35,10 @@ public class StepsDotNetTests
     public void DotNetBuildIndividualStepTest()
     {
         //Arrange
-        Step step = DotnetSteps.CreateDotnetBuildStep(null, 
+        Step step = DotnetSteps.CreateDotnetBuildStep(null,
+            "MyWebApp.csproj", 
             "Release",
-            "MyWebApp.csproj");
+            false);
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
@@ -45,7 +46,29 @@ public class StepsDotNetTests
         //Assert
         string expected = @"
 - name: .NET build
-  run: dotnet build --configuration Release MyWebApp.csproj
+  run: dotnet build MyWebApp.csproj --configuration Release
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+
+    [TestMethod]
+    public void DotNetBuildIndividualShortParametersStepTest()
+    {
+        //Arrange
+        Step step = DotnetSteps.CreateDotnetBuildStep(null,
+            "MyWebApp.csproj",
+            "Release",
+            true);
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: .NET build
+  run: dotnet build MyWebApp.csproj -c Release
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
@@ -103,7 +126,7 @@ public class StepsDotNetTests
         //Assert
         string expected = @"
 - name: Build
-  run: dotnet MyProject/MyProject.Models/MyProject.Models.csproj --configuration ${{ env.BuildConfiguration }}
+  run: dotnet build MyProject/MyProject.Models/MyProject.Models.csproj --configuration ${{ env.BuildConfiguration }}
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);

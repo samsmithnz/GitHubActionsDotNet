@@ -24,13 +24,18 @@ namespace GitHubActionsDotNet.Templates.Steps
         }
 
         public static Step CreateDotnetBuildStep(string name = null,
-            string configuration = null,
             string projectPath = null,
+            string configuration = null,
             bool useShortParameters = false //Included for inclusivity reasons
             )
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet build ");
+            if (projectPath != null)
+            {
+                sb.Append(projectPath);
+                sb.Append(" ");
+            }
             if (configuration != null)
             {
                 if (useShortParameters == true)
@@ -43,11 +48,6 @@ namespace GitHubActionsDotNet.Templates.Steps
                     sb.Append("--configuration ");
                 }
                 sb.Append(configuration);
-                sb.Append(" ");
-            }
-            if (projectPath != null)
-            {
-                sb.Append(projectPath);
                 sb.Append(" ");
             }
 
