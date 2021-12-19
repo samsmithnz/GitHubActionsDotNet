@@ -18,7 +18,6 @@ public class CompletePipelineTest
             on = TriggerHelper.AddStandardTrigger(),
             jobs = new()
         };
-
         //Build job
         Step[] buildSteps = new Step[2];
         buildSteps[0] = CommonStepsHelper.AddCheckoutStep();
