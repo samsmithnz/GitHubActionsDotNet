@@ -30,7 +30,6 @@ public class StepsDotNetTests
         Assert.AreEqual(expected, yaml);
     }
 
-
     [TestMethod]
     public void DotNetBuildIndividualStepTest()
     {
@@ -38,6 +37,7 @@ public class StepsDotNetTests
         Step step = DotNetSteps.CreateDotNetBuildStep(".NET build",
             "MyWebApp.csproj", 
             "Release",
+            null,
             false);
 
         //Act
@@ -52,7 +52,6 @@ public class StepsDotNetTests
         Assert.AreEqual(expected, yaml);
     }
 
-
     [TestMethod]
     public void DotNetBuildIndividualShortParametersStepTest()
     {
@@ -60,6 +59,7 @@ public class StepsDotNetTests
         Step step = DotNetSteps.CreateDotNetBuildStep(".NET build",
             "MyWebApp.csproj",
             "Release",
+            null,
             true);
 
         //Act
@@ -79,7 +79,8 @@ public class StepsDotNetTests
     {
         //Arrange
         Step step = DotNetSteps.CreateDotNetRestoreStep(null,
-            "MyWebApp.csproj");
+            "MyWebApp.csproj",
+            null);
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
@@ -99,35 +100,17 @@ public class StepsDotNetTests
         //Arrange
         Step step = DotNetSteps.CreateDotNetNuGetPushStep(null,
             "${{ github.workspace }}/*.nupkg",
-            "github"
-            );
+            "github",
+            null,
+            false);
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
 
         //Assert
         string expected = @"
-- name: Push NuGet package to GitHub Packages
+- name: Push NuGet package
   run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source github
-";
-        expected = UtilityTests.TrimNewLines(expected);
-        Assert.AreEqual(expected, yaml);
-    }
-
-    [TestMethod]
-    public void DotNetCoreCLIBuildIndividualStepTest()
-    {
-        //Arrange
-        Step step = new();
-
-
-        //Act
-        string yaml = GitHubActionsSerialization.SerializeStep(step);
-
-        //Assert
-        string expected = @"
-- name: Build
-  run: dotnet build MyProject/MyProject.Models/MyProject.Models.csproj --configuration ${{ env.BuildConfiguration }}
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
@@ -137,16 +120,20 @@ public class StepsDotNetTests
     public void DotNetCoreCLIPublishIndividualStepTest()
     {
         //Arrange
-        Step step = new();
-
+        Step step = DotNetSteps.CreateDotNetPublishStep(".NET publish",
+            "MyProject.Models/MyProject.Models.csproj",
+            "${{ env.BuildConfiguration }}",
+            "${{ github.workspace }}",
+            null,
+            false);
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
 
         //Assert
         string expected = @"
-- name: Publish
-  run: dotnet publish MyProject/MyProject.Models/MyProject.Models.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}
+- name: .NET publish
+  run: dotnet publish MyProject.Models/MyProject.Models.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
@@ -156,15 +143,18 @@ public class StepsDotNetTests
     public void DotNetCoreCLIPublishMultiLineIndividualStepTest()
     {
         //Arrange
-        Step step = new();
-
+        string script = @"
+dotnet publish src/Project.Service/Project.Service.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64 
+dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64
+";
+        Step step = CommonSteps.CreateScriptStep("Publish multiple .NET projects", script);
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
 
         //Assert
         string expected = @"
-- name: Publish dotnet projects
+- name: Publish multiple .NET projects
   run: |
     dotnet publish src/Project.Service/Project.Service.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64 
     dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64
@@ -177,35 +167,18 @@ public class StepsDotNetTests
     public void DotNetCoreCLIPackIndividualStepTest()
     {
         //Arrange
-        Step step = new();
-
-
-        //Act
-        string yaml = GitHubActionsSerialization.SerializeStep(step);
-
-        //Assert
-        string expected = @"
-- name: dotnet pack
-  run: dotnet pack MyProject/MyProject.Models/MyProject.Models.csproj
-";
-        expected = UtilityTests.TrimNewLines(expected);
-        Assert.AreEqual(expected, yaml);
-    }
-
-    [TestMethod]
-    public void DotNetCoreCLIInvalidIndividualStepTest()
-    {
-        //Arrange
-        Step step = new();
-
+        Step step = DotNetSteps.CreateDotNetPackStep(".NET pack",
+            "MyProject.Models.csproj",
+            null,
+            false);
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
 
         //Assert
         string expected = @"
-- # This DotNetCoreCLI task is misconfigured, inputs are required
-  name: dotnet build but no inputs
+- name: .NET pack
+  run: dotnet pack MyProject.Models.csproj
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
@@ -215,8 +188,7 @@ public class StepsDotNetTests
     public void MSBuildStepTest()
     {
         //Arrange
-        Step step = new();
-
+        Step step = CommonSteps.CreateScriptStep(null, @"msbuild '${{ env.solution }}' /p:configuration='${{ env.buildConfiguration }}' /p:platform='${{ env.buildPlatform }}' /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation=""${{ github.workspace }}\WebApp.zip"" /p:DeployIisAppPath=""Default Web Site""");
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
@@ -233,8 +205,7 @@ public class StepsDotNetTests
     public void MSBuild2StepTest()
     {
         //Arrange
-        Step step = new();
-
+        Step step = CommonSteps.CreateScriptStep(null,@"msbuild '**/*.sln' /p:configuration='Release' /p:platform='Any CPU' /t:Publish /p:PublishUrl=""publish""");
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
