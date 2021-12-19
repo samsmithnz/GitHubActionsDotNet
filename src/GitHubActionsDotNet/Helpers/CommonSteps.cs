@@ -1,7 +1,7 @@
 ﻿using GitHubActionsDotNet.Models;
 using System.Text;
 
-namespace GitHubActionsDotNet.Helpers.Steps
+namespace GitHubActionsDotNet.Helpers
 {
     public static class CommonSteps
     {

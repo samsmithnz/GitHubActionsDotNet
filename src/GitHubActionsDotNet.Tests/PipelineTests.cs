@@ -1,3 +1,4 @@
+using GitHubActionsDotNet.Helpers;
 using GitHubActionsDotNet.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -26,11 +27,11 @@ public class PipelineTests
     {
         //Arrange
         GitHubActionsRoot root = new();
-        Job job = new();
-        job.name = "build";
-        job.runs_on = "windows-latest";
         root.jobs = new();
-        root.jobs.Add(job.name, job);
+        Job buildJob = CommonJobs.AddJob(
+            null,
+            "windows-latest");
+        root.jobs.Add("build", buildJob);
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
@@ -39,7 +40,6 @@ public class PipelineTests
         string expected = @"
 jobs:
   build:
-    name: build
     runs-on: windows-latest
 ";
         expected = UtilityTests.TrimNewLines(expected);

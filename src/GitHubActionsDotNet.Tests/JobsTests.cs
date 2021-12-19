@@ -1,6 +1,7 @@
 using GitHubActionsDotNet.Models;
-using GitHubActionsDotNet.Helpers.Steps;
+using GitHubActionsDotNet.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace GitHubActionsDotNet.Tests;
 
@@ -14,14 +15,15 @@ public class JobsTests
     {
         //Arrange
         GitHubActionsRoot root = new();
-        Job buildJob = new();
-        buildJob.name = "Build job";
-        buildJob.runs_on = "windows-latest";
-        buildJob.timeout_minutes = 30;
-        buildJob.steps = new Step[2];
-        buildJob.steps[0] = CommonSteps.AddCheckoutStep();
-        buildJob.steps[1] = CommonSteps.AddScriptStep(null, @"echo ""hello world""", "cmd");
+        Step[] buildSteps = new Step[2];
+        buildSteps[0] = CommonSteps.AddCheckoutStep();
+        buildSteps[1] = CommonSteps.AddScriptStep(null, @"echo ""hello world""", "cmd");
         root.jobs = new();
+        Job buildJob = CommonJobs.AddJob(
+            "Build job",
+            "windows-latest",
+            30,
+            buildSteps);
         root.jobs.Add("build", buildJob);
 
         //Act

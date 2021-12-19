@@ -1,6 +1,6 @@
 ﻿using GitHubActionsDotNet.Models;
 using GitHubActionsDotNet.Serialization;
-using GitHubActionsDotNet.Helpers.Steps;
+using GitHubActionsDotNet.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GitHubActionsDotNet.Tests;
