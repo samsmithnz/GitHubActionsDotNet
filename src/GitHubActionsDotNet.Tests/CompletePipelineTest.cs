@@ -60,6 +60,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - run: echo ""hello world""
+      shell: cmd
   release:
     name: Release job
     runs-on: ubuntu-latest
