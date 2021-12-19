@@ -239,7 +239,21 @@ jobs:
     {
         //Arrange
         GitHubActionsRoot root = new();
-
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+        };
+        root.jobs = new();
+        Job buildJob = JobHelper.AddJob(
+            "Build job",
+            "windows-latest",
+            buildSteps,
+            new()
+            {
+                { "Variable1", "new variable" }
+            },
+            new string[] { "AnotherJob" });
+        root.jobs.Add("build", buildJob);
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
@@ -256,13 +270,10 @@ jobs:
       Variable1: new variable
     steps:
     - uses: actions/checkout@v2
-    - run: echo your commands here ${{ env.Variable1 }}
-      shell: cmd
+    - run: echo ""hello world""
 ";
-
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
-
     }
 
     [TestMethod]
