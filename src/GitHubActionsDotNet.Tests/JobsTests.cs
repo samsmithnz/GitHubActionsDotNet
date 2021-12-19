@@ -1,6 +1,7 @@
 using GitHubActionsDotNet.Helpers;
 using GitHubActionsDotNet.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace GitHubActionsDotNet.Tests;
 
@@ -62,7 +63,10 @@ jobs:
             "Build job",
             "windows-latest",
             buildSteps,
-            null);
+            new()
+            {
+                { "Variable1", "new variable" }
+            });
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -83,7 +87,6 @@ jobs:
 
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
-
     }
 
 
