@@ -19,25 +19,25 @@ public class CompletePipelineTest
             jobs = new()
         };
         //Build job
-        Step[] buildSteps = new Step[2];
-        buildSteps[0] = CommonStepsHelper.AddCheckoutStep();
-        buildSteps[1] = CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""");
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
+        };
         Job buildJob = JobHelper.AddJob(
             "Build job",
             "windows-latest",
-            null,
-            0,
             buildSteps);
         root.jobs.Add("build", buildJob);
         //Release job
-        Step[] releaseSteps = new Step[1];
-        releaseSteps[0] = CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""");
+        Step[] releaseSteps = new Step[] {
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+        };
         Job releaseJob = JobHelper.AddJob(
             "Release job",
             "ubuntu-latest",
-            new string[] { "build" },
-            0,
-            releaseSteps);
+            releaseSteps,
+            null,
+            new string[] { "build" });
         root.jobs.Add("release", releaseJob);
 
         //Act

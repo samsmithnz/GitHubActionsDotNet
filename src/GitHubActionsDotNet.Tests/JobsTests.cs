@@ -14,16 +14,18 @@ public class JobsTests
     {
         //Arrange
         GitHubActionsRoot root = new();
-        Step[] buildSteps = new Step[2];
-        buildSteps[0] = CommonStepsHelper.AddCheckoutStep();
-        buildSteps[1] = CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd");
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
+        };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
             "Build job",
             "windows-latest",
+            buildSteps,
             null,
-            30,
-            buildSteps);
+            null,
+            30);
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -51,6 +53,17 @@ jobs:
     {
         //Arrange
         GitHubActionsRoot root = new();
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
+        };
+        root.jobs = new();
+        Job buildJob = JobHelper.AddJob(
+            "Build job",
+            "windows-latest",
+            buildSteps,
+            null);
+        root.jobs.Add("build", buildJob);
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
@@ -58,16 +71,15 @@ jobs:
         //Assert
         string expected = @"
 jobs:
-  Build:
+  build:
     name: Build job
     runs-on: windows-latest
     env:
       Variable1: new variable
     steps:
     - uses: actions/checkout@v2
-    - run: echo your commands here ${{ env.Variable1 }}
-      shell: cmd
-    ";
+    - run: echo ""hello world""
+";
 
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
