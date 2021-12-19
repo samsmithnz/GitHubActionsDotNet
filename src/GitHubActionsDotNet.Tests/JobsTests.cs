@@ -322,7 +322,20 @@ jobs:
     {
         //Arrange
         GitHubActionsRoot root = new();
-
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+        };
+        root.jobs = new();
+        Job prodJob = JobHelper.AddJob(
+            "Prod",
+            "ubuntu-latest",
+            buildSteps,
+            null,
+            new string[] { "functionalTests" },
+            0,
+            new Environment { name = "prod" });
+        root.jobs.Add("prod", prodJob);
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
