@@ -1,5 +1,4 @@
 ﻿using GitHubActionsDotNet.Models;
-using System.Collections.Generic;
 using System.Text;
 
 namespace GitHubActionsDotNet.Templates.Steps
