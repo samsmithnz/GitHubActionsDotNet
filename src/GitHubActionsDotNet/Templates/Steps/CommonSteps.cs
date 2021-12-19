@@ -151,29 +151,11 @@ namespace GitHubActionsDotNet.Templates.Steps
             }
             if (configuration != null)
             {
-                if (useShortParameters == true)
-                {
-                    sb.Append("-c ");
-                }
-                else
-                {
-                    sb.Append("--configuration ");
-                }
-                sb.Append(configuration);
-                sb.Append(" ");
+                sb.Append(ProcessAlternativeParameters(configuration, "c", "configuration", useShortParameters));
             }
             if (output != null)
             {
-                if (useShortParameters == true)
-                {
-                    sb.Append("-o ");
-                }
-                else
-                {
-                    sb.Append("--output ");
-                }
-                sb.Append(output);
-                sb.Append(" ");
+                sb.Append(ProcessAlternativeParameters(output, "o", "output", useShortParameters));
             }
             if (otherArguments != null)
             {
@@ -192,6 +174,36 @@ namespace GitHubActionsDotNet.Templates.Steps
                 step.name = name;
             }
             return step;
+        }
+
+        private static string ProcessAlternativeParameters(string commandText, 
+            string shortCommand, 
+            string longCommand, 
+            bool useShortParameters)
+        {
+            //Generates either -c Release or --command Release
+            StringBuilder sb = new StringBuilder();
+            if (commandText != null)
+            {
+                if (useShortParameters == true)
+                {
+                    //e.g. -c
+                    sb.Append("-");
+                    sb.Append(shortCommand);
+                    sb.Append(" ");
+                }
+                else
+                {
+                    //e.g. --command
+                    sb.Append("--");
+                    sb.Append(longCommand);
+                    sb.Append(" ");
+                }
+                //e.g. Release
+                sb.Append(commandText);
+                sb.Append(" ");
+            }
+            return sb.ToString();
         }
     }
 }
