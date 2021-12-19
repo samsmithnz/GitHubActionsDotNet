@@ -1,5 +1,6 @@
 ﻿using GitHubActionsDotNet.Models;
 using GitHubActionsDotNet.Serialization;
+using GitHubActionsDotNet.Templates.Steps;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GitHubActionsDotNet.Tests;
@@ -13,11 +14,7 @@ public class StepsDotNetTests
     public void UseDotNetIndividualStepTest()
     {
         //Arrange
-        Step step = new();
-        step.name = "Use .NET sdk";
-        step.uses = "actions/setup-dotnet@v1";
-        step.with = new();
-        step.with.Add("dotnet-version", "6.x");
+        Step step = DotnetSteps.CreateDotnetUseStep();
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
@@ -38,15 +35,17 @@ public class StepsDotNetTests
     public void DotNetBuildIndividualStepTest()
     {
         //Arrange
-        Step step = new();
+        Step step = DotnetSteps.CreateDotnetBuildStep(null, 
+            "Release",
+            "MyWebApp.csproj");
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
 
         //Assert
         string expected = @"
-- name: dotnet build ${{ env.buildConfiguration }} part 1
-  run: dotnet build --configuration ${{ env.buildConfiguration }} WebApplication1/WebApplication1.Service/WebApplication1.Service.csproj
+- name: .NET build
+  run: dotnet build --configuration Release MyWebApp.csproj
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
@@ -56,15 +55,16 @@ public class StepsDotNetTests
     public void DotNetCoreCLIRestoreIndividualStepTest()
     {
         //Arrange
-        Step step = new();
+        Step step = DotnetSteps.CreateDotnetRestoreStep(null,
+            "MyWebApp.csproj");
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
 
         //Assert
         string expected = @"
-- name: Restore
-  run: dotnet restore MyProject/MyProject.Models/MyProject.Models.csproj
+- name: .NET restore
+  run: dotnet restore MyWebApp.csproj
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
