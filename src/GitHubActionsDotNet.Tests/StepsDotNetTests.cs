@@ -94,20 +94,21 @@ public class StepsDotNetTests
     }
 
     [TestMethod]
-    public void DotNetCoreCLIPushIndividualStepTest()
+    public void DotNetCoreCLINuGetPushIndividualStepTest()
     {
         //Arrange
-        Step step = new();
-
+        Step step = DotNetSteps.CreateDotNetNuGetPushStep(null,
+            "${{ github.workspace }}/*.nupkg",
+            "github"
+            );
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
 
         //Assert
         string expected = @"
-- name: Push to GitHub Packages
-  run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source ""github""
-  if: (success() && startsWith(github.ref, 'refs/tags/'))
+- name: Push NuGet package to GitHub Packages
+  run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source github
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);

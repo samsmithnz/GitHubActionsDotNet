@@ -44,7 +44,6 @@ namespace GitHubActionsDotNet.Templates.Steps
                 }
                 else
                 {
-
                     sb.Append("--configuration ");
                 }
                 sb.Append(configuration);
@@ -80,6 +79,46 @@ namespace GitHubActionsDotNet.Templates.Steps
             Step step = new Step
             {
                 name = ".NET restore",
+                run = sb.ToString()
+            };
+
+            if (name != null)
+            {
+                step.name = name;
+            }
+            return step;
+        }
+
+        public static Step CreateDotNetNuGetPushStep(string name = null,
+            string nupkgFile = null,
+            string source = null,
+            bool useShortParameters = false //Included for inclusivity reasons
+            )
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("dotnet nuget push ");
+            if (nupkgFile != null)
+            {
+                sb.Append(nupkgFile);
+                sb.Append(" ");
+            }
+            if (source != null)
+            {
+                if (useShortParameters == true)
+                {
+                    sb.Append("-s ");
+                }
+                else
+                {
+                    sb.Append("--source ");
+                }
+                sb.Append(source);
+                sb.Append(" ");
+            }
+
+            Step step = new Step
+            {
+                name = "Push NuGet package to GitHub Packages",
                 run = sb.ToString()
             };
 
