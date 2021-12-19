@@ -281,7 +281,16 @@ jobs:
     {
         //Arrange
         GitHubActionsRoot root = new();
-
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            CommonStepsHelper.AddCheckoutStep(null, "git://MyProject/MyRepo"),
+            CommonStepsHelper.AddCheckoutStep("GitHub checkout", "MyGitHubRepo")};
+        root.jobs = new();
+        Job buildJob = JobHelper.AddJob(
+            "Build job",
+            "ubuntu-latest",
+            buildSteps);
+        root.jobs.Add("build", buildJob);
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
@@ -289,14 +298,16 @@ jobs:
         //Assert
         string expected = @"
 jobs:
-  provisionProd:
+  build:
+    name: Build job
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
     - uses: actions/checkout@v2
       with:
         repository: git://MyProject/MyRepo
-    - uses: actions/checkout@v2
+    - name: GitHub checkout
+      uses: actions/checkout@v2
       with:
         repository: MyGitHubRepo
 ";

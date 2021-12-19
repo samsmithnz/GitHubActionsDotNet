@@ -1,4 +1,5 @@
 ﻿using GitHubActionsDotNet.Models;
+using System.Collections.Generic;
 using System.Text;
 
 namespace GitHubActionsDotNet.Helpers
@@ -25,12 +26,23 @@ namespace GitHubActionsDotNet.Helpers
             return step;
         }
 
-        public static Step AddCheckoutStep(string name = null)
+        public static Step AddCheckoutStep(string name = null,
+            string repository = null)
         {
+            Dictionary<string, string> with = null;
+            if (repository != null)
+            {
+                with = new Dictionary<string, string>
+                {
+                    { "repository", repository }
+                };
+            }
+
             Step step = new Step
             {
                 name = name,
-                uses = "actions/checkout@v2"
+                uses = "actions/checkout@v2",
+                with = with
             };
             return step;
 
