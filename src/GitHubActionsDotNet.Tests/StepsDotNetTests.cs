@@ -14,7 +14,7 @@ public class StepsDotNetTests
     public void UseDotNetIndividualStepTest()
     {
         //Arrange
-        Step step = DotnetSteps.CreateDotnetUseStep();
+        Step step = DotNetSteps.CreateDotNetUseStep();
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
@@ -35,7 +35,7 @@ public class StepsDotNetTests
     public void DotNetBuildIndividualStepTest()
     {
         //Arrange
-        Step step = DotnetSteps.CreateDotnetBuildStep(null,
+        Step step = DotNetSteps.CreateDotNetBuildStep(".NET build",
             "MyWebApp.csproj", 
             "Release",
             false);
@@ -57,7 +57,7 @@ public class StepsDotNetTests
     public void DotNetBuildIndividualShortParametersStepTest()
     {
         //Arrange
-        Step step = DotnetSteps.CreateDotnetBuildStep(null,
+        Step step = DotNetSteps.CreateDotNetBuildStep(".NET build",
             "MyWebApp.csproj",
             "Release",
             true);
@@ -78,7 +78,7 @@ public class StepsDotNetTests
     public void DotNetCoreCLIRestoreIndividualStepTest()
     {
         //Arrange
-        Step step = DotnetSteps.CreateDotnetRestoreStep(null,
+        Step step = DotNetSteps.CreateDotNetRestoreStep(null,
             "MyWebApp.csproj");
 
         //Act

@@ -4,9 +4,9 @@ using System.Text;
 
 namespace GitHubActionsDotNet.Templates.Steps
 {
-    public static class DotnetSteps
+    public static class DotNetSteps
     {
-        public static Step CreateDotnetUseStep(string name = null)
+        public static Step CreateDotNetUseStep(string name = null)
         {
             Step step = new Step
             {
@@ -23,17 +23,17 @@ namespace GitHubActionsDotNet.Templates.Steps
             return step;
         }
 
-        public static Step CreateDotnetBuildStep(string name = null,
-            string projectPath = null,
+        public static Step CreateDotNetBuildStep(string name = null,
+            string project = null,
             string configuration = null,
             bool useShortParameters = false //Included for inclusivity reasons
             )
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet build ");
-            if (projectPath != null)
+            if (project != null)
             {
-                sb.Append(projectPath);
+                sb.Append(project);
                 sb.Append(" ");
             }
             if (configuration != null)
@@ -64,16 +64,16 @@ namespace GitHubActionsDotNet.Templates.Steps
             return step;
         }
 
-        public static Step CreateDotnetRestoreStep(string name = null,
-            string projectPath = null,
+        public static Step CreateDotNetRestoreStep(string name = null,
+            string project = null,
             bool useShortParameters = false //Included for inclusivity reasons
             )
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet restore ");
-            if (projectPath != null)
+            if (project != null)
             {
-                sb.Append(projectPath);
+                sb.Append(project);
                 sb.Append(" ");
             }
 
