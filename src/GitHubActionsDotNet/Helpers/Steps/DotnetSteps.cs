@@ -131,6 +131,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
 
         public static Step CreateDotNetPackStep(string name = null,
             string project = null,
+            string output = null,
             string otherArguments = null,
             bool useShortParameters = false //Included for inclusivity reasons
             )
@@ -141,6 +142,10 @@ namespace GitHubActionsDotNet.Helpers.Steps
             {
                 sb.Append(project);
                 sb.Append(" ");
+            }
+            if (output != null)
+            {
+                sb.Append(ProcessAlternativeParameters(output, "o", "output", useShortParameters));
             }
             if (otherArguments != null)
             {

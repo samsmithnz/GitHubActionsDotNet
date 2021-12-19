@@ -170,6 +170,7 @@ dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --outp
         Step step = DotNetSteps.CreateDotNetPackStep(".NET pack",
             "MyProject.Models.csproj",
             null,
+            null,
             false);
 
         //Act
