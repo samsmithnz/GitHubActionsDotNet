@@ -15,7 +15,7 @@ public class CompletePipelineTest
         GitHubActionsRoot root = new()
         {
             name = "CI/CD",
-            on = TriggerHelper.AddStandardTrigger(),
+            on = TriggerHelper.AddStandardPushAndPullTrigger(),
             jobs = new()
         };
         //Build job
