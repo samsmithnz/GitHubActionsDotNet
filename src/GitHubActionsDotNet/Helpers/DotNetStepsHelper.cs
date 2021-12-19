@@ -62,7 +62,7 @@ namespace GitHubActionsDotNet.Helpers
 
         public static Step AddDotNetRestoreStep(string name = null,
             string project = null,
-            string otherArguments = null 
+            string otherArguments = null
             //bool useShortParameters = false //Included for inclusivity reasons
             )
         {

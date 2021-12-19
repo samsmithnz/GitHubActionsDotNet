@@ -1,6 +1,6 @@
-﻿using GitHubActionsDotNet.Models;
+﻿using GitHubActionsDotNet.Helpers;
+using GitHubActionsDotNet.Models;
 using GitHubActionsDotNet.Serialization;
-using GitHubActionsDotNet.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GitHubActionsDotNet.Tests;
@@ -35,7 +35,7 @@ public class StepsDotNetTests
     {
         //Arrange
         Step step = DotNetStepsHelper.AddDotNetBuildStep(".NET build",
-            "MyWebApp.csproj", 
+            "MyWebApp.csproj",
             "Release",
             null,
             false);
@@ -206,7 +206,7 @@ dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --outp
     public void MSBuild2StepTest()
     {
         //Arrange
-        Step step = CommonStepsHelper.AddScriptStep(null,@"msbuild '**/*.sln' /p:configuration='Release' /p:platform='Any CPU' /t:Publish /p:PublishUrl=""publish""");
+        Step step = CommonStepsHelper.AddScriptStep(null, @"msbuild '**/*.sln' /p:configuration='Release' /p:platform='Any CPU' /t:Publish /p:PublishUrl=""publish""");
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);

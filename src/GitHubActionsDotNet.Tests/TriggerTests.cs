@@ -377,7 +377,7 @@ on:
     public void OnPushAndScheduleCronTriggerTest()
     {
         //Arrange
-        GitHubActionsRoot root = new(); 
+        GitHubActionsRoot root = new();
         Trigger trigger = new();
         trigger.push = new();
         trigger.push.branches = new string[1];

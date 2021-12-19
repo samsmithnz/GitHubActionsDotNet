@@ -131,7 +131,7 @@ namespace GitHubActionsDotNet.Common
                 }
             }
             return input;
-        } 
+        }
 
         public static void WriteLine(string message, bool verbose)
         {

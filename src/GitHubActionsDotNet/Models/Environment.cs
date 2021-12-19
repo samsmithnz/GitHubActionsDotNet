@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace GitHubActionsDotNet.Models
+﻿namespace GitHubActionsDotNet.Models
 {
     ////https://devblogs.microsoft.com/devops/i-need-manual-approvers-for-github-actions-and-i-got-them-now/
     //environment:
