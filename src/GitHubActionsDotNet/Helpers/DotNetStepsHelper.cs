@@ -24,6 +24,38 @@ namespace GitHubActionsDotNet.Helpers
             return step;
         }
 
+        public static Step AddDotNetRestoreStep(string name = null,
+            string project = null,
+            string otherArguments = null
+            //bool useShortParameters = false //Included for inclusivity reasons
+            )
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("dotnet restore ");
+            if (project != null)
+            {
+                sb.Append(project);
+                sb.Append(" ");
+            }
+            if (otherArguments != null)
+            {
+                sb.Append(otherArguments);
+                sb.Append(" ");
+            }
+
+            Step step = new Step
+            {
+                name = ".NET restore",
+                run = sb.ToString()
+            };
+
+            if (name != null)
+            {
+                step.name = name;
+            }
+            return step;
+        }
+
         public static Step AddDotNetBuildStep(string name = null,
             string project = null,
             string configuration = null,
@@ -61,18 +93,23 @@ namespace GitHubActionsDotNet.Helpers
             return step;
         }
 
-        public static Step AddDotNetRestoreStep(string name = null,
+        public static Step AddDotNetTestStep(string name = null,
             string project = null,
-            string otherArguments = null
-            //bool useShortParameters = false //Included for inclusivity reasons
+            string configuration = null,
+            string otherArguments = null,
+            bool useShortParameters = false //Included for inclusivity reasons)
             )
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("dotnet restore ");
+            sb.Append("dotnet test ");
             if (project != null)
             {
                 sb.Append(project);
                 sb.Append(" ");
+            }
+            if (configuration != null)
+            {
+                sb.Append(ProcessAlternativeParameters(configuration, "c", "configuration", useShortParameters));
             }
             if (otherArguments != null)
             {
@@ -82,7 +119,7 @@ namespace GitHubActionsDotNet.Helpers
 
             Step step = new Step
             {
-                name = ".NET restore",
+                name = ".NET test",
                 run = sb.ToString()
             };
 
