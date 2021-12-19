@@ -56,7 +56,7 @@ jobs:
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
