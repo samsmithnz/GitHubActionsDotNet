@@ -92,11 +92,28 @@ jobs:
 
 
     [TestMethod]
-    public void ComplexVariablesWithComplexDependsOnJobTest()
+    public void ComplexVariablesWithComplexNeedsJobTest()
     {
         //Arrange
         GitHubActionsRoot root = new();
-
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+        };
+        root.jobs = new();
+        Job buildJob = JobHelper.AddJob(
+            "Build job",
+            "windows-latest",
+            buildSteps,
+            new()
+            {
+                { "group", "Active Login" },
+                { "sourceArtifactName", "nuget-windows" },
+                { "targetArtifactName", "nuget-windows-signed" },
+                { "pathToNugetPackages", "**/*.nupkg" }
+            },
+            new string[] { "AnotherJob" });
+        root.jobs.Add("build", buildJob);
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
@@ -104,7 +121,7 @@ jobs:
         //Assert
         string expected = @"
 jobs:
-  Build:
+  build:
     name: Build job
     runs-on: windows-latest
     needs:
@@ -116,12 +133,10 @@ jobs:
       pathToNugetPackages: '**/*.nupkg'
     steps:
     - uses: actions/checkout@v2
-    - run: echo your commands here
-      shell: cmd
-    ";
+    - run: echo ""hello world""
+";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
-
     }
 
 
