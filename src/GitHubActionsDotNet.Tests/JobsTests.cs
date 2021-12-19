@@ -1,7 +1,6 @@
-using GitHubActionsDotNet.Models;
 using GitHubActionsDotNet.Helpers;
+using GitHubActionsDotNet.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace GitHubActionsDotNet.Tests;
 
@@ -22,6 +21,7 @@ public class JobsTests
         Job buildJob = JobHelper.AddJob(
             "Build job",
             "windows-latest",
+            null,
             30,
             buildSteps);
         root.jobs.Add("build", buildJob);
