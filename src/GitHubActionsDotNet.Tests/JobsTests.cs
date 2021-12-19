@@ -318,30 +318,6 @@ jobs:
     }
 
     [TestMethod]
-    public void CheckoutSimpleJobTest()
-    {
-        //Arrange
-        GitHubActionsRoot root = new();
-
-
-        //Act
-        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
-
-        //Assert
-        string expected = @"
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-";
-
-        expected = UtilityTests.TrimNewLines(expected);
-        Assert.AreEqual(expected, yaml);
-
-    }
-
-    [TestMethod]
     public void EnvironmentJobTest()
     {
         //Arrange
@@ -354,16 +330,16 @@ jobs:
         //Assert
         string expected = @"
 jobs:
-  provisionProd:
-    name: Provision Prod
+  prod:
+    name: Prod
     runs-on: ubuntu-latest
     needs:
-    - functionalTestsStaging
+    - functionalTests
     environment:
       name: prod
     steps:
     - uses: actions/checkout@v2
-    - run: echo hello world
+    - run: echo ""hello world""
 ";
         //url: https://abel-node-gh-accelerator.azurewebsites.net
 
