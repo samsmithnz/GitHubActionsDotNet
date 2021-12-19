@@ -3,7 +3,7 @@ using System.Text;
 
 namespace GitHubActionsDotNet.Helpers
 {
-    public static class CommonSteps
+    public static class CommonStepsHelper
     {
         public static Step AddScriptStep(string name = null,
              string runStep = null,

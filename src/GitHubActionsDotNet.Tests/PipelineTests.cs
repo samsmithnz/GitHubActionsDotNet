@@ -28,7 +28,7 @@ public class PipelineTests
         //Arrange
         GitHubActionsRoot root = new();
         root.jobs = new();
-        Job buildJob = CommonJobs.AddJob(
+        Job buildJob = JobHelper.AddJob(
             null,
             "windows-latest");
         root.jobs.Add("build", buildJob);

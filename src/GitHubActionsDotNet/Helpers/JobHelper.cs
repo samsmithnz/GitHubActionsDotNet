@@ -2,7 +2,7 @@
 
 namespace GitHubActionsDotNet.Helpers
 {
-    public static class CommonJobs
+    public static class JobHelper
     {
         public static Job AddJob(
             string displayName = null,

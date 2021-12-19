@@ -16,10 +16,10 @@ public class JobsTests
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[2];
-        buildSteps[0] = CommonSteps.AddCheckoutStep();
-        buildSteps[1] = CommonSteps.AddScriptStep(null, @"echo ""hello world""", "cmd");
+        buildSteps[0] = CommonStepsHelper.AddCheckoutStep();
+        buildSteps[1] = CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd");
         root.jobs = new();
-        Job buildJob = CommonJobs.AddJob(
+        Job buildJob = JobHelper.AddJob(
             "Build job",
             "windows-latest",
             30,
