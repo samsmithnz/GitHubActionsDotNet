@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GitHubActionsDotNet.Templates.Steps
+namespace GitHubActionsDotNet.Helpers
 {
-    public static class DotNetSteps
+    public static class DotNetStepsHelper
     {
-        public static Step CreateDotNetUseStep(string name = null)
+        public static Step AddDotNetUseStep(string name = null)
         {
             Step step = new Step
             {
@@ -23,7 +23,7 @@ namespace GitHubActionsDotNet.Templates.Steps
             return step;
         }
 
-        public static Step CreateDotNetBuildStep(string name = null,
+        public static Step AddDotNetBuildStep(string name = null,
             string project = null,
             string configuration = null,
             string otherArguments = null,
@@ -60,9 +60,9 @@ namespace GitHubActionsDotNet.Templates.Steps
             return step;
         }
 
-        public static Step CreateDotNetRestoreStep(string name = null,
+        public static Step AddDotNetRestoreStep(string name = null,
             string project = null,
-            string otherArguments = null 
+            string otherArguments = null
             //bool useShortParameters = false //Included for inclusivity reasons
             )
         {
@@ -92,7 +92,7 @@ namespace GitHubActionsDotNet.Templates.Steps
             return step;
         }
 
-        public static Step CreateDotNetNuGetPushStep(string name = null,
+        public static Step AddDotNetNuGetPushStep(string name = null,
             string nupkgFile = null,
             string source = null,
             string otherArguments = null,
@@ -129,8 +129,9 @@ namespace GitHubActionsDotNet.Templates.Steps
             return step;
         }
 
-        public static Step CreateDotNetPackStep(string name = null,
+        public static Step AddDotNetPackStep(string name = null,
             string project = null,
+            string output = null,
             string otherArguments = null,
             bool useShortParameters = false //Included for inclusivity reasons
             )
@@ -141,6 +142,10 @@ namespace GitHubActionsDotNet.Templates.Steps
             {
                 sb.Append(project);
                 sb.Append(" ");
+            }
+            if (output != null)
+            {
+                sb.Append(ProcessAlternativeParameters(output, "o", "output", useShortParameters));
             }
             if (otherArguments != null)
             {
@@ -161,7 +166,7 @@ namespace GitHubActionsDotNet.Templates.Steps
             return step;
         }
 
-        public static Step CreateDotNetPublishStep(string name = null,
+        public static Step AddDotNetPublishStep(string name = null,
             string project = null,
             string configuration = null,
             string output = null,

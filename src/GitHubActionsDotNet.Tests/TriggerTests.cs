@@ -1,4 +1,5 @@
 
+using GitHubActionsDotNet.Helpers;
 using GitHubActionsDotNet.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -8,6 +9,30 @@ namespace GitHubActionsDotNet.Tests;
 [TestClass]
 public class TriggerTests
 {
+    [TestMethod]
+    public void TriggerAndPRMainSimpleStringTest()
+    {
+        //Arrange
+        GitHubActionsRoot root = new();
+        root.on = TriggerHelper.AddStandardTrigger();
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+on:
+  push:
+    branches:
+    - main
+  pull-request:
+    branches:
+    - main
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
     [TestMethod]
     public void TriggerSimpleStringTest()
     {
@@ -28,39 +53,6 @@ on:
   push:
     branches:
     - main
-";
-        expected = UtilityTests.TrimNewLines(expected);
-        Assert.AreEqual(expected, yaml);
-
-    }
-
-
-    [TestMethod]
-    public void TriggerAndPRNoneSimpleStringTest()
-    {
-        //Arrange
-        GitHubActionsRoot root = new();
-        Trigger trigger = new();
-        trigger.push = new();
-        trigger.push.branches = new string[1];
-        trigger.push.branches[0] = "none";
-        trigger.pull_request = new();
-        trigger.pull_request.branches = new string[1];
-        trigger.pull_request.branches[0] = "none";
-        root.on = trigger;
-
-        //Act
-        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
-
-        //Assert
-        string expected = @"
-on:
-  push:
-    branches:
-    - none
-  pull-request:
-    branches:
-    - none
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
@@ -385,7 +377,7 @@ on:
     public void OnPushAndScheduleCronTriggerTest()
     {
         //Arrange
-        GitHubActionsRoot root = new(); 
+        GitHubActionsRoot root = new();
         Trigger trigger = new();
         trigger.push = new();
         trigger.push.branches = new string[1];
