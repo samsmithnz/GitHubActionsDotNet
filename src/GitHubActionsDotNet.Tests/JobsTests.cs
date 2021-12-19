@@ -19,8 +19,8 @@ public class JobsTests
         buildJob.runs_on = "windows-latest";
         buildJob.timeout_minutes = 30;
         buildJob.steps = new Step[2];
-        buildJob.steps[0] = CommonSteps.CheckoutStep();
-        buildJob.steps[1] = CommonSteps.CreateScriptStep(null, @"echo ""hello world""", "cmd");
+        buildJob.steps[0] = CommonSteps.AddCheckoutStep();
+        buildJob.steps[1] = CommonSteps.AddScriptStep(null, @"echo ""hello world""", "cmd");
         root.jobs = new();
         root.jobs.Add("build", buildJob);
 

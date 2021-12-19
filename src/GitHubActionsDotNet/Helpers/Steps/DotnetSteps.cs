@@ -6,7 +6,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
 {
     public static class DotNetSteps
     {
-        public static Step CreateDotNetUseStep(string name = null)
+        public static Step AddDotNetUseStep(string name = null)
         {
             Step step = new Step
             {
@@ -23,7 +23,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
             return step;
         }
 
-        public static Step CreateDotNetBuildStep(string name = null,
+        public static Step AddDotNetBuildStep(string name = null,
             string project = null,
             string configuration = null,
             string otherArguments = null,
@@ -60,7 +60,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
             return step;
         }
 
-        public static Step CreateDotNetRestoreStep(string name = null,
+        public static Step AddDotNetRestoreStep(string name = null,
             string project = null,
             string otherArguments = null 
             //bool useShortParameters = false //Included for inclusivity reasons
@@ -92,7 +92,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
             return step;
         }
 
-        public static Step CreateDotNetNuGetPushStep(string name = null,
+        public static Step AddDotNetNuGetPushStep(string name = null,
             string nupkgFile = null,
             string source = null,
             string otherArguments = null,
@@ -129,7 +129,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
             return step;
         }
 
-        public static Step CreateDotNetPackStep(string name = null,
+        public static Step AddDotNetPackStep(string name = null,
             string project = null,
             string output = null,
             string otherArguments = null,
@@ -166,7 +166,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
             return step;
         }
 
-        public static Step CreateDotNetPublishStep(string name = null,
+        public static Step AddDotNetPublishStep(string name = null,
             string project = null,
             string configuration = null,
             string output = null,

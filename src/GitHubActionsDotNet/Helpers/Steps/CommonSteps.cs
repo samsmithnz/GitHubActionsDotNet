@@ -5,7 +5,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
 {
     public static class CommonSteps
     {
-        public static Step CreateScriptStep(string name = null,
+        public static Step AddScriptStep(string name = null,
              string runStep = null,
              string shell = null
              )
@@ -25,7 +25,7 @@ namespace GitHubActionsDotNet.Helpers.Steps
             return step;
         }
 
-        public static Step CheckoutStep(string name = null)
+        public static Step AddCheckoutStep(string name = null)
         {
             Step step = new Step
             {
