@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace GitHubActionsDotNet.Templates.Steps
+namespace GitHubActionsDotNet.Helpers.Steps
 {
     public static class DotNetSteps
     {

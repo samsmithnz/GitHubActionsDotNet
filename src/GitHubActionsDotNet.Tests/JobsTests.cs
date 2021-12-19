@@ -1,5 +1,5 @@
 using GitHubActionsDotNet.Models;
-using GitHubActionsDotNet.Templates.Steps;
+using GitHubActionsDotNet.Helpers.Steps;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GitHubActionsDotNet.Tests;
