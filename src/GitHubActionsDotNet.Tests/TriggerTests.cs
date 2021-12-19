@@ -14,7 +14,7 @@ public class TriggerTests
     {
         //Arrange
         GitHubActionsRoot root = new();
-        root.on = TriggerHelper.AddStandardTrigger();
+        root.on = TriggerHelper.AddStandardPushAndPullTrigger();
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
@@ -26,6 +26,27 @@ on:
     branches:
     - main
   pull-request:
+    branches:
+    - main
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void TriggerMainSimpleStringTest()
+    {
+        //Arrange
+        GitHubActionsRoot root = new();
+        root.on = TriggerHelper.AddStandardPushTrigger();
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+on:
+  push:
     branches:
     - main
 ";

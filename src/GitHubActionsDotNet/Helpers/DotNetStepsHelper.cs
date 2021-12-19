@@ -6,7 +6,8 @@ namespace GitHubActionsDotNet.Helpers
 {
     public static class DotNetStepsHelper
     {
-        public static Step AddDotNetUseStep(string name = null)
+        public static Step AddDotNetSetupStep(string name = null,
+            string dotnetVersion = "6.x")
         {
             Step step = new Step
             {
@@ -14,7 +15,7 @@ namespace GitHubActionsDotNet.Helpers
                 uses = "actions/setup-dotnet@v1",
                 with = new Dictionary<string, string>()
             };
-            step.with.Add("dotnet-version", "6.x");
+            step.with.Add("dotnet-version", dotnetVersion);
 
             if (name != null)
             {

@@ -14,7 +14,7 @@ public class StepsDotNetTests
     public void UseDotNetIndividualStepTest()
     {
         //Arrange
-        Step step = DotNetStepsHelper.AddDotNetUseStep();
+        Step step = DotNetStepsHelper.AddDotNetSetupStep();
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);

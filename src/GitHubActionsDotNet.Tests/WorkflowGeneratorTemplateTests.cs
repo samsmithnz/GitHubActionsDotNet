@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using GitHubActionsDotNet.Helpers;
+using GitHubActionsDotNet.Models;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace GitHubActionsDotNet.Tests;
 
@@ -9,6 +11,34 @@ public class WorkflowGeneratorTemplateTests
     [TestMethod]
     public void FunctionTest()
     {
+        //variables
+        string WORKFLOW_NAME = "";
+        string BRANCH_NAME = "";
+        string AZURE_RESOURCE_NAME = "";
+        string PACKAGE_PATH = "";
+        string DOTNET_VERSION = "";
+        string PROJECT_ROOT = "";
+        string PLATFORM = "";
+
+        //Arrange
+        GitHubActionsRoot root = new();
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            DotNetStepsHelper.AddDotNetSetupStep(),
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
+        };
+        root.jobs = new();
+        Job buildJob = JobHelper.AddJob(
+            "Build job",
+            "windows-latest",
+            buildSteps,
+            null,
+            null,
+            30);
+        root.jobs.Add("build", buildJob);
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
 
         //Assert
         string expected = @"
@@ -53,11 +83,31 @@ jobs:
         publish-profile: ${{ secrets.{PUBLISH_PROFILE} }}
         package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 ";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
     }
 
     [TestMethod]
     public void WebappTest()
     {
+        //Arrange
+        GitHubActionsRoot root = new();
+        Step[] buildSteps = new Step[] {
+            CommonStepsHelper.AddCheckoutStep(),
+            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
+        };
+        root.jobs = new();
+        Job buildJob = JobHelper.AddJob(
+            "Build job",
+            "windows-latest",
+            buildSteps,
+            null,
+            null,
+            30);
+        root.jobs.Add("build", buildJob);
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
 
         //Assert
         string expected = @"
@@ -102,5 +152,7 @@ jobs:
         publish-profile: ${{ secrets.{PUBLISH_PROFILE} }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 ";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
     }
 }
