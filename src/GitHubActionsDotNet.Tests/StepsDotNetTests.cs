@@ -1,0 +1,223 @@
+﻿using GitHubActionsDotNet.Models;
+using GitHubActionsDotNet.Serialization;
+using GitHubActionsDotNet.Templates.Steps;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace GitHubActionsDotNet.Tests;
+
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+[TestClass]
+public class StepsDotNetTests
+{
+
+    [TestMethod]
+    public void UseDotNetIndividualStepTest()
+    {
+        //Arrange
+        Step step = DotNetSteps.CreateDotNetUseStep();
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: Use .NET sdk
+  uses: actions/setup-dotnet@v1
+  with:
+    dotnet-version: 6.x
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void DotNetBuildIndividualStepTest()
+    {
+        //Arrange
+        Step step = DotNetSteps.CreateDotNetBuildStep(".NET build",
+            "MyWebApp.csproj", 
+            "Release",
+            null,
+            false);
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: .NET build
+  run: dotnet build MyWebApp.csproj --configuration Release
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void DotNetBuildIndividualShortParametersStepTest()
+    {
+        //Arrange
+        Step step = DotNetSteps.CreateDotNetBuildStep(".NET build",
+            "MyWebApp.csproj",
+            "Release",
+            null,
+            true);
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: .NET build
+  run: dotnet build MyWebApp.csproj -c Release
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void DotNetCoreCLIRestoreIndividualStepTest()
+    {
+        //Arrange
+        Step step = DotNetSteps.CreateDotNetRestoreStep(null,
+            "MyWebApp.csproj",
+            null);
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: .NET restore
+  run: dotnet restore MyWebApp.csproj
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void DotNetCoreCLINuGetPushIndividualStepTest()
+    {
+        //Arrange
+        Step step = DotNetSteps.CreateDotNetNuGetPushStep(null,
+            "${{ github.workspace }}/*.nupkg",
+            "github",
+            null,
+            false);
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: Push NuGet package
+  run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source github
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void DotNetCoreCLIPublishIndividualStepTest()
+    {
+        //Arrange
+        Step step = DotNetSteps.CreateDotNetPublishStep(".NET publish",
+            "MyProject.Models/MyProject.Models.csproj",
+            "${{ env.BuildConfiguration }}",
+            "${{ github.workspace }}",
+            null,
+            false);
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: .NET publish
+  run: dotnet publish MyProject.Models/MyProject.Models.csproj --configuration ${{ env.BuildConfiguration }} --output ${{ github.workspace }}
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void DotNetCoreCLIPublishMultiLineIndividualStepTest()
+    {
+        //Arrange
+        string script = @"
+dotnet publish src/Project.Service/Project.Service.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64 
+dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64
+";
+        Step step = CommonSteps.CreateScriptStep("Publish multiple .NET projects", script);
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: Publish multiple .NET projects
+  run: |
+    dotnet publish src/Project.Service/Project.Service.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64 
+    dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void DotNetCoreCLIPackIndividualStepTest()
+    {
+        //Arrange
+        Step step = DotNetSteps.CreateDotNetPackStep(".NET pack",
+            "MyProject.Models.csproj",
+            null,
+            false);
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- name: .NET pack
+  run: dotnet pack MyProject.Models.csproj
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void MSBuildStepTest()
+    {
+        //Arrange
+        Step step = CommonSteps.CreateScriptStep(null, @"msbuild '${{ env.solution }}' /p:configuration='${{ env.buildConfiguration }}' /p:platform='${{ env.buildPlatform }}' /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation=""${{ github.workspace }}\WebApp.zip"" /p:DeployIisAppPath=""Default Web Site""");
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- run: msbuild '${{ env.solution }}' /p:configuration='${{ env.buildConfiguration }}' /p:platform='${{ env.buildPlatform }}' /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation=""${{ github.workspace }}\WebApp.zip"" /p:DeployIisAppPath=""Default Web Site""";
+
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void MSBuild2StepTest()
+    {
+        //Arrange
+        Step step = CommonSteps.CreateScriptStep(null,@"msbuild '**/*.sln' /p:configuration='Release' /p:platform='Any CPU' /t:Publish /p:PublishUrl=""publish""");
+
+        //Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        //Assert
+        string expected = @"
+- run: msbuild '**/*.sln' /p:configuration='Release' /p:platform='Any CPU' /t:Publish /p:PublishUrl=""publish""
+";
+
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+
+}

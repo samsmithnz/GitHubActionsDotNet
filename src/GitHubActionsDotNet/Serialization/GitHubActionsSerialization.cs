@@ -33,6 +33,16 @@ namespace GitHubActionsDotNet.Serialization
             return yaml;
         }
 
+        public static string SerializeStep(Step gitHubActionStep, List<string> variableList = null)
+        {
+            string yaml = YamlSerialization.SerializeYaml<Step[]>(new Step[1] { gitHubActionStep });
+
+            yaml = ProcessGitHubActionYAML(yaml, variableList);
+            yaml = StepsPostProcessing(yaml);
+
+            return yaml;
+        }
+
         private static string ProcessGitHubActionYAML(string yaml, List<string> variableList = null, string matrixVariableName = null)
         {
             //Fix some variables for serialization, the '-' character is not valid in C# property names, and some of the YAML standard uses reserved words (e.g. if)
@@ -99,7 +109,7 @@ namespace GitHubActionsDotNet.Serialization
         }
 
         private static string PrepareYamlPropertiesForGitHubSerialization(string yaml)
-        { 
+        {
             //Fix some variables that we can't use for property names because the "-" character is not allowed in c# properties, or it's a reserved word (e.g. if)
             yaml = yaml.Replace("runs_on", "runs-on");
             yaml = yaml.Replace("_if", "if");
@@ -174,7 +184,7 @@ namespace GitHubActionsDotNet.Serialization
         //Strip the steps off to focus on just the individual step
         private static string StepsPostProcessing(string input)
         {
-            if (input.Trim().StartsWith("steps:") )
+            if (input.Trim().StartsWith("steps:"))
             {
                 //we need to remove steps, before we do, we need to see if the task needs to remove indent
                 string[] stepLines = input.Split(Environment.NewLine);
@@ -182,11 +192,11 @@ namespace GitHubActionsDotNet.Serialization
                 {
                     int i = 0;
                     //Search for the first non empty line
-                    while (string.IsNullOrEmpty(stepLines[i].Trim())  || stepLines[i].Trim().StartsWith("steps:") )
+                    while (string.IsNullOrEmpty(stepLines[i].Trim()) || stepLines[i].Trim().StartsWith("steps:"))
                     {
                         i++;
                     }
-                    if (stepLines[i].StartsWith("-") )
+                    if (stepLines[i].StartsWith("-"))
                     {
                         int indentLevel = stepLines[i].IndexOf("-");
                         string buffer = ConversionUtility.GenerateSpaces(indentLevel);
