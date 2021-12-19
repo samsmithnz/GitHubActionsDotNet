@@ -34,13 +34,12 @@ public class PipelineTests
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
-        //WTF this this.
-        yaml = yaml.Replace("    name: " + job.name + System.Environment.NewLine, "");
 
         //Assert
         string expected = @"
 jobs:
   build:
+    name: build
     runs-on: windows-latest
 ";
         expected = UtilityTests.TrimNewLines(expected);
