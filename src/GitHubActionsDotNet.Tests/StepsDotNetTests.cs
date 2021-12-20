@@ -171,6 +171,7 @@ dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --outp
             "MyProject.Models.csproj",
             null,
             null,
+            null,
             false);
 
         //Act

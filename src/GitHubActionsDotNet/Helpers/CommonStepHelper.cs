@@ -7,9 +7,9 @@ namespace GitHubActionsDotNet.Helpers
     public static class CommonStepHelper
     {
         public static Step AddScriptStep(string name = null,
-             string runStep = null,
-             string shell = null
-             )
+            string runStep = null,
+            string shell = null,
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             if (runStep != null)
@@ -20,6 +20,7 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = name,
+                _if = _if,
                 run = sb.ToString(),
                 shell = shell
             };
@@ -28,7 +29,8 @@ namespace GitHubActionsDotNet.Helpers
 
         public static Step AddCheckoutStep(string name = null,
             string repository = null,
-            string fetchDepth = null)
+            string fetchDepth = null,
+            string _if = null)
         {
             Dictionary<string, string> with = null;
             if (repository != null || repository != null)
@@ -48,10 +50,36 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = name,
                 uses = "actions/checkout@v2",
+                _if = _if,
                 with = with
             };
             return step;
+        }
 
+        //- name: Upload nuget package back to GitHub
+        //  uses: actions/upload-artifact@v2
+        //  if: runner.OS == 'Linux' #Only pack the Linux nuget package
+        //  with:
+        //    name: nugetPackage
+        //    path: src/GitHubActionsDotNet/bin/Release
+
+        public static Step AddUploadArtifactStep(string name = null,
+            string packageName = null,
+            string packagePath = null,
+            string _if = null)
+        {
+            Step step = new Step
+            {
+                name = name,
+                uses = "actions/upload-artifact@v2",
+                _if = _if,
+                with = new Dictionary<string, string>()
+                {
+                    { "name", packageName },
+                    { "path", packagePath }
+                }
+            };
+            return step;
         }
 
     }

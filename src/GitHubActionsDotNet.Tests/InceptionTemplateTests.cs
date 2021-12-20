@@ -27,11 +27,13 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             GitVersionStepHelper.AddGitVersionDetermineVersionStep(),
             CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayGitVersionScript),
             DotNetStepHelper.AddDotNetSetupStep("Setup .NET","6.x"),
-            //DotNetStepsHelper.AddDotNetRestoreStep("Restore","${{ env.WORKING_DIRECTORY }}"),
-            //DotNetStepsHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
-            //DotNetStepsHelper.AddDotNetTestStep("Test"),
-            //DotNetStepsHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}", "-r win-x86 --self-contained true"),
-            //AzureStepsHelper.AddAzureWebappDeployStep("Deploy to Azure Web App","${{ env.AZURE_WEBAPP_NAME }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}")
+            DotNetStepHelper.AddDotNetTestStep(".NET test","src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj","Release",null,true),
+            DotNetStepHelper.AddDotNetPackStep(".NET pack","src/GitHubActionsDotNet/GitHubActionsDotNet.csproj","Release",null,"--include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'", true),
+            CommonStepHelper.AddUploadArtifactStep("Upload nuget package back to GitHub","nugetPackage","src/GitHubActionsDotNet/bin/Release","runner.OS == 'Linux'")
+            //DotNetStepHelper.AddDotNetRestoreStep("Restore","${{ env.WORKING_DIRECTORY }}"),
+            //DotNetStepHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
+            //DotNetStepHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}", "-r win-x86 --self-contained true"),
+            //AzureStepHelper.AddAzureWebappDeployStep("Deploy to Azure Web App","${{ env.AZURE_WEBAPP_NAME }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -49,6 +51,11 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
                 { "os", new string[] { "ubuntu-latest", "windows-latest" } }
             }
         };
+        buildJob.outputs = new()
+        {
+            { "Version", "${{ steps.gitversion.outputs.SemVer }}" },
+            { "CommitsSinceVersionSource", "${{ steps.gitversion.outputs.CommitsSinceVersionSource }}" }
+        };
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -57,7 +64,7 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
         //Assert
         string expected = @"
 name: 'CI/ CD'
-on: 
+on:
   push:
     branches: [main]
   pull_request:
@@ -65,11 +72,11 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest] #windows-latest, 
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{matrix.os}}
-    outputs: # https://stackoverflow.com/questions/59175332/using-output-from-a-previous-job-in-a-new-one-in-a-github-action
+    outputs:
       Version: ${{ steps.gitversion.outputs.SemVer }}
-      CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}  
+      CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
     steps:
     - uses: actions/checkout@v2
       with:
@@ -80,25 +87,25 @@ jobs:
         versionSpec: 5.x
     - name: Determine Version
       uses: gittools/actions/gitversion/execute@v0.9.11
-      id: gitversion # step id used as reference for output values
+      id: gitversion
     - name: Display GitVersion outputs
       run: |
         echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
-        echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""   
+        echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.x
     - name: .NET test
-      run: dotnet test src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj -c Release --nologo -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=lcov 
+      run: dotnet test src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj -c Release
     - name: .NET pack
-      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --nologo --include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'
+      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'
     - name: Upload nuget package back to GitHub
       uses: actions/upload-artifact@v2
-      if: runner.OS == 'Linux' #Only pack the Linux nuget package
+      if: runner.OS == 'Linux'
       with:
         name: nugetPackage
-        path: src/GitHubActionsDotNet/bin/Release      
+        path: src/GitHubActionsDotNet/bin/Release
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
