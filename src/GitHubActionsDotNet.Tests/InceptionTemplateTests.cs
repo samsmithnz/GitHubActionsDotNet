@@ -10,14 +10,14 @@ namespace GitHubActionsDotNet.Tests;
 public class InceptionTemplateTests
 {
     [TestMethod]
-    public void GitHubActionsDotNetCICDTest()
+    public void ThisProjectCICDTest()
     {
         //Arrange
         GitHubActionsRoot root = new();
         root.name = "CI/CD";
         root.on = TriggerHelper.AddStandardPushAndPullTrigger("main");
         
-        string displayGitVersionScript = @"
+        string displayBuildGitVersionScript = @"
 echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
 echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""";
 
@@ -25,7 +25,7 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             CommonStepHelper.AddCheckoutStep(null,null,"0"),
             GitVersionStepHelper.AddGitVersionSetupStep(),
             GitVersionStepHelper.AddGitVersionDetermineVersionStep(),
-            CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayGitVersionScript),
+            CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayBuildGitVersionScript),
             DotNetStepHelper.AddDotNetSetupStep("Setup .NET","6.x"),
             DotNetStepHelper.AddDotNetTestStep(".NET test","src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj","Release",null,true),
             DotNetStepHelper.AddDotNetPackStep(".NET pack","src/GitHubActionsDotNet/GitHubActionsDotNet.csproj","Release",null,"--include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'", true),
@@ -54,8 +54,12 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
         };
         root.jobs.Add("build", buildJob);
 
+        string displayNuGetPushGitVersionScript = @"
+echo ""Version: ${{ needs.build.outputs.SemVer }}""
+echo ""CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSource }}""";
+
         Step[] nugetPushSteps = new Step[] {
-            CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayGitVersionScript),
+            CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayNuGetPushGitVersionScript),
             CommonStepHelper.AddDownloadArtifactStep("Download nuget package artifact","nugetPackage","nugetPackage"),
             DotNetStepHelper.AddDotNetSetupStep("Setup .NET"),
             GitHubStepHelper.AddCreateReleaseStep("Create Release",
@@ -79,7 +83,6 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             null,
             "github.ref == 'refs/heads/main'");
         root.jobs.Add("NuGetPush", nugetPushJob);
-
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
