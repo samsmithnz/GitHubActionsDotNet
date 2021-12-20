@@ -27,15 +27,21 @@ namespace GitHubActionsDotNet.Helpers
         }
 
         public static Step AddCheckoutStep(string name = null,
-            string repository = null)
+            string repository = null,
+            string fetchDepth = null)
         {
             Dictionary<string, string> with = null;
+            if (repository != null || repository != null)
+            {
+                with = new Dictionary<string, string>();
+            }
             if (repository != null)
             {
-                with = new Dictionary<string, string>
-                {
-                    { "repository", repository }
-                };
+                with.Add("repository", repository);
+            }
+            if (fetchDepth != null)
+            {
+                with.Add("fetch-depth", fetchDepth);
             }
 
             Step step = new Step
