@@ -58,7 +58,7 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayGitVersionScript),
             CommonStepHelper.AddDownloadArtifactStep("Download nuget package artifact","nugetPackage","nugetPackage"),
             DotNetStepHelper.AddDotNetSetupStep("Setup .NET"),
-            GitHubHelper.AddCreateReleaseStep("Create Release",
+            GitHubStepHelper.AddCreateReleaseStep("Create Release",
                 "${{ needs.build.outputs.Version }}",
                 "Release ${{ needs.build.outputs.Version }}",
                 "needs.build.outputs.CommitsSinceVersionSource > 0"),
