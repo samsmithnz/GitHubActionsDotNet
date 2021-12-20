@@ -39,13 +39,13 @@ public class WorkflowGeneratorTemplateTests
             { "DOTNET_MULTILEVEL_LOOKUP", "0" }
         };
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            DotNetStepsHelper.AddDotNetSetupStep("Setup .NET Core","${{ env.DOTNET_CORE_VERSION }}"),
-            DotNetStepsHelper.AddDotNetRestoreStep("Restore","${{ env.WORKING_DIRECTORY }}"),
-            DotNetStepsHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
-            DotNetStepsHelper.AddDotNetTestStep("Test"),
-            DotNetStepsHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}", "--no-build"),
-            AzureStepsHelper.AddAzureFunctionDeployStep("Deploy to Azure Function App","${{ env.AZURE_FUNCTIONAPP_NAME }}", "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}")
+            CommonStepHelper.AddCheckoutStep(),
+            DotNetStepHelper.AddDotNetSetupStep("Setup .NET Core","${{ env.DOTNET_CORE_VERSION }}"),
+            DotNetStepHelper.AddDotNetRestoreStep("Restore","${{ env.WORKING_DIRECTORY }}"),
+            DotNetStepHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
+            DotNetStepHelper.AddDotNetTestStep("Test"),
+            DotNetStepHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}", "--no-build"),
+            AzureStepHelper.AddAzureFunctionDeployStep("Deploy to Azure Function App","${{ env.AZURE_FUNCTIONAPP_NAME }}", "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -139,13 +139,13 @@ jobs:
             { "DOTNET_MULTILEVEL_LOOKUP", "0" }
         };
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            DotNetStepsHelper.AddDotNetSetupStep("Setup .NET Core","${{ env.DOTNET_CORE_VERSION }}"),
-            DotNetStepsHelper.AddDotNetRestoreStep("Restore","${{ env.WORKING_DIRECTORY }}"),
-            DotNetStepsHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
-            DotNetStepsHelper.AddDotNetTestStep("Test"),
-            DotNetStepsHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}", "-r win-x86 --self-contained true"),
-            AzureStepsHelper.AddAzureWebappDeployStep("Deploy to Azure Web App","${{ env.AZURE_WEBAPP_NAME }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}")
+            CommonStepHelper.AddCheckoutStep(),
+            DotNetStepHelper.AddDotNetSetupStep("Setup .NET Core","${{ env.DOTNET_CORE_VERSION }}"),
+            DotNetStepHelper.AddDotNetRestoreStep("Restore","${{ env.WORKING_DIRECTORY }}"),
+            DotNetStepHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
+            DotNetStepHelper.AddDotNetTestStep("Test"),
+            DotNetStepHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}", "-r win-x86 --self-contained true"),
+            AzureStepHelper.AddAzureWebappDeployStep("Deploy to Azure Web App","${{ env.AZURE_WEBAPP_NAME }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(

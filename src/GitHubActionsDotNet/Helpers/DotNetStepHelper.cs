@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GitHubActionsDotNet.Helpers
 {
-    public static class DotNetStepsHelper
+    public static class DotNetStepHelper
     {
         public static Step AddDotNetSetupStep(string name = null,
             string dotnetVersion = "6.x")

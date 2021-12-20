@@ -14,7 +14,7 @@ public class StepsDotNetTests
     public void UseDotNetIndividualStepTest()
     {
         //Arrange
-        Step step = DotNetStepsHelper.AddDotNetSetupStep();
+        Step step = DotNetStepHelper.AddDotNetSetupStep();
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
@@ -34,7 +34,7 @@ public class StepsDotNetTests
     public void DotNetBuildIndividualStepTest()
     {
         //Arrange
-        Step step = DotNetStepsHelper.AddDotNetBuildStep(".NET build",
+        Step step = DotNetStepHelper.AddDotNetBuildStep(".NET build",
             "MyWebApp.csproj",
             "Release",
             null,
@@ -56,7 +56,7 @@ public class StepsDotNetTests
     public void DotNetBuildIndividualShortParametersStepTest()
     {
         //Arrange
-        Step step = DotNetStepsHelper.AddDotNetBuildStep(".NET build",
+        Step step = DotNetStepHelper.AddDotNetBuildStep(".NET build",
             "MyWebApp.csproj",
             "Release",
             null,
@@ -78,7 +78,7 @@ public class StepsDotNetTests
     public void DotNetCoreCLIRestoreIndividualStepTest()
     {
         //Arrange
-        Step step = DotNetStepsHelper.AddDotNetRestoreStep(null,
+        Step step = DotNetStepHelper.AddDotNetRestoreStep(null,
             "MyWebApp.csproj",
             null);
 
@@ -98,7 +98,7 @@ public class StepsDotNetTests
     public void DotNetCoreCLINuGetPushIndividualStepTest()
     {
         //Arrange
-        Step step = DotNetStepsHelper.AddDotNetNuGetPushStep(null,
+        Step step = DotNetStepHelper.AddDotNetNuGetPushStep(null,
             "${{ github.workspace }}/*.nupkg",
             "github",
             null,
@@ -120,7 +120,7 @@ public class StepsDotNetTests
     public void DotNetCoreCLIPublishIndividualStepTest()
     {
         //Arrange
-        Step step = DotNetStepsHelper.AddDotNetPublishStep(".NET publish",
+        Step step = DotNetStepHelper.AddDotNetPublishStep(".NET publish",
             "MyProject.Models/MyProject.Models.csproj",
             "${{ env.BuildConfiguration }}",
             "${{ github.workspace }}",
@@ -147,7 +147,7 @@ public class StepsDotNetTests
 dotnet publish src/Project.Service/Project.Service.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64 
 dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --output ${{ github.workspace }} --runtime win-x64
 ";
-        Step step = CommonStepsHelper.AddScriptStep("Publish multiple .NET projects", script);
+        Step step = CommonStepHelper.AddScriptStep("Publish multiple .NET projects", script);
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
@@ -167,7 +167,7 @@ dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --outp
     public void DotNetCoreCLIPackIndividualStepTest()
     {
         //Arrange
-        Step step = DotNetStepsHelper.AddDotNetPackStep(".NET pack",
+        Step step = DotNetStepHelper.AddDotNetPackStep(".NET pack",
             "MyProject.Models.csproj",
             null,
             null,
@@ -189,7 +189,7 @@ dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --outp
     public void MSBuildStepTest()
     {
         //Arrange
-        Step step = CommonStepsHelper.AddScriptStep(null, @"msbuild '${{ env.solution }}' /p:configuration='${{ env.buildConfiguration }}' /p:platform='${{ env.buildPlatform }}' /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation=""${{ github.workspace }}\WebApp.zip"" /p:DeployIisAppPath=""Default Web Site""");
+        Step step = CommonStepHelper.AddScriptStep(null, @"msbuild '${{ env.solution }}' /p:configuration='${{ env.buildConfiguration }}' /p:platform='${{ env.buildPlatform }}' /p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation=""${{ github.workspace }}\WebApp.zip"" /p:DeployIisAppPath=""Default Web Site""");
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
@@ -206,7 +206,7 @@ dotnet publish src/Project.Web/Project.Web.csproj --configuration Release --outp
     public void MSBuild2StepTest()
     {
         //Arrange
-        Step step = CommonStepsHelper.AddScriptStep(null, @"msbuild '**/*.sln' /p:configuration='Release' /p:platform='Any CPU' /t:Publish /p:PublishUrl=""publish""");
+        Step step = CommonStepHelper.AddScriptStep(null, @"msbuild '**/*.sln' /p:configuration='Release' /p:platform='Any CPU' /t:Publish /p:PublishUrl=""publish""");
 
         //Act
         string yaml = GitHubActionsSerialization.SerializeStep(step);
