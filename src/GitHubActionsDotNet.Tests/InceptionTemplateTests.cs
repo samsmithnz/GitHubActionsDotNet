@@ -55,7 +55,7 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
         root.jobs.Add("build", buildJob);
 
         string displayNuGetPushGitVersionScript = @"
-echo ""Version: ${{ needs.build.outputs.SemVer }}""
+echo ""Version: ${{ needs.build.outputs.Version }}""
 echo ""CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSource }}""";
 
         Step[] nugetPushSteps = new Step[] {
@@ -75,7 +75,7 @@ echo ""CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSou
         };
         Job nugetPushJob = JobHelper.AddJob(
             "Push to NuGet",
-            "${{matrix.os}}",
+            "ubuntu-latest",
             nugetPushSteps,
             null,
             new string[] { "build" },
@@ -171,6 +171,6 @@ jobs:
       run: dotnet nuget push nugetPackage\*.nupkg --source ""https://api.nuget.org/v3/index.json"" --api-key ""${{ secrets.GHPackagesToken }}""
 ";
         expected = UtilityTests.TrimNewLines(expected);
-        Assert.AreEqual(expected, yaml);
+        tsAssert.AreEqual(expected, yaml);
     }
 }
