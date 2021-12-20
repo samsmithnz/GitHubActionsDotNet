@@ -198,7 +198,7 @@ jobs:
     - name: Publish
       run: dotnet publish ${{ env.WORKING_DIRECTORY }} --configuration ${{ env.CONFIGURATION }} --output ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} -r win-x86 --self-contained true
     - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
+      uses: Azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
         publish-profile: ${{ secrets.{PUBLISH_PROFILE} }}
