@@ -108,10 +108,10 @@ jobs:
       run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'
     - name: Upload nuget package back to GitHub
       uses: actions/upload-artifact@v2
-      if: runner.OS == 'Linux'
       with:
         name: nugetPackage
         path: src/GitHubActionsDotNet/bin/Release
+      if: runner.OS == 'Linux'
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
