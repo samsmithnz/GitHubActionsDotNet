@@ -71,9 +71,9 @@ on:
   pull_request:
     branches: 
     - main
- 
 jobs:
   build:
+    name: Build job
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
