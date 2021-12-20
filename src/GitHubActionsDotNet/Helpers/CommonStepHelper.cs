@@ -32,6 +32,10 @@ namespace GitHubActionsDotNet.Helpers
             string fetchDepth = null,
             string _if = null)
         {
+            //- uses: actions/checkout@v2
+            //  with:
+            //    fetch-depth: 0
+
             Dictionary<string, string> with = null;
             if (repository != null || fetchDepth != null)
             {
