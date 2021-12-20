@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace GitHubActionsDotNet.Helpers
 {
-    public static class AzureStepsHelper
+    public static class AzureStepHelper
     {
         public static Step AddAzureFunctionDeployStep(string name = null,
             string appName = null,

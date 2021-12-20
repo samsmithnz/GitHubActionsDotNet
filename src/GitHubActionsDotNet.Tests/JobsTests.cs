@@ -16,8 +16,8 @@ public class JobsTests
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
+            CommonStepHelper.AddCheckoutStep(),
+            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -55,8 +55,8 @@ jobs:
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+            CommonStepHelper.AddCheckoutStep(),
+            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -97,8 +97,8 @@ jobs:
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+            CommonStepHelper.AddCheckoutStep(),
+            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -147,8 +147,8 @@ jobs:
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+            CommonStepHelper.AddCheckoutStep(),
+            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -195,8 +195,8 @@ jobs:
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+            CommonStepHelper.AddCheckoutStep(),
+            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -240,8 +240,8 @@ jobs:
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+            CommonStepHelper.AddCheckoutStep(),
+            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -282,9 +282,9 @@ jobs:
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddCheckoutStep(null, "git://MyProject/MyRepo"),
-            CommonStepsHelper.AddCheckoutStep("GitHub checkout", "MyGitHubRepo")};
+            CommonStepHelper.AddCheckoutStep(),
+            CommonStepHelper.AddCheckoutStep(null, "git://MyProject/MyRepo"),
+            CommonStepHelper.AddCheckoutStep("GitHub checkout", "MyGitHubRepo")};
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
             "Build job",
@@ -323,8 +323,8 @@ jobs:
         //Arrange
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(),
-            CommonStepsHelper.AddScriptStep(null, @"echo ""hello world""")
+            CommonStepHelper.AddCheckoutStep(),
+            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
         Job prodJob = JobHelper.AddJob(
