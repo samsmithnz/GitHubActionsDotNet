@@ -76,7 +76,9 @@ jobs:
     name: Build job
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os:
+        - ubuntu-latest
+        - windows-latest
     runs-on: ${{matrix.os}}
     outputs:
       Version: ${{ steps.gitversion.outputs.SemVer }}
