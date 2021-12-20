@@ -7,7 +7,8 @@ namespace GitHubActionsDotNet.Helpers
     public static class DotNetStepHelper
     {
         public static Step AddDotNetSetupStep(string name = null,
-            string dotnetVersion = "6.x")
+            string dotnetVersion = "6.x",
+            string _if = null)
         {
             Step step = new Step
             {
@@ -26,9 +27,9 @@ namespace GitHubActionsDotNet.Helpers
 
         public static Step AddDotNetRestoreStep(string name = null,
             string project = null,
-            string otherArguments = null
+            string otherArguments = null,
             //bool useShortParameters = false //Included for inclusivity reasons
-            )
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet restore ");
@@ -60,8 +61,8 @@ namespace GitHubActionsDotNet.Helpers
             string project = null,
             string configuration = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet build ");
@@ -97,8 +98,8 @@ namespace GitHubActionsDotNet.Helpers
             string project = null,
             string configuration = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons)
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons)
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet test ");
@@ -134,8 +135,8 @@ namespace GitHubActionsDotNet.Helpers
             string nupkgFile = null,
             string source = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet nuget push ");
@@ -172,8 +173,8 @@ namespace GitHubActionsDotNet.Helpers
             string configuration = null,
             string output = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet pack ");
@@ -214,8 +215,8 @@ namespace GitHubActionsDotNet.Helpers
             string configuration = null,
             string output = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet publish ");
