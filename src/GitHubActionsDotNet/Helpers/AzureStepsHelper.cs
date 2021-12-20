@@ -15,9 +15,32 @@ namespace GitHubActionsDotNet.Helpers
                 uses = "Azure/functions-action@v1",
                 with = new Dictionary<string, string>()
                 {
-                    {"app-name" ,appName},
-                    {"publish-profile" ,"${{ secrets.{PUBLISH_PROFILE} }}"},
-                    {"package" ,package},
+                    {"app-name", appName},
+                    {"publish-profile", "${{ secrets.{PUBLISH_PROFILE} }}"},
+                    {"package", package}
+                }
+            };
+
+            if (name != null)
+            {
+                step.name = name;
+            }
+            return step;
+        }
+
+        public static Step AddAzureWebappDeployStep(string name = null,
+            string appName = null,
+            string package = null)
+        {
+            Step step = new Step
+            {
+                name = "Deploy to Azure Web App",
+                uses = "Azure/webapps-deploy@v2",
+                with = new Dictionary<string, string>()
+                {
+                    {"app-name", appName},
+                    {"publish-profile", "${{ secrets.{PUBLISH_PROFILE} }}"},
+                    {"package", package}
                 }
             };
 
