@@ -114,7 +114,8 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("runs_on", "runs-on");
             yaml = yaml.Replace("_if", "if");
             yaml = yaml.Replace("timeout_minutes", "timeout-minutes");
-            yaml = yaml.Replace("pull_request", "pull-request");
+            //Commented out 20-Dec-2021, as it's affecting the pull_request workflow trigger
+            //yaml = yaml.Replace("pull_request", "pull-request");
             yaml = yaml.Replace("branches_ignore", "branches-ignore");
             yaml = yaml.Replace("paths_ignore", "paths-ignore");
             yaml = yaml.Replace("tags_ignore", "tags-ignore");

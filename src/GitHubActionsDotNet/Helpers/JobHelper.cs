@@ -12,7 +12,8 @@ namespace GitHubActionsDotNet.Helpers
             Dictionary<string, string> env = null,
             string[] needs = null,
             int timeout_minutes = 0,
-            Environment environment = null)
+            Environment environment = null,
+            string _if = null)
         {
             Job job = new Job
             {
@@ -22,7 +23,8 @@ namespace GitHubActionsDotNet.Helpers
                 env = env,
                 timeout_minutes = timeout_minutes,
                 environment = environment,
-                steps = steps
+                steps = steps,
+                _if = _if
             };
             return job;
         }

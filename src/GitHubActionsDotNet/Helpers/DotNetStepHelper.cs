@@ -7,13 +7,15 @@ namespace GitHubActionsDotNet.Helpers
     public static class DotNetStepHelper
     {
         public static Step AddDotNetSetupStep(string name = null,
-            string dotnetVersion = "6.x")
+            string dotnetVersion = "6.x",
+            string _if = null)
         {
             Step step = new Step
             {
                 name = "Use .NET sdk",
                 uses = "actions/setup-dotnet@v1",
-                with = new Dictionary<string, string>()
+                with = new Dictionary<string, string>(),
+                _if = _if
             };
             step.with.Add("dotnet-version", dotnetVersion);
 
@@ -26,9 +28,9 @@ namespace GitHubActionsDotNet.Helpers
 
         public static Step AddDotNetRestoreStep(string name = null,
             string project = null,
-            string otherArguments = null
+            string otherArguments = null,
             //bool useShortParameters = false //Included for inclusivity reasons
-            )
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet restore ");
@@ -46,7 +48,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET restore",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -60,8 +63,8 @@ namespace GitHubActionsDotNet.Helpers
             string project = null,
             string configuration = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet build ");
@@ -83,7 +86,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET build",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -97,8 +101,8 @@ namespace GitHubActionsDotNet.Helpers
             string project = null,
             string configuration = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons)
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons)
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet test ");
@@ -120,7 +124,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET test",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -134,8 +139,8 @@ namespace GitHubActionsDotNet.Helpers
             string nupkgFile = null,
             string source = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet nuget push ");
@@ -157,7 +162,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = "Push NuGet package",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -169,10 +175,11 @@ namespace GitHubActionsDotNet.Helpers
 
         public static Step AddDotNetPackStep(string name = null,
             string project = null,
+            string configuration = null,
             string output = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet pack ");
@@ -180,6 +187,10 @@ namespace GitHubActionsDotNet.Helpers
             {
                 sb.Append(project);
                 sb.Append(" ");
+            }
+            if (configuration != null)
+            {
+                sb.Append(ProcessAlternativeParameters(configuration, "c", "configuration", useShortParameters));
             }
             if (output != null)
             {
@@ -194,7 +205,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET NuGet pack",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -209,8 +221,8 @@ namespace GitHubActionsDotNet.Helpers
             string configuration = null,
             string output = null,
             string otherArguments = null,
-            bool useShortParameters = false //Included for inclusivity reasons
-            )
+            bool useShortParameters = false, //Included for inclusivity reasons
+            string _if = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet publish ");
@@ -236,7 +248,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET publish",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)

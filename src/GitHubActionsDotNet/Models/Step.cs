@@ -6,6 +6,7 @@ namespace GitHubActionsDotNet.Models
     {
 
         public string name { get; set; }
+        public string id { get; set; }
         public string uses { get; set; }
 
         private string _run = null;

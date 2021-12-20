@@ -25,7 +25,7 @@ on:
   push:
     branches:
     - main
-  pull-request:
+  pull_request:
     branches:
     - main
 ";
@@ -165,7 +165,7 @@ on:
 
         //Assert
         string expected = @"on:
-  pull-request:
+  pull_request:
     branches:
     - features/*
     paths:
@@ -236,7 +236,7 @@ on:
         //Assert
         string expected = @"
 on:
-  pull-request:
+  pull_request:
     branches-ignore:
     - features/experimental/*
     paths-ignore:
@@ -281,7 +281,7 @@ on:
     - features/experimental/*
     paths-ignore:
     - README.md
-  pull-request:
+  pull_request:
     branches-ignore:
     - features/experimental/*
     paths-ignore:
