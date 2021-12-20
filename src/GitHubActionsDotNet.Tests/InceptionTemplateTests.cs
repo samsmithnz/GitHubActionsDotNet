@@ -141,7 +141,7 @@ jobs:
   NuGetPush:
     name: Push to NuGet
     runs-on: ubuntu-latest
-    needs: 
+    needs:
     - build
     if: github.ref == 'refs/heads/main'
     steps:
