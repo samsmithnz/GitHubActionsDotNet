@@ -50,7 +50,7 @@ on:
   push:
     branches:
     - main
-  pull-request:
+  pull_request:
     branches:
     - main
 jobs:

@@ -13,7 +13,7 @@
         //    - '**.js'
         //    paths-ignore:
         //    - 'docs/**'
-        //  pull-request
+        //  pull_request
         //    branches:    
         //    - main
         //    - Develop
