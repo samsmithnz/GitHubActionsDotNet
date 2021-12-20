@@ -33,7 +33,7 @@ namespace GitHubActionsDotNet.Helpers
             string _if = null)
         {
             Dictionary<string, string> with = null;
-            if (repository != null || repository != null)
+            if (repository != null || fetchDepth != null)
             {
                 with = new Dictionary<string, string>();
             }
