@@ -7,7 +7,8 @@ namespace GitHubActionsDotNet.Helpers
     public static class GitVersionStepHelper
     {
         public static Step AddGitVersionSetupStep(string name = null,
-            string versionSpec = "5.x")
+            string versionSpec = "5.x",
+            string _if = null)
         {
             //- name: Setup GitVersion
             //  uses: gittools/actions/gitversion/setup@v0.9.11
@@ -30,7 +31,8 @@ namespace GitHubActionsDotNet.Helpers
             return step;
         }
         public static Step AddGitVersionDetermineVersionStep(string name = null,
-            string id = "gitversion")
+            string id = "gitversion",
+            string _if = null)
         {
             //-name: Determine Version
             // uses: gittools/actions/gitversion/execute@v0.9.11
