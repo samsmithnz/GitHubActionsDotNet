@@ -87,13 +87,13 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - name: Install GitVersion
+    - name: Setup GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.11
       with:
         versionSpec: 5.x
     - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v0.9.11
       id: gitversion
+      uses: gittools/actions/gitversion/execute@v0.9.11
     - name: Display GitVersion outputs
       run: |
         echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
