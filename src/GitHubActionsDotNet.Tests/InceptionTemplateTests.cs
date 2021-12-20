@@ -30,10 +30,6 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             DotNetStepHelper.AddDotNetTestStep(".NET test","src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj","Release",null,true),
             DotNetStepHelper.AddDotNetPackStep(".NET pack","src/GitHubActionsDotNet/GitHubActionsDotNet.csproj","Release",null,"--include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'", true),
             CommonStepHelper.AddUploadArtifactStep("Upload nuget package back to GitHub","nugetPackage","src/GitHubActionsDotNet/bin/Release","runner.OS == 'Linux'")
-            //DotNetStepHelper.AddDotNetRestoreStep("Restore","${{ env.WORKING_DIRECTORY }}"),
-            //DotNetStepHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
-            //DotNetStepHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}", "-r win-x86 --self-contained true"),
-            //AzureStepHelper.AddAzureWebappDeployStep("Deploy to Azure Web App","${{ env.AZURE_WEBAPP_NAME }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}")
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -57,6 +53,32 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             { "CommitsSinceVersionSource", "${{ steps.gitversion.outputs.CommitsSinceVersionSource }}" }
         };
         root.jobs.Add("build", buildJob);
+
+        Step[] nugetPushSteps = new Step[] {
+            CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayGitVersionScript),
+            CommonStepHelper.AddDownloadArtifactStep("Download nuget package artifact","nugetPackage","nugetPackage"),
+            DotNetStepHelper.AddDotNetSetupStep("Setup .NET"),
+            GitHubHelper.AddCreateReleaseStep("Create Release",
+                "${{ needs.build.outputs.Version }}",
+                "Release ${{ needs.build.outputs.Version }}",
+                "needs.build.outputs.CommitsSinceVersionSource > 0"),
+            DotNetStepHelper.AddPublishNuGetPackage("Publish nuget package to nuget.org", 
+                "nugetPackage\\*.nupkg", 
+                @"""${{ secrets.GHPackagesToken }}""",
+                @"""https://api.nuget.org/v3/index.json""",
+                "needs.build.outputs.CommitsSinceVersionSource > 0")
+        };
+        Job nugetPushJob = JobHelper.AddJob(
+            "Push to NuGet",
+            "${{matrix.os}}",
+            nugetPushSteps,
+            null,
+            new string[] { "build" },
+            0,
+            null,
+            "github.ref == 'refs/heads/main'");
+        root.jobs.Add("NuGetPush", nugetPushJob);
+
 
         //Act
         string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
@@ -112,6 +134,37 @@ jobs:
         name: nugetPackage
         path: src/GitHubActionsDotNet/bin/Release
       if: runner.OS == 'Linux'
+  NuGetPush:
+    name: Push to NuGet
+    runs-on: ubuntu-latest
+    needs: 
+    - build
+    if: github.ref == 'refs/heads/main'
+    steps:
+    - name: Display GitVersion outputs
+      run: |
+        echo ""Version: ${{ needs.build.outputs.Version }}""
+        echo ""CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSource }}""
+    - name: Download nuget package artifact
+      uses: actions/download-artifact@v2.1.0
+      with:
+        name: nugetPackage
+        path: nugetPackage
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.x
+    - name: Create Release
+      uses: actions/create-release@v1
+      if: needs.build.outputs.CommitsSinceVersionSource > 0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ needs.build.outputs.Version }}
+        release_name: Release ${{ needs.build.outputs.Version }}
+    - name: Publish nuget package to nuget.org
+      if: needs.build.outputs.CommitsSinceVersionSource > 0
+      run: dotnet nuget push nugetPackage\*.nupkg --api-key ""${{ secrets.GHPackagesToken }}"" --source ""https://api.nuget.org/v3/index.json""
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);

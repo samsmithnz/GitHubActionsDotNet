@@ -66,7 +66,6 @@ namespace GitHubActionsDotNet.Helpers
         //  with:
         //    name: nugetPackage
         //    path: src/GitHubActionsDotNet/bin/Release
-
         public static Step AddUploadArtifactStep(string name = null,
             string packageName = null,
             string packagePath = null,
@@ -85,6 +84,32 @@ namespace GitHubActionsDotNet.Helpers
             };
             return step;
         }
+
+        //- name: Download nuget package artifact
+        //  uses: actions/download-artifact@v2.1.0
+        //  with:
+        //    name: nugetPackage
+        //    path: nugetPackage
+        public static Step AddDownloadArtifactStep(string name = null,
+            string packageName = null,
+            string packagePath = null,
+            string _if = null)
+        {
+            Step step = new Step
+            {
+                name = name,
+                uses = "actions/download-artifact@v2.1.0",
+                with = new Dictionary<string, string>()
+                {
+                    { "name", packageName },
+                    { "path", packagePath }
+                },
+                _if = _if
+            };
+            return step;
+        }
+
+
 
     }
 }
