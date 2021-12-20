@@ -63,11 +63,15 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
 
         //Assert
         string expected = @"
-name: 'CI/ CD'
+name: CI/CD
 on:
   push:
-    branches: [main]
+    branches: 
+    - main
   pull_request:
+    branches: 
+    - main
+ 
 jobs:
   build:
     strategy:
