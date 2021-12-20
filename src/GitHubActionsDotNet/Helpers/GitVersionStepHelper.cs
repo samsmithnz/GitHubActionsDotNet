@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GitHubActionsDotNet.Helpers
 {
-    public static class GitVersionStepsHelper
+    public static class GitVersionStepHelper
     {
         public static Step AddGitVersionSetupStep(string name = null,
             string versionSpec = "5.x")

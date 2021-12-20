@@ -22,11 +22,11 @@ echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
 echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""";
 
         Step[] buildSteps = new Step[] {
-            CommonStepsHelper.AddCheckoutStep(null,null,"0"),
-            GitVersionStepsHelper.AddGitVersionSetupStep(),
-            GitVersionStepsHelper.AddGitVersionDetermineVersionStep(),
-            CommonStepsHelper.AddScriptStep("Display GitVersion outputs", displayGitVersionScript),
-            DotNetStepsHelper.AddDotNetSetupStep("Setup .NET","6.x"),
+            CommonStepHelper.AddCheckoutStep(null,null,"0"),
+            GitVersionStepHelper.AddGitVersionSetupStep(),
+            GitVersionStepHelper.AddGitVersionDetermineVersionStep(),
+            CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayGitVersionScript),
+            DotNetStepHelper.AddDotNetSetupStep("Setup .NET","6.x"),
             //DotNetStepsHelper.AddDotNetRestoreStep("Restore","${{ env.WORKING_DIRECTORY }}"),
             //DotNetStepsHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
             //DotNetStepsHelper.AddDotNetTestStep("Test"),
