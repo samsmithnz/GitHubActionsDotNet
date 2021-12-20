@@ -66,10 +66,10 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
 name: CI/CD
 on:
   push:
-    branches: 
+    branches:
     - main
   pull_request:
-    branches: 
+    branches:
     - main
 jobs:
   build:
