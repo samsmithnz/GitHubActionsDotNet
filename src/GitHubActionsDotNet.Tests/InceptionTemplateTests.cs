@@ -62,10 +62,11 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
                 "${{ needs.build.outputs.Version }}",
                 "Release ${{ needs.build.outputs.Version }}",
                 "needs.build.outputs.CommitsSinceVersionSource > 0"),
-            DotNetStepHelper.AddPublishNuGetPackage("Publish nuget package to nuget.org", 
+            DotNetStepHelper.AddDotNetNuGetPushStep("Publish nuget package to nuget.org", 
                 "nugetPackage\\*.nupkg", 
-                @"""${{ secrets.GHPackagesToken }}""",
                 @"""https://api.nuget.org/v3/index.json""",
+                @"--api-key ""${{ secrets.GHPackagesToken }}""",
+                false,
                 "needs.build.outputs.CommitsSinceVersionSource > 0")
         };
         Job nugetPushJob = JobHelper.AddJob(
@@ -164,7 +165,7 @@ jobs:
         release_name: Release ${{ needs.build.outputs.Version }}
     - name: Publish nuget package to nuget.org
       if: needs.build.outputs.CommitsSinceVersionSource > 0
-      run: dotnet nuget push nugetPackage\*.nupkg --api-key ""${{ secrets.GHPackagesToken }}"" --source ""https://api.nuget.org/v3/index.json""
+      run: dotnet nuget push nugetPackage\*.nupkg --source ""https://api.nuget.org/v3/index.json"" --api-key ""${{ secrets.GHPackagesToken }}""
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
