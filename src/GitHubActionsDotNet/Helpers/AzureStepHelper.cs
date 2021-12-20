@@ -18,7 +18,8 @@ namespace GitHubActionsDotNet.Helpers
                     {"app-name", appName},
                     {"publish-profile", "${{ secrets.{PUBLISH_PROFILE} }}"},
                     {"package", package}
-                }
+                },
+                _if = _if
             };
 
             if (name != null)
@@ -41,7 +42,8 @@ namespace GitHubActionsDotNet.Helpers
                     {"app-name", appName},
                     {"publish-profile", "${{ secrets.{PUBLISH_PROFILE} }}"},
                     {"package", package}
-                }
+                },
+                _if = _if
             };
 
             if (name != null)

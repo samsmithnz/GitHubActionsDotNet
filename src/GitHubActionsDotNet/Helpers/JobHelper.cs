@@ -22,7 +22,8 @@ namespace GitHubActionsDotNet.Helpers
                 env = env,
                 timeout_minutes = timeout_minutes,
                 environment = environment,
-                steps = steps
+                steps = steps,
+                _if = _if
             };
             return job;
         }

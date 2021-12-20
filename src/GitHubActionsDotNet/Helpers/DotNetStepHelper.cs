@@ -14,7 +14,8 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = "Use .NET sdk",
                 uses = "actions/setup-dotnet@v1",
-                with = new Dictionary<string, string>()
+                with = new Dictionary<string, string>(),
+                _if = _if
             };
             step.with.Add("dotnet-version", dotnetVersion);
 
@@ -47,7 +48,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET restore",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -84,7 +86,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET build",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -121,7 +124,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET test",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -158,7 +162,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = "Push NuGet package",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -200,7 +205,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET NuGet pack",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)
@@ -242,7 +248,8 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = ".NET publish",
-                run = sb.ToString()
+                run = sb.ToString(),
+                _if = _if
             };
 
             if (name != null)

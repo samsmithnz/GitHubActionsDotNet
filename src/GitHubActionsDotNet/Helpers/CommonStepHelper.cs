@@ -20,9 +20,9 @@ namespace GitHubActionsDotNet.Helpers
             Step step = new Step
             {
                 name = name,
-                _if = _if,
                 run = sb.ToString(),
-                shell = shell
+                shell = shell,
+                _if = _if
             };
             return step;
         }
@@ -54,8 +54,8 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = name,
                 uses = "actions/checkout@v2",
-                _if = _if,
-                with = with
+                with = with,
+                _if = _if
             };
             return step;
         }
@@ -76,12 +76,12 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = name,
                 uses = "actions/upload-artifact@v2",
-                _if = _if,
                 with = new Dictionary<string, string>()
                 {
                     { "name", packageName },
                     { "path", packagePath }
-                }
+                },
+                _if = _if
             };
             return step;
         }
