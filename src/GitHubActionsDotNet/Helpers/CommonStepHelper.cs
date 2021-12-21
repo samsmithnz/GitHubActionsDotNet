@@ -1,41 +1,33 @@
 ﻿using GitHubActionsDotNet.Models;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GitHubActionsDotNet.Helpers
 {
     public static class CommonStepHelper
     {
         public static Step AddScriptStep(string name = null,
-            string runStep = null,
+            string runScript = null,
             string shell = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
-            StringBuilder sb = new StringBuilder();
-            if (runStep != null)
-            {
-                sb.Append(runStep);
-            }
-
-            Step step = new Step
-            {
-                name = name,
-                run = sb.ToString(),
-                shell = shell,
-                _if = _if
-            };
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.run = runScript;
+            step.shell = shell;
             return step;
         }
 
+        //- uses: actions/checkout@v2
+        //  with:
+        //    fetch-depth: 0
         public static Step AddCheckoutStep(string name = null,
             string repository = null,
             string fetchDepth = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
-            //- uses: actions/checkout@v2
-            //  with:
-            //    fetch-depth: 0
-
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.uses = "actions/checkout@v2";
             Dictionary<string, string> with = null;
             if (repository != null || fetchDepth != null)
             {
@@ -49,14 +41,7 @@ namespace GitHubActionsDotNet.Helpers
             {
                 with.Add("fetch-depth", fetchDepth);
             }
-
-            Step step = new Step
-            {
-                name = name,
-                uses = "actions/checkout@v2",
-                with = with,
-                _if = _if
-            };
+            step.with = with;
             return step;
         }
 
@@ -69,18 +54,15 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddUploadArtifactStep(string name = null,
             string packageName = null,
             string packagePath = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
-            Step step = new Step
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.uses = "actions/upload-artifact@v2";
+            step.with = new Dictionary<string, string>()
             {
-                name = name,
-                uses = "actions/upload-artifact@v2",
-                with = new Dictionary<string, string>()
-                {
-                    { "name", packageName },
-                    { "path", packagePath }
-                },
-                _if = _if
+                { "name", packageName },
+                { "path", packagePath }
             };
             return step;
         }
@@ -93,23 +75,18 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddDownloadArtifactStep(string name = null,
             string packageName = null,
             string packagePath = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
-            Step step = new Step
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.uses = "actions/download-artifact@v2.1.0";
+            step.with = new Dictionary<string, string>()
             {
-                name = name,
-                uses = "actions/download-artifact@v2.1.0",
-                with = new Dictionary<string, string>()
-                {
-                    { "name", packageName },
-                    { "path", packagePath }
-                },
-                _if = _if
+                { "name", packageName },
+                { "path", packagePath }
             };
             return step;
         }
-
-
 
     }
 }

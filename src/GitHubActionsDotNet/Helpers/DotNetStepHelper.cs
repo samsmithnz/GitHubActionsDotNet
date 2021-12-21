@@ -8,21 +8,17 @@ namespace GitHubActionsDotNet.Helpers
     {
         public static Step AddDotNetSetupStep(string name = null,
             string dotnetVersion = "6.x",
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
-            Step step = new Step
+            if (name == null)
             {
-                name = "Use .NET sdk",
-                uses = "actions/setup-dotnet@v1",
-                with = new Dictionary<string, string>(),
-                _if = _if
-            };
-            step.with.Add("dotnet-version", dotnetVersion);
-
-            if (name != null)
-            {
-                step.name = name;
+                name = "Setup .NET SDK";
             }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.uses = "actions/setup-dotnet@v1";
+            step.with = new Dictionary<string, string>();
+            step.with.Add("dotnet-version", dotnetVersion);
             return step;
         }
 
@@ -30,8 +26,14 @@ namespace GitHubActionsDotNet.Helpers
             string project = null,
             string otherArguments = null,
             //bool useShortParameters = false //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
+            if (name == null)
+            {
+                name = ".NET restore";
+            }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet restore ");
             if (project != null)
@@ -44,18 +46,7 @@ namespace GitHubActionsDotNet.Helpers
                 sb.Append(otherArguments);
                 sb.Append(" ");
             }
-
-            Step step = new Step
-            {
-                name = ".NET restore",
-                run = sb.ToString(),
-                _if = _if
-            };
-
-            if (name != null)
-            {
-                step.name = name;
-            }
+            step.run = sb.ToString();
             return step;
         }
 
@@ -64,8 +55,14 @@ namespace GitHubActionsDotNet.Helpers
             string configuration = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
+            if (name == null)
+            {
+                name = ".NET build";
+            }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet build ");
             if (project != null)
@@ -82,18 +79,7 @@ namespace GitHubActionsDotNet.Helpers
                 sb.Append(otherArguments);
                 sb.Append(" ");
             }
-
-            Step step = new Step
-            {
-                name = ".NET build",
-                run = sb.ToString(),
-                _if = _if
-            };
-
-            if (name != null)
-            {
-                step.name = name;
-            }
+            step.run = sb.ToString();
             return step;
         }
 
@@ -102,8 +88,14 @@ namespace GitHubActionsDotNet.Helpers
             string configuration = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons)
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
+            if (name == null)
+            {
+                name = ".NET test";
+            }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet test ");
             if (project != null)
@@ -120,18 +112,7 @@ namespace GitHubActionsDotNet.Helpers
                 sb.Append(otherArguments);
                 sb.Append(" ");
             }
-
-            Step step = new Step
-            {
-                name = ".NET test",
-                run = sb.ToString(),
-                _if = _if
-            };
-
-            if (name != null)
-            {
-                step.name = name;
-            }
+            step.run = sb.ToString();
             return step;
         }
 
@@ -140,8 +121,14 @@ namespace GitHubActionsDotNet.Helpers
             string source = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
+            if (name == null)
+            {
+                name = "Push NuGet package";
+            }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet nuget push ");
             if (nupkgFile != null)
@@ -158,18 +145,7 @@ namespace GitHubActionsDotNet.Helpers
                 sb.Append(otherArguments);
                 sb.Append(" ");
             }
-
-            Step step = new Step
-            {
-                name = "Push NuGet package",
-                run = sb.ToString(),
-                _if = _if
-            };
-
-            if (name != null)
-            {
-                step.name = name;
-            }
+            step.run = sb.ToString();
             return step;
         }
 
@@ -179,8 +155,14 @@ namespace GitHubActionsDotNet.Helpers
             string output = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
+            if (name == null)
+            {
+                name = ".NET NuGet pack";
+            }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet pack ");
             if (project != null)
@@ -201,18 +183,7 @@ namespace GitHubActionsDotNet.Helpers
                 sb.Append(otherArguments);
                 sb.Append(" ");
             }
-
-            Step step = new Step
-            {
-                name = ".NET NuGet pack",
-                run = sb.ToString(),
-                _if = _if
-            };
-
-            if (name != null)
-            {
-                step.name = name;
-            }
+            step.run = sb.ToString();
             return step;
         }
 
@@ -222,8 +193,14 @@ namespace GitHubActionsDotNet.Helpers
             string output = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
+            if (name == null)
+            {
+                name = ".NET publish";
+            }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet publish ");
             if (project != null)
@@ -244,18 +221,7 @@ namespace GitHubActionsDotNet.Helpers
                 sb.Append(otherArguments);
                 sb.Append(" ");
             }
-
-            Step step = new Step
-            {
-                name = ".NET publish",
-                run = sb.ToString(),
-                _if = _if
-            };
-
-            if (name != null)
-            {
-                step.name = name;
-            }
+            step.run = sb.ToString();
             return step;
         }
 

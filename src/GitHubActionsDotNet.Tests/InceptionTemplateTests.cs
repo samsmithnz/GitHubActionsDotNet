@@ -13,6 +13,7 @@ public class InceptionTemplateTests
     public void ThisProjectCICDTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         root.name = "CI/CD";
         root.on = TriggerHelper.AddStandardPushAndPullTrigger("main");
@@ -32,13 +33,10 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             CommonStepHelper.AddUploadArtifactStep("Upload nuget package back to GitHub","nugetPackage","src/GitHubActionsDotNet/bin/Release","runner.OS == 'Linux'")
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "${{matrix.os}}",
-            buildSteps,
-            null,
-            null,
-            0);
+            buildSteps);
         //Add the strategy
         buildJob.strategy = new()
         {
@@ -73,14 +71,11 @@ echo ""CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSou
                 false,
                 "needs.build.outputs.CommitsSinceVersionSource > 0")
         };
-        Job nugetPushJob = JobHelper.AddJob(
+        Job nugetPushJob = jobHelper.AddJob(
             "Push to NuGet",
             "ubuntu-latest",
             nugetPushSteps,
-            null,
             new string[] { "build" },
-            0,
-            null,
             "github.ref == 'refs/heads/main'");
         root.jobs.Add("NuGetPush", nugetPushJob);
 

@@ -5,53 +5,45 @@ namespace GitHubActionsDotNet.Helpers
 {
     public static class GitVersionStepHelper
     {
+        //- name: Setup GitVersion
+        //  uses: gittools/actions/gitversion/setup@v0.9.11
+        //  with:
+        //    versionSpec: 5.x
         public static Step AddGitVersionSetupStep(string name = null,
             string versionSpec = "5.x",
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
-            //- name: Setup GitVersion
-            //  uses: gittools/actions/gitversion/setup@v0.9.11
-            //  with:
-            //    versionSpec: 5.x
-
-            Step step = new Step
+            if (name == null)
             {
-                name = "Setup GitVersion",
-                uses = "gittools/actions/gitversion/setup@v0.9.11",
-                with = new Dictionary<string, string>(),
-                _if = _if
-            };
-            step.with.Add("versionSpec", versionSpec);
-
-            if (name != null)
-            {
-                step.name = name;
+                name = "Setup GitVersion";
             }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.uses = "gittools/actions/gitversion/setup@v0.9.11";
+            step.with = new Dictionary<string, string>()
+            {
+                { "versionSpec", versionSpec }
+            };
             return step;
         }
+
+        //-name: Determine Version
+        // uses: gittools/actions/gitversion/execute@v0.9.11
+        // id: gitversion 
         public static Step AddGitVersionDetermineVersionStep(string name = null,
             string id = "gitversion",
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
-            //-name: Determine Version
-            // uses: gittools/actions/gitversion/execute@v0.9.11
-            // id: gitversion 
-
-            Step step = new Step
+            if (name == null)
             {
-                name = "Determine Version",
-                uses = "gittools/actions/gitversion/execute@v0.9.11",
-                id = id,
-                _if = _if
-            };
-
-            if (name != null)
-            {
-                step.name = name;
+                name = "Determine Version";
             }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.uses = "gittools/actions/gitversion/execute@v0.9.11";
+            step.id = id;
             return step;
         }
-
 
     }
 }

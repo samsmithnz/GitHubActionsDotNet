@@ -16,26 +16,23 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddCreateReleaseStep(string name = null,
             string tagName = null,
             string releaseName = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
-            Step step = new Step
+            if (name == null)
             {
-                name = "Create Release",
-                uses = "actions/create-release@v1",
-                env = new Dictionary<string, string>()
-                {
-                    { "GITHUB_TOKEN", "${{ secrets.GITHUB_TOKEN }}" }
-                },
-                with = new Dictionary<string, string>(),
-                _if = _if
-            };
+                name = "Create Release";
+            }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.uses = "actions/create-release@v1";
+            if (step.env == null)
+            {
+                step.env = new Dictionary<string, string>();
+            }
+            step.env.Add("GITHUB_TOKEN", "${{ secrets.GITHUB_TOKEN }}");
+            step.with = new Dictionary<string, string>();
             step.with.Add("tag_name", tagName);
             step.with.Add("release_name", releaseName);
-
-            if (name != null)
-            {
-                step.name = name;
-            }
             return step;
         }
 

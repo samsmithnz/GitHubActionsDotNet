@@ -26,6 +26,7 @@ public class PipelineTests
     public void PipelineSimpleStringTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         root.jobs = new();
         root.on = new()
@@ -38,7 +39,7 @@ public class PipelineTests
                 }
             }
         };
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             null,
             "windows-latest",
             new Step[]
