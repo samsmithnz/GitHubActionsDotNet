@@ -19,26 +19,20 @@ namespace GitHubActionsDotNet.Helpers
             string _if = null,
             Dictionary<string, string> env = null)
         {
-            Step step = new Step
+            if (name == null)
             {
-                name = "Create Release",
-                uses = "actions/create-release@v1",
-                with = new Dictionary<string, string>(),
-                _if = _if,
-                env = env
-            };
+                name = "Create Release";
+            }
+            Step step = BaseStep.AddBaseStep(name, _if, env);
+            step.uses = "actions/create-release@v1";
             if (step.env == null)
             {
                 step.env = new Dictionary<string, string>();
             }
             step.env.Add("GITHUB_TOKEN", "${{ secrets.GITHUB_TOKEN }}");
+            step.with = new Dictionary<string, string>();
             step.with.Add("tag_name", tagName);
             step.with.Add("release_name", releaseName);
-
-            if (name != null)
-            {
-                step.name = name;
-            }
             return step;
         }
 
