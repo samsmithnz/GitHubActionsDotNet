@@ -40,7 +40,11 @@ public class PipelineTests
         };
         Job buildJob = JobHelper.AddJob(
             null,
-            "windows-latest");
+            "windows-latest",
+            new Step[]
+            {
+                CommonStepHelper.AddScriptStep("Hello world", "echo 'hello world'")
+            });
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -55,6 +59,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    steps:
+    - name: Hello world
+      run: echo 'hello world'
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
