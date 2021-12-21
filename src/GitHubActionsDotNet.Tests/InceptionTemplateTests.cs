@@ -35,10 +35,7 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
         Job buildJob = JobHelper.AddJob(
             "Build job",
             "${{matrix.os}}",
-            buildSteps,
-            null,
-            null,
-            0);
+            buildSteps);
         //Add the strategy
         buildJob.strategy = new()
         {
@@ -77,7 +74,6 @@ echo ""CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSou
             "Push to NuGet",
             "ubuntu-latest",
             nugetPushSteps,
-            null,
             new string[] { "build" },
             0,
             null,

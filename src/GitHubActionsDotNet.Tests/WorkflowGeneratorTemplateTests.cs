@@ -52,10 +52,7 @@ public class WorkflowGeneratorTemplateTests
         Job buildJob = JobHelper.AddJob(
             "Build job",
             platform + "-latest",
-            buildSteps,
-            null,
-            null,
-            0);
+            buildSteps);
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -153,10 +150,7 @@ jobs:
         Job buildJob = JobHelper.AddJob(
             "Build job",
             platform + "-latest",
-            buildSteps,
-            null,
-            null,
-            0);
+            buildSteps);
         root.jobs.Add("build", buildJob);
 
         //Act

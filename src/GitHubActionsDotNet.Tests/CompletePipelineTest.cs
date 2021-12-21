@@ -36,7 +36,6 @@ public class CompletePipelineTest
             "Release job",
             "ubuntu-latest",
             releaseSteps,
-            null,
             new string[] { "build" });
         root.jobs.Add("release", releaseJob);
 

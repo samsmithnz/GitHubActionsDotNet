@@ -24,7 +24,6 @@ public class JobsTests
             "windows-latest",
             buildSteps,
             null,
-            null,
             30);
         root.jobs.Add("build", buildJob);
 
@@ -62,6 +61,10 @@ jobs:
             "Build job",
             "windows-latest",
             buildSteps,
+            null, 
+            0, 
+            null, 
+            null,
             new()
             {
                 { "Variable1", "new variable" }
@@ -104,14 +107,17 @@ jobs:
             "Build job",
             "windows-latest",
             buildSteps,
+            new string[] { "Job", "AnotherJob" },
+            0,
+            null,
+            null,
             new()
             {
                 { "group", "Active Login" },
                 { "sourceArtifactName", "nuget-windows" },
                 { "targetArtifactName", "nuget-windows-signed" },
                 { "pathToNugetPackages", "**/*.nupkg" }
-            },
-            new string[] { "Job", "AnotherJob" });
+            });
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -154,14 +160,17 @@ jobs:
             "Build job",
             "windows-latest",
             buildSteps,
+            new string[] { "AnotherJob" },
+            0,
+            null,
+            null,
             new()
             {
                 { "group", "Active Login" },
                 { "sourceArtifactName", "nuget-windows" },
                 { "targetArtifactName", "nuget-windows-signed" },
                 { "pathToNugetPackages", "**/*.nupkg" }
-            },
-            new string[] { "AnotherJob" });
+            });
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -202,11 +211,14 @@ jobs:
             "Build job",
             "windows-latest",
             buildSteps,
+            new string[] { "AnotherJob" },
+            0,
+            null,
+            null,
             new()
             {
                 { "Variable1", "new variable" }
-            },
-            new string[] { "AnotherJob" });
+            });
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -247,11 +259,14 @@ jobs:
             "Build job",
             "windows-latest",
             buildSteps,
+            new string[] { "AnotherJob" },
+            0,
+            null,
+            null,
             new()
             {
                 { "Variable1", "new variable" }
-            },
-            new string[] { "AnotherJob" });
+            });
         root.jobs.Add("build", buildJob);
 
         //Act
@@ -330,7 +345,6 @@ jobs:
             "Prod",
             "ubuntu-latest",
             buildSteps,
-            null,
             new string[] { "functionalTests" },
             0,
             new Environment { name = "prod" });
