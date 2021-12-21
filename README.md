@@ -13,5 +13,5 @@ Work in progress.
     - Common .NET build steps
 
 ## Architecture
-- Class library project/logic: .NET Standard 2.1
+- Class library project/logic: .NET Standard 2.0
 - MSTest/unit tests: .NET 6
