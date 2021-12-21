@@ -19,6 +19,7 @@ public class WorkflowGeneratorTemplateTests
         string dotnet_version = "3.1.x";
         string project_root = "src/";
         string platform = "windows";
+        string publishProfileName = "${{ secrets.PUBLISH_PROFILE }}";
 
         //Arrange
         GitHubActionsRoot root = new();
@@ -45,7 +46,7 @@ public class WorkflowGeneratorTemplateTests
             DotNetStepHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
             DotNetStepHelper.AddDotNetTestStep("Test"),
             DotNetStepHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}", "--no-build"),
-            AzureStepHelper.AddAzureFunctionDeployStep("Deploy to Azure Function App","${{ env.AZURE_FUNCTIONAPP_NAME }}", "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}")
+            AzureStepHelper.AddAzureFunctionDeployStep("Deploy to Azure Function App","${{ env.AZURE_FUNCTIONAPP_NAME }}", "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}", publishProfileName)
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -101,7 +102,7 @@ jobs:
       uses: Azure/functions-action@v1
       with:
         app-name: ${{ env.AZURE_FUNCTIONAPP_NAME }}
-        publish-profile: ${{ secrets.{PUBLISH_PROFILE} }}
+        publish-profile: ${{ secrets.PUBLISH_PROFILE }}
         package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 ";
         expected = UtilityTests.TrimNewLines(expected);
@@ -109,7 +110,7 @@ jobs:
     }
 
     [TestMethod]
-    public void WebappTest()
+    public void WebAppTest()
     {
         //variables
         string workflow_name = "Workflow generator for webapps";
@@ -119,6 +120,7 @@ jobs:
         string dotnet_version = "3.1.x";
         string project_root = "src/";
         string platform = "windows";
+        string publishProfileName = "${{ secrets.PUBLISH_PROFILE }}";
 
         //Arrange
         GitHubActionsRoot root = new();
@@ -145,7 +147,7 @@ jobs:
             DotNetStepHelper.AddDotNetBuildStep("Build","${{ env.WORKING_DIRECTORY }}","${{ env.CONFIGURATION }}","--no-restore"),
             DotNetStepHelper.AddDotNetTestStep("Test"),
             DotNetStepHelper.AddDotNetPublishStep("Publish","${{ env.WORKING_DIRECTORY }}", "${{ env.CONFIGURATION }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}", "-r win-x86 --self-contained true"),
-            AzureStepHelper.AddAzureWebappDeployStep("Deploy to Azure Web App","${{ env.AZURE_WEBAPP_NAME }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}")
+            AzureStepHelper.AddAzureWebAppDeployStep("Deploy to Azure Web App","${{ env.AZURE_WEBAPP_NAME }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}", publishProfileName)
         };
         root.jobs = new();
         Job buildJob = JobHelper.AddJob(
@@ -201,7 +203,7 @@ jobs:
       uses: Azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.{PUBLISH_PROFILE} }}
+        publish-profile: ${{ secrets.PUBLISH_PROFILE }}
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 ";
         expected = UtilityTests.TrimNewLines(expected);
