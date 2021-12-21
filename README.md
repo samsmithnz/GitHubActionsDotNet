@@ -19,7 +19,7 @@ Work in progress.
 - The models are in the [src/GitHubActionsDotNet/Models](https://github.com/samsmithnz/GitHubActionsDotNet/tree/main/src/GitHubActionsDotNet/Models) folder. You can create a model from scratch by instantating the model, or using the [src/GitHubActionsDotNet/Helpers](https://github.com/samsmithnz/GitHubActionsDotNet/tree/main/src/GitHubActionsDotNet/Helpers) with many premade templates
 - Use the `GitHubActionsSerialization` class to convert the object into a YAML doc. There are variations of the serialization class to convert individual steps and jobs too
 
-Example C# to build a simple pipeline with GitHubActionsDotNet:
+**Example C# to build a simple pipeline with GitHubActionsDotNet:**
 ```
 GitHubActionsRoot root = new();
 root.jobs = new();
@@ -35,16 +35,20 @@ root.on = new()
 };
 Job buildJob = JobHelper.AddJob(
     null,
-    "windows-latest");
+    "windows-latest",
+    new Step[]
+    {
+        CommonStepHelper.AddScriptStep("Hello world", "echo 'hello world'")
+    });
 root.jobs.Add("build", buildJob);
 ```
 
-To serialize:
+**To serialize:**
 ```
 string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
 ```
 
-The resultant yaml, will look like this:
+**The resultant yaml, will look like this:**
 ```
 on:
   push:
@@ -53,6 +57,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    steps:
+    - name: Hello world
+      run: echo 'hello world'
 ```
 
 
