@@ -57,6 +57,9 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    steps:
+    - name: Hello world
+      run: echo 'hello world'
 ```
 
 
