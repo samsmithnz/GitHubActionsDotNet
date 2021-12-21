@@ -1,5 +1,5 @@
 # GitHubActionsDotNet
-A project that contains models and templates to create GitHub Actions with .NET
+A project that contains models and helper templates to create GitHub Actions with .NET, and then convert/serialize it to a yaml file
 
 [![CI/ CD](https://github.com/samsmithnz/GitHubActionsDotNet/actions/workflows/CICD.yml/badge.svg)](https://github.com/samsmithnz/GitHubActionsDotNet/actions/workflows/CICD.yml)
 [![Latest NuGet package](https://img.shields.io/nuget/v/GitHubActionsDotNet)](https://www.nuget.org/packages/GitHubActionsDotNet/)
