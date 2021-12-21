@@ -16,7 +16,7 @@ public class InceptionTemplateTests
         GitHubActionsRoot root = new();
         root.name = "CI/CD";
         root.on = TriggerHelper.AddStandardPushAndPullTrigger("main");
-        
+
         string displayBuildGitVersionScript = @"
 echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
 echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""";
@@ -66,8 +66,8 @@ echo ""CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSou
                 "${{ needs.build.outputs.Version }}",
                 "Release ${{ needs.build.outputs.Version }}",
                 "needs.build.outputs.CommitsSinceVersionSource > 0"),
-            DotNetStepHelper.AddDotNetNuGetPushStep("Publish nuget package to nuget.org", 
-                "nugetPackage\\*.nupkg", 
+            DotNetStepHelper.AddDotNetNuGetPushStep("Publish nuget package to nuget.org",
+                "nugetPackage\\*.nupkg",
                 @"""https://api.nuget.org/v3/index.json""",
                 @"--api-key ""${{ secrets.GHPackagesToken }}""",
                 false,

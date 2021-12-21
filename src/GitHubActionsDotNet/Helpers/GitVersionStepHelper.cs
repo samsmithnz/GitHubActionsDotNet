@@ -1,6 +1,5 @@
 ﻿using GitHubActionsDotNet.Models;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GitHubActionsDotNet.Helpers
 {
@@ -53,6 +52,6 @@ namespace GitHubActionsDotNet.Helpers
             return step;
         }
 
-  
+
     }
 }
