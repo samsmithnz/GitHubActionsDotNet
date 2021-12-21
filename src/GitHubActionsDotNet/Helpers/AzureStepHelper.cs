@@ -8,6 +8,7 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddAzureFunctionDeployStep(string name = null,
             string appName = null,
             string package = null,
+            string publishProfileName = null,
             string _if = null)
         {
             Step step = new Step
@@ -17,7 +18,7 @@ namespace GitHubActionsDotNet.Helpers
                 with = new Dictionary<string, string>()
                 {
                     {"app-name", appName},
-                    {"publish-profile", "${{ secrets.{PUBLISH_PROFILE} }}"},
+                    {"publish-profile", publishProfileName},
                     {"package", package}
                 },
                 _if = _if
@@ -30,9 +31,10 @@ namespace GitHubActionsDotNet.Helpers
             return step;
         }
 
-        public static Step AddAzureWebappDeployStep(string name = null,
+        public static Step AddAzureWebAppDeployStep(string name = null,
             string appName = null,
             string package = null,
+            string publishProfileName = null,
             string _if = null)
         {
             Step step = new Step
@@ -42,7 +44,7 @@ namespace GitHubActionsDotNet.Helpers
                 with = new Dictionary<string, string>()
                 {
                     {"app-name", appName},
-                    {"publish-profile", "${{ secrets.{PUBLISH_PROFILE} }}"},
+                    {"publish-profile", publishProfileName},
                     {"package", package}
                 },
                 _if = _if
