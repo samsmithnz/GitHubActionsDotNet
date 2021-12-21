@@ -9,12 +9,12 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddBaseStep(
             string name = null,
             string _if = null,
-            Dictionary<string,string> env = null)
+            Dictionary<string, string> env = null)
         {
             Step step = new Step
             {
                 name = name,
-                 _if = _if,
+                _if = _if,
                 env = env
             };
 
