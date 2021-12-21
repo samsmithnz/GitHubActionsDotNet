@@ -45,6 +45,5 @@ namespace GitHubActionsDotNet.Helpers
             return step;
         }
 
-
     }
 }
