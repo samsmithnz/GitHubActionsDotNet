@@ -7,10 +7,12 @@ A project that contains models and helper templates to create GitHub Actions wit
 
 Work in progress. 
 - Currently contains most GitHub Actions models.
-- Tests to create 
-    - very basic pipelines and triggers
-    - very basic jobs
+- Tests current include code to create:
+    - Pipelines and triggers
+    - Basic jobs
     - Common .NET build steps
+    - Basic GitHub steps
+    - Basic Azure steps
 
 ## How to use
 
