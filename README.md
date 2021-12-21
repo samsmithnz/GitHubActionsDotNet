@@ -35,7 +35,11 @@ root.on = new()
 };
 Job buildJob = JobHelper.AddJob(
     null,
-    "windows-latest");
+    "windows-latest",
+    new Step[]
+    {
+        CommonStepHelper.AddScriptStep("Hello world", "echo 'hello world'")
+    });
 root.jobs.Add("build", buildJob);
 ```
 
