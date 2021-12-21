@@ -3,9 +3,92 @@ using System.Collections.Generic;
 
 namespace GitHubActionsDotNet.Helpers
 {
-    public static class JobHelper
+    public class JobHelper
     {
-        public static Job AddJob(
+        /// <summary>
+        /// Add a job
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="runs_on"></param>
+        /// <param name="steps"></param>
+        /// <returns></returns>
+        public Job AddJob(string displayName,
+            string runs_on,
+            Step[] steps)
+        {
+            return AddJob(displayName,
+                runs_on,
+                steps,
+                null,
+                0,
+                null,
+                null,
+                null);
+        }
+
+        /// <summary>
+        /// Add a job 
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="runs_on"></param>
+        /// <param name="steps"></param>
+        /// <param name="needs"></param>
+        /// <returns></returns>
+        public Job AddJob(string displayName,
+        string runs_on,
+        Step[] steps,
+        string[] needs)
+        {
+            return AddJob(displayName,
+                runs_on,
+                steps,
+                needs,
+                0,
+                null,
+                null,
+                null);
+        }
+
+        /// <summary>
+        /// Add a job
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="runs_on"></param>
+        /// <param name="steps"></param>
+        /// <param name="needs"></param>
+        /// <param name="_if"></param>
+        /// <param name="env"></param>
+        /// <returns></returns>
+        public Job AddJob(string displayName,
+            string runs_on,
+            Step[] steps,
+            string[] needs,
+            string _if,
+            Dictionary<string, string> env)
+        {
+            return AddJob(displayName,
+                runs_on,
+                steps,
+                needs,
+                0,
+                null,
+                _if,
+                env);
+        }
+
+        /// <summary>
+        /// Add a job
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="runs_on"></param>
+        /// <param name="steps"></param>
+        /// <param name="needs"></param>
+        /// <param name="timeout_minutes"></param>
+        /// <param name="environment"></param>
+        /// <param name="_if"></param>
+        /// <param name="env"></param>
+        /// <returns></returns>
+        public Job AddJob(
             string displayName = null,
             string runs_on = null,
             Step[] steps = null,
