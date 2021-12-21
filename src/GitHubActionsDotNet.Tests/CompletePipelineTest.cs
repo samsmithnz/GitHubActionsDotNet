@@ -12,6 +12,7 @@ public class CompletePipelineTest
     public void CompleteHelloWorldPipelineTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new()
         {
             name = "CI/CD",
@@ -23,7 +24,7 @@ public class CompletePipelineTest
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
         };
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "windows-latest",
             buildSteps);
@@ -32,7 +33,7 @@ public class CompletePipelineTest
         Step[] releaseSteps = new Step[] {
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
-        Job releaseJob = JobHelper.AddJob(
+        Job releaseJob = jobHelper.AddJob(
             "Release job",
             "ubuntu-latest",
             releaseSteps,

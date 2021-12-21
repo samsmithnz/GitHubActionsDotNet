@@ -1,6 +1,7 @@
 using GitHubActionsDotNet.Helpers;
 using GitHubActionsDotNet.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace GitHubActionsDotNet.Tests;
 
@@ -13,13 +14,14 @@ public class JobsTests
     public void SimpleJobTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "windows-latest",
             buildSteps,
@@ -51,21 +53,18 @@ jobs:
     public void SimpleVariablesJobTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "windows-latest",
             buildSteps,
-            null, 
-            0, 
-            null, 
-            null,
-            new()
+            new Dictionary<string, string>()
             {
                 { "Variable1", "new variable" }
             });
@@ -97,13 +96,14 @@ jobs:
     public void ComplexVariablesWithComplexNeedsJobTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "windows-latest",
             buildSteps,
@@ -150,13 +150,14 @@ jobs:
     public void ComplexVariablesWithSimpleNeedsJobTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "windows-latest",
             buildSteps,
@@ -201,13 +202,14 @@ jobs:
     public void SimpleVariablesWithSimpleDependsOnJobTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "windows-latest",
             buildSteps,
@@ -249,21 +251,19 @@ jobs:
     public void SimpleVariablesWithComplexDependsOnJobTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "windows-latest",
             buildSteps,
             new string[] { "AnotherJob" },
-            0,
-            null,
-            null,
-            new()
+            new Dictionary<string, string>()
             {
                 { "Variable1", "new variable" }
             });
@@ -294,13 +294,14 @@ jobs:
     public void CheckoutJobTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddCheckoutStep(null, "git://MyProject/MyRepo"),
             CommonStepHelper.AddCheckoutStep("GitHub checkout", "MyGitHubRepo")};
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             "ubuntu-latest",
             buildSteps);
@@ -335,13 +336,14 @@ jobs:
     public void EnvironmentJobTest()
     {
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
         };
         root.jobs = new();
-        Job prodJob = JobHelper.AddJob(
+        Job prodJob = jobHelper.AddJob(
             "Prod",
             "ubuntu-latest",
             buildSteps,

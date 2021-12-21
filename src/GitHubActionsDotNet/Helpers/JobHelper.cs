@@ -27,6 +27,31 @@ namespace GitHubActionsDotNet.Helpers
         }
 
         /// <summary>
+        /// Add a job
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="runs_on"></param>
+        /// <param name="steps"></param>
+        /// <param name="needs"></param>
+        /// <param name="_if"></param>
+        /// <returns></returns>
+        public Job AddJob(string displayName,
+            string runs_on,
+            Step[] steps,
+            string[] needs,
+            string _if)
+        {
+            return AddJob(displayName,
+                runs_on,
+                steps,
+                needs,
+                0,
+                null,
+                _if,
+                null);
+        }
+
+        /// <summary>
         /// Add a job 
         /// </summary>
         /// <param name="displayName"></param>
@@ -76,6 +101,55 @@ namespace GitHubActionsDotNet.Helpers
                 env);
         }
 
+
+        /// <summary>
+        /// Add a job
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="runs_on"></param>
+        /// <param name="steps"></param>
+        /// <param name="env"></param>
+        /// <returns></returns>
+        public Job AddJob(string displayName,
+                string runs_on,
+                Step[] steps,
+                Dictionary<string, string> env)
+        {
+            return AddJob(displayName,
+                runs_on,
+                steps,
+                null,
+                0,
+                null,
+                null,
+                env);
+        }
+
+        /// <summary>
+        /// Add a job
+        /// </summary>
+        /// <param name="displayName"></param>
+        /// <param name="runs_on"></param>
+        /// <param name="steps"></param>
+        /// <param name="needs"></param>
+        /// <param name="env"></param>
+        /// <returns></returns>
+        public Job AddJob(string displayName,
+            string runs_on,
+            Step[] steps,
+            string[] needs,
+            Dictionary<string, string> env)
+        {
+            return AddJob(displayName,
+                runs_on,
+                steps,
+                needs,
+                0,
+                null,
+                null,
+                env);
+        }
+
         /// <summary>
         /// Add a job
         /// </summary>
@@ -89,14 +163,14 @@ namespace GitHubActionsDotNet.Helpers
         /// <param name="env"></param>
         /// <returns></returns>
         public Job AddJob(
-            string displayName = null,
-            string runs_on = null,
-            Step[] steps = null,
-            string[] needs = null,
-            int timeout_minutes = 0,
-            Environment environment = null,
-            string _if = null,
-            Dictionary<string, string> env = null)
+                string displayName = null,
+                string runs_on = null,
+                Step[] steps = null,
+                string[] needs = null,
+                int timeout_minutes = 0,
+                Environment environment = null,
+                string _if = null,
+                Dictionary<string, string> env = null)
         {
             Job job = new Job
             {

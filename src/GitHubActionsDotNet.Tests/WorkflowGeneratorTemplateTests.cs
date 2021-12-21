@@ -22,6 +22,7 @@ public class WorkflowGeneratorTemplateTests
         string publishProfileName = "${{ secrets.PUBLISH_PROFILE }}";
 
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         root.name = workflow_name;
         root.on = TriggerHelper.AddStandardPushTrigger(branch_name);
@@ -49,7 +50,7 @@ public class WorkflowGeneratorTemplateTests
             AzureStepHelper.AddAzureFunctionDeployStep("Deploy to Azure Function App","${{ env.AZURE_FUNCTIONAPP_NAME }}", "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}", publishProfileName)
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             platform + "-latest",
             buildSteps);
@@ -120,6 +121,7 @@ jobs:
         string publishProfileName = "${{ secrets.PUBLISH_PROFILE }}";
 
         //Arrange
+        JobHelper jobHelper = new();
         GitHubActionsRoot root = new();
         root.name = workflow_name;
         root.on = TriggerHelper.AddStandardPushTrigger(branch_name);
@@ -147,7 +149,7 @@ jobs:
             AzureStepHelper.AddAzureWebAppDeployStep("Deploy to Azure Web App","${{ env.AZURE_WEBAPP_NAME }}", "${{ env.AZURE_WEBAPP_PACKAGE_PATH }}", publishProfileName)
         };
         root.jobs = new();
-        Job buildJob = JobHelper.AddJob(
+        Job buildJob = jobHelper.AddJob(
             "Build job",
             platform + "-latest",
             buildSteps);
