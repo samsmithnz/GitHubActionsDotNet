@@ -9,7 +9,8 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddScriptStep(string name = null,
             string runStep = null,
             string shell = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             StringBuilder sb = new StringBuilder();
             if (runStep != null)
@@ -30,7 +31,8 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddCheckoutStep(string name = null,
             string repository = null,
             string fetchDepth = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             //- uses: actions/checkout@v2
             //  with:
@@ -69,7 +71,8 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddUploadArtifactStep(string name = null,
             string packageName = null,
             string packagePath = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             Step step = new Step
             {
@@ -93,7 +96,8 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddDownloadArtifactStep(string name = null,
             string packageName = null,
             string packagePath = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             Step step = new Step
             {

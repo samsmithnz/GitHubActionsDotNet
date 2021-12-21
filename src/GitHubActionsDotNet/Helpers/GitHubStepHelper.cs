@@ -16,7 +16,8 @@ namespace GitHubActionsDotNet.Helpers
         public static Step AddCreateReleaseStep(string name = null,
             string tagName = null,
             string releaseName = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             Step step = new Step
             {

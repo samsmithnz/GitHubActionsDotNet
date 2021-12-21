@@ -8,7 +8,8 @@ namespace GitHubActionsDotNet.Helpers
     {
         public static Step AddDotNetSetupStep(string name = null,
             string dotnetVersion = "6.x",
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             Step step = new Step
             {
@@ -30,7 +31,8 @@ namespace GitHubActionsDotNet.Helpers
             string project = null,
             string otherArguments = null,
             //bool useShortParameters = false //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet restore ");
@@ -64,7 +66,8 @@ namespace GitHubActionsDotNet.Helpers
             string configuration = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet build ");
@@ -102,7 +105,8 @@ namespace GitHubActionsDotNet.Helpers
             string configuration = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons)
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet test ");
@@ -140,7 +144,8 @@ namespace GitHubActionsDotNet.Helpers
             string source = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet nuget push ");
@@ -179,7 +184,8 @@ namespace GitHubActionsDotNet.Helpers
             string output = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet pack ");
@@ -222,7 +228,8 @@ namespace GitHubActionsDotNet.Helpers
             string output = null,
             string otherArguments = null,
             bool useShortParameters = false, //Included for inclusivity reasons
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("dotnet publish ");

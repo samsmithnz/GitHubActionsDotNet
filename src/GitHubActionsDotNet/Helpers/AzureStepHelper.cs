@@ -9,7 +9,8 @@ namespace GitHubActionsDotNet.Helpers
             string appName = null,
             string package = null,
             string publishProfileName = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             Step step = new Step
             {
@@ -35,7 +36,8 @@ namespace GitHubActionsDotNet.Helpers
             string appName = null,
             string package = null,
             string publishProfileName = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             Step step = new Step
             {

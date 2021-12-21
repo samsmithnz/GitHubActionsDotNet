@@ -9,11 +9,11 @@ namespace GitHubActionsDotNet.Helpers
             string displayName = null,
             string runs_on = null,
             Step[] steps = null,
-            Dictionary<string, string> env = null,
             string[] needs = null,
             int timeout_minutes = 0,
             Environment environment = null,
-            string _if = null)
+            string _if = null,
+            Dictionary<string, string> env = null)
         {
             Job job = new Job
             {
