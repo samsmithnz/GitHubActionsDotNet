@@ -41,6 +41,7 @@ namespace GitHubActionsDotNet.Helpers
             }
             Step step = BaseStep.AddBaseStep(name, _if, env);
             step.uses = "gittools/actions/gitversion/execute@v0.9.11";
+            step.id = id;
             return step;
         }
 
