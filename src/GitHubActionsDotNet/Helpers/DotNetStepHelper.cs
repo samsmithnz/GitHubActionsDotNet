@@ -16,7 +16,8 @@ namespace GitHubActionsDotNet.Helpers
                 name = "Use .NET sdk",
                 uses = "actions/setup-dotnet@v1",
                 with = new Dictionary<string, string>(),
-                _if = _if
+                _if = _if,
+                env = env
             };
             step.with.Add("dotnet-version", dotnetVersion);
 
@@ -51,7 +52,8 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = ".NET restore",
                 run = sb.ToString(),
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)
@@ -90,7 +92,8 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = ".NET build",
                 run = sb.ToString(),
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)
@@ -129,7 +132,8 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = ".NET test",
                 run = sb.ToString(),
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)
@@ -168,7 +172,8 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = "Push NuGet package",
                 run = sb.ToString(),
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)
@@ -212,7 +217,8 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = ".NET NuGet pack",
                 run = sb.ToString(),
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)
@@ -256,7 +262,8 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = ".NET publish",
                 run = sb.ToString(),
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)

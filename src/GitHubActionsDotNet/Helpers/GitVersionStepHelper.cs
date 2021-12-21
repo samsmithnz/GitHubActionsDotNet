@@ -20,7 +20,8 @@ namespace GitHubActionsDotNet.Helpers
                 name = "Setup GitVersion",
                 uses = "gittools/actions/gitversion/setup@v0.9.11",
                 with = new Dictionary<string, string>(),
-                _if = _if
+                _if = _if,
+                env = env
             };
             step.with.Add("versionSpec", versionSpec);
 
@@ -44,7 +45,8 @@ namespace GitHubActionsDotNet.Helpers
                 name = "Determine Version",
                 uses = "gittools/actions/gitversion/execute@v0.9.11",
                 id = id,
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)

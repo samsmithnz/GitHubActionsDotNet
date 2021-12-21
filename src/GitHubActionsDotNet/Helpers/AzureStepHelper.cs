@@ -22,7 +22,8 @@ namespace GitHubActionsDotNet.Helpers
                     {"publish-profile", publishProfileName},
                     {"package", package}
                 },
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)
@@ -49,7 +50,8 @@ namespace GitHubActionsDotNet.Helpers
                     {"publish-profile", publishProfileName},
                     {"package", package}
                 },
-                _if = _if
+                _if = _if,
+                env = env
             };
 
             if (name != null)

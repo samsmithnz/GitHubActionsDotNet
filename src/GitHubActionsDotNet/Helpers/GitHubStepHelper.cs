@@ -23,13 +23,11 @@ namespace GitHubActionsDotNet.Helpers
             {
                 name = "Create Release",
                 uses = "actions/create-release@v1",
-                env = new Dictionary<string, string>()
-                {
-                    { "GITHUB_TOKEN", "${{ secrets.GITHUB_TOKEN }}" }
-                },
                 with = new Dictionary<string, string>(),
-                _if = _if
+                _if = _if,
+                env = env
             };
+            step.env.Add("GITHUB_TOKEN", "${{ secrets.GITHUB_TOKEN }}");
             step.with.Add("tag_name", tagName);
             step.with.Add("release_name", releaseName);
 

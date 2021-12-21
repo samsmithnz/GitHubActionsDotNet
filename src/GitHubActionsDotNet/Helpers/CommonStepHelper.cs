@@ -23,7 +23,8 @@ namespace GitHubActionsDotNet.Helpers
                 name = name,
                 run = sb.ToString(),
                 shell = shell,
-                _if = _if
+                _if = _if,
+                env = env
             };
             return step;
         }
@@ -57,7 +58,8 @@ namespace GitHubActionsDotNet.Helpers
                 name = name,
                 uses = "actions/checkout@v2",
                 with = with,
-                _if = _if
+                _if = _if,
+                env = env
             };
             return step;
         }
@@ -83,7 +85,8 @@ namespace GitHubActionsDotNet.Helpers
                     { "name", packageName },
                     { "path", packagePath }
                 },
-                _if = _if
+                _if = _if,
+                env = env
             };
             return step;
         }
@@ -108,7 +111,8 @@ namespace GitHubActionsDotNet.Helpers
                     { "name", packageName },
                     { "path", packagePath }
                 },
-                _if = _if
+                _if = _if,
+                env = env
             };
             return step;
         }

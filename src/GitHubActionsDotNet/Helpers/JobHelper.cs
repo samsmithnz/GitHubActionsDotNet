@@ -20,11 +20,11 @@ namespace GitHubActionsDotNet.Helpers
                 name = displayName,
                 runs_on = runs_on,
                 needs = needs,
-                env = env,
                 timeout_minutes = timeout_minutes,
                 environment = environment,
                 steps = steps,
-                _if = _if
+                _if = _if,
+                env = env
             };
             return job;
         }
