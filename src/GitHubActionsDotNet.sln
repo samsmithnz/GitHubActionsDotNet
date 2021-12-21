@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.31825.309
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{32AED6ED-54B9-4F42-BF43-1713D1B699C8}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\.github\workflows\CICD.yml = ..\..\.github\workflows\CICD.yml
-		..\..\.github\workflows\codeql-analysis.yml = ..\..\.github\workflows\codeql-analysis.yml
-		..\..\.github\dependabot.yml = ..\..\.github\dependabot.yml
-		..\..\GitVersion.yml = ..\..\GitVersion.yml
-		..\..\README.md = ..\..\README.md
+		..\.github\workflows\CICD.yml = ..\.github\workflows\CICD.yml
+		..\.github\workflows\codeql-analysis.yml = ..\.github\workflows\codeql-analysis.yml
+		..\.github\dependabot.yml = ..\.github\dependabot.yml
+		..\GitVersion.yml = ..\GitVersion.yml
+		..\README.md = ..\README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitHubActionsDotNet", "GitHubActionsDotNet\GitHubActionsDotNet.csproj", "{7F35B284-7F95-4D49-A2C9-34CAD7C1601B}"
