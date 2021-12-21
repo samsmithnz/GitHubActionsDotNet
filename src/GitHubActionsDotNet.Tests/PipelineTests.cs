@@ -28,6 +28,16 @@ public class PipelineTests
         //Arrange
         GitHubActionsRoot root = new();
         root.jobs = new();
+        root.on = new()
+        {
+            push = new()
+            {
+                branches = new string[]
+                {
+            "main"
+                }
+            }
+        };
         Job buildJob = JobHelper.AddJob(
             null,
             "windows-latest");
@@ -38,6 +48,10 @@ public class PipelineTests
 
         //Assert
         string expected = @"
+on:
+  push:
+    branches:
+    - main
 jobs:
   build:
     runs-on: windows-latest
