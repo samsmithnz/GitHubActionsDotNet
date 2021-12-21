@@ -27,6 +27,10 @@ namespace GitHubActionsDotNet.Helpers
                 _if = _if,
                 env = env
             };
+            if (step.env == null)
+            {
+                step.env = new Dictionary<string, string>();
+            }
             step.env.Add("GITHUB_TOKEN", "${{ secrets.GITHUB_TOKEN }}");
             step.with.Add("tag_name", tagName);
             step.with.Add("release_name", releaseName);
