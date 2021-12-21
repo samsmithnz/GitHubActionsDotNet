@@ -13,7 +13,7 @@ namespace GitHubActionsDotNet.Helpers
         {
             if (name == null)
             {
-                name = "Use .NET sd";
+                name = "Setup .NET SDK";
             }
             Step step = BaseStep.AddBaseStep(name, _if, env);
             step.uses = "actions/setup-dotnet@v1";

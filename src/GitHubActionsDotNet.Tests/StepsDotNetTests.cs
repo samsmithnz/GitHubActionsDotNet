@@ -21,7 +21,7 @@ public class StepsDotNetTests
 
         //Assert
         string expected = @"
-- name: Use .NET sdk
+- name: Setup .NET SDK
   uses: actions/setup-dotnet@v1
   with:
     dotnet-version: 6.x
