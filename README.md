@@ -20,7 +20,7 @@ Work in progress.
 - Use the `GitHubActionsSerialization` class to convert the object into a YAML doc. There are variations of the serialization class to convert individual steps and jobs too
 
 **Example C# to build a simple pipeline with GitHubActionsDotNet:**
-```
+```C#
 GitHubActionsRoot root = new();
 root.jobs = new();
 root.on = new()
@@ -44,12 +44,12 @@ root.jobs.Add("build", buildJob);
 ```
 
 **To serialize:**
-```
+```C#
 string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
 ```
 
 **The resultant yaml, will look like this:**
-```
+```YAML
 on:
   push:
     branches:
