@@ -22,7 +22,9 @@ public class CompletePipelineTest
         //Build job
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
-            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""", "cmd")
+            CommonStepHelper.AddScriptStep(null,
+                @"echo ""hello world""", 
+                "cmd")
         };
         Job buildJob = jobHelper.AddJob(
             "Build job",
@@ -31,7 +33,8 @@ public class CompletePipelineTest
         root.jobs.Add("build", buildJob);
         //Release job
         Step[] releaseSteps = new Step[] {
-            CommonStepHelper.AddScriptStep(null, @"echo ""hello world""")
+            CommonStepHelper.AddScriptStep(null, 
+                @"echo ""hello world""")
         };
         Job releaseJob = jobHelper.AddJob(
             "Release job",
