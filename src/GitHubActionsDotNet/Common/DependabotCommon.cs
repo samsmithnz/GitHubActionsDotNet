@@ -18,28 +18,28 @@ namespace GitHubActionsDotNet.Common
             return files;
         }
 
-        public static string GetPackageEcoSystemFromFileName(FileInfo fileInfo)
+        public static string GetPackageEcoSystemFromFileName(string fileName)
         {
             string packageEcosystem = "";
-            if (fileInfo.Name == "pom.xml")
+            if (fileName == "pom.xml")
             {
                 packageEcosystem = "maven";
             }
-            else if (fileInfo.Name == "package.json")
+            else if (fileName == "package.json")
             {
                 packageEcosystem = "npm";
             }
-            else if (fileInfo.Name == "nuget.config" ||
-                fileInfo.Extension == ".csproj" ||
-                fileInfo.Extension == ".vbproj")
+            else if (fileName == "nuget.config" ||
+                fileName.EndsWith(".csproj") ||
+                fileName.EndsWith(".vbproj"))
             {
                 packageEcosystem = "nuget";
             }
-            else if (fileInfo.Name == "Gemfile")
+            else if (fileName == "Gemfile")
             {
                 packageEcosystem = "bundler";
             }
-            else if (fileInfo.Name == "requirements.txt")
+            else if (fileName == "requirements.txt")
             {
                 packageEcosystem = "pip";
             }
