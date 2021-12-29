@@ -2,21 +2,19 @@
 using GitHubActionsDotNet.Models.Dependabot;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
-using Environment = System.Environment;
 
 namespace GitHubActionsDotNet.Serialization
 {
     public static class DependabotSerialization
     {
         public static string Serialize(string startingDirectory,
-        List<string> files,
-        string interval = null,
-        string time = null,
-        string timezone = null,
-        List<string> assignees = null,
-        int openPRLimit = 0,
-        bool includeActions = true)
+            List<string> files,
+            string interval = null,
+            string time = null,
+            string timezone = null,
+            List<string> assignees = null,
+            int openPRLimit = 0,
+            bool includeActions = true)
         {
             if (startingDirectory == null)
             {
@@ -34,7 +32,7 @@ namespace GitHubActionsDotNet.Serialization
                 cleanedFile = "/" + cleanedFile.Replace("\\", "/");
                 Package package = new Package()
                 {
-                    package_ecosystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo),
+                    package_ecosystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name),
                     directory = cleanedFile,
                     schedule = new Schedule()
                     {
