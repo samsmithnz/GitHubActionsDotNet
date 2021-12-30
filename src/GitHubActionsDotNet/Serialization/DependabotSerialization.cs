@@ -26,9 +26,14 @@ namespace GitHubActionsDotNet.Serialization
             foreach (string file in files)
             {
                 FileInfo fileInfo = new FileInfo(file);
-                string cleanedFile = file.Replace(startingDirectory + "/", "");
+                string cleanedFile = file;
+                //Cleanup Linux paths, replacing the leading path
+                cleanedFile = cleanedFile.Replace(startingDirectory + "/", "");
+                //Cleanup Windows paths, replacing the leading path
                 cleanedFile = cleanedFile.Replace(startingDirectory + "\\", "");
+                //Remove the file name
                 cleanedFile = cleanedFile.Replace(fileInfo.Name, "");
+                //We should be left with the path - that we append a '/' to the front of, and replace all \'s with /'s
                 cleanedFile = "/" + cleanedFile.Replace("\\", "/");
                 Package package = new Package()
                 {
