@@ -304,5 +304,24 @@ updates:
             Assert.AreEqual(expected, yaml);
         }
 
+        [TestMethod]
+        public void CreateEmptyDependabotConfigurationTest()
+        {
+            //Arrange
+            string workingDirectory = System.Environment.CurrentDirectory;
+
+            //Act
+            List<string> files = FileSearch.GetFilesForDirectory(workingDirectory);
+            string yaml = DependabotSerialization.Serialize(workingDirectory, files);
+
+
+            //Assert
+            string expected = @"version: 2
+updates:
+- package-ecosystem: github-actions
+  directory: /";
+            Assert.AreEqual(expected, UtilityTests.TrimNewLines(yaml));
+        }
+
     }
 }
