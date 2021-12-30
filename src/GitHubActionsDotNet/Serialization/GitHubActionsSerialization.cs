@@ -19,6 +19,7 @@ namespace GitHubActionsDotNet.Serialization
             string yaml = YamlSerialization.SerializeYaml<GitHubActionsRoot>(gitHubActions);
 
             yaml = ProcessGitHubActionYAML(yaml, variableList, matrixVariableName);
+            yaml = StepsPostProcessing(yaml);
 
             return yaml;
         }
