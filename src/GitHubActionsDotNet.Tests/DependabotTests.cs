@@ -314,7 +314,6 @@ updates:
             List<string> files = FileSearch.GetFilesForDirectory(workingDirectory);
             string yaml = DependabotSerialization.Serialize(workingDirectory, files);
 
-
             //Assert
             string expected = @"version: 2
 updates:
