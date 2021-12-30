@@ -34,14 +34,26 @@ namespace GitHubActionsDotNet.Serialization
                 {
                     package_ecosystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name),
                     directory = cleanedFile,
-                    schedule = new Schedule()
-                    {
-                        interval = interval,
-                        time = time,
-                        timezone = timezone
-                    },
                     assignees = assignees
                 };
+                if (interval != null ||
+                    time != null ||
+                    timezone != null)
+                {
+                    package.schedule = new Schedule();
+                    if (interval != null)
+                    {
+                        package.schedule.interval = interval;
+                    }
+                    if (time != null)
+                    {
+                        package.schedule.time = time;
+                    }
+                    if (timezone != null)
+                    {
+                        package.schedule.timezone = timezone;
+                    }
+                }
                 if (openPRLimit > 0)
                 {
                     package.open_pull_requests_limit = openPRLimit.ToString();
@@ -51,22 +63,30 @@ namespace GitHubActionsDotNet.Serialization
             //Add actions
             if (includeActions == true)
             {
-                Package actionsPackage = new Package();
-                actionsPackage.package_ecosystem = "github-actions";
-                actionsPackage.directory = "/";
-                actionsPackage.schedule = new Schedule()
+                Package actionsPackage = new Package
                 {
-                    interval = interval
+                    package_ecosystem = "github-actions",
+                    directory = "/",
+                    assignees = assignees
                 };
-                if (time != null)
+                if (interval != null ||
+                    time != null ||
+                    timezone != null)
                 {
-                    actionsPackage.schedule.time = time;
+                    actionsPackage.schedule = new Schedule();
+                    if (interval != null)
+                    {
+                        actionsPackage.schedule.interval = interval;
+                    }
+                    if (time != null)
+                    {
+                        actionsPackage.schedule.time = time;
+                    }
+                    if (timezone != null)
+                    {
+                        actionsPackage.schedule.timezone = timezone;
+                    }
                 }
-                if (timezone != null)
-                {
-                    actionsPackage.schedule.timezone = timezone;
-                }
-                actionsPackage.assignees = assignees;
                 if (openPRLimit > 0)
                 {
                     actionsPackage.open_pull_requests_limit = openPRLimit.ToString();
