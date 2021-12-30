@@ -30,9 +30,11 @@ namespace GitHubActionsDotNet.Helpers
                 step.env = new Dictionary<string, string>();
             }
             step.env.Add("GITHUB_TOKEN", "${{ secrets.GITHUB_TOKEN }}");
-            step.with = new Dictionary<string, string>();
-            step.with.Add("tag_name", tagName);
-            step.with.Add("release_name", releaseName);
+            step.with = new Dictionary<string, string>
+            {
+                { "tag_name", tagName },
+                { "release_name", releaseName }
+            };
             return step;
         }
 

@@ -7,14 +7,16 @@ namespace GitHubActionsDotNet.Common
     {
         public static List<string> GetFileTypesToSearch()
         {
-            List<string> files = new List<string>();
-            files.Add("pom.xml");
-            files.Add("package.json");
-            files.Add("nuget.config");
-            files.Add("*.csproj");
-            files.Add("*.vbproj");
-            files.Add("Gemfile");
-            files.Add("requirements.txt");
+            List<string> files = new List<string>
+            {
+                "pom.xml",
+                "package.json",
+                "nuget.config",
+                "*.csproj",
+                "*.vbproj",
+                "Gemfile",
+                "requirements.txt"
+            };
             return files;
         }
 

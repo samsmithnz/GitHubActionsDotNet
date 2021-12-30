@@ -56,12 +56,14 @@ namespace GitHubActionsDotNet.Serialization
             //Add actions
             if (includeActions == true)
             {
-                Package actionsPackage = new Package();
-                actionsPackage.package_ecosystem = "github-actions";
-                actionsPackage.directory = "/";
-                actionsPackage.schedule = new Schedule()
+                Package actionsPackage = new Package
                 {
-                    interval = interval
+                    package_ecosystem = "github-actions",
+                    directory = "/",
+                    schedule = new Schedule()
+                    {
+                        interval = interval
+                    }
                 };
                 if (time != null)
                 {
