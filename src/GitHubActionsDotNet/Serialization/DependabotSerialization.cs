@@ -26,71 +26,18 @@ namespace GitHubActionsDotNet.Serialization
             foreach (string file in files)
             {
                 FileInfo fileInfo = new FileInfo(file);
-                string cleanedFile = file.Replace(startingDirectory + "/", "");
-                cleanedFile = cleanedFile.Replace(startingDirectory + "\\", "");
-                cleanedFile = cleanedFile.Replace(fileInfo.Name, "");
-                cleanedFile = "/" + cleanedFile.Replace("\\", "/");
-                Package package = new Package()
-                {
-                    package_ecosystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name),
-                    directory = cleanedFile,
-                    assignees = assignees
-                };
-                if (interval != null ||
-                    time != null ||
-                    timezone != null)
-                {
-                    package.schedule = new Schedule();
-                    if (interval != null)
-                    {
-                        package.schedule.interval = interval;
-                    }
-                    if (time != null)
-                    {
-                        package.schedule.time = time;
-                    }
-                    if (timezone != null)
-                    {
-                        package.schedule.timezone = timezone;
-                    }
-                }
-                if (openPRLimit > 0)
-                {
-                    package.open_pull_requests_limit = openPRLimit.ToString();
-                }
+                string cleanedFilePath = file.Replace(startingDirectory + "/", "");
+                cleanedFilePath = cleanedFilePath.Replace(startingDirectory + "\\", "");
+                cleanedFilePath = cleanedFilePath.Replace(fileInfo.Name, "");
+                cleanedFilePath = "/" + cleanedFilePath.Replace("\\", "/");
+                string packageEcoSystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name);
+                Package package = CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
                 packages.Add(package);
             }
             //Add actions
             if (includeActions == true)
             {
-                Package actionsPackage = new Package
-                {
-                    package_ecosystem = "github-actions",
-                    directory = "/",
-                    assignees = assignees
-                };
-                if (interval != null ||
-                    time != null ||
-                    timezone != null)
-                {
-                    actionsPackage.schedule = new Schedule();
-                    if (interval != null)
-                    {
-                        actionsPackage.schedule.interval = interval;
-                    }
-                    if (time != null)
-                    {
-                        actionsPackage.schedule.time = time;
-                    }
-                    if (timezone != null)
-                    {
-                        actionsPackage.schedule.timezone = timezone;
-                    }
-                }
-                if (openPRLimit > 0)
-                {
-                    actionsPackage.open_pull_requests_limit = openPRLimit.ToString();
-                }
+                Package actionsPackage = CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
                 packages.Add(actionsPackage);
             }
             root.updates = packages;
@@ -103,6 +50,45 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("open_pull_requests_limit", "open-pull-requests-limit");
 
             return yaml;
+        }
+
+        private static Package CreatePackage(string filePath,
+            string packageEcoSystem,
+            string interval = null,
+            string time = null,
+            string timezone = null,
+            List<string> assignees = null,
+            int openPRLimit = 0)
+        {
+            Package package = new Package()
+            {
+                package_ecosystem = packageEcoSystem,
+                directory = filePath,
+                assignees = assignees
+            };
+            if (interval != null ||
+                time != null ||
+                timezone != null)
+            {
+                package.schedule = new Schedule();
+                if (interval != null)
+                {
+                    package.schedule.interval = interval;
+                }
+                if (time != null)
+                {
+                    package.schedule.time = time;
+                }
+                if (timezone != null)
+                {
+                    package.schedule.timezone = timezone;
+                }
+            }
+            if (openPRLimit > 0)
+            {
+                package.open_pull_requests_limit = openPRLimit.ToString();
+            }
+            return package;
         }
     }
 }
