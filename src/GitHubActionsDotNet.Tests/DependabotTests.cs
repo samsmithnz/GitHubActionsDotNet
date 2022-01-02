@@ -42,7 +42,7 @@ updates:
   directory: /
   schedule:
     interval: daily
-    time: 06:00
+    time: ""06:00""
     timezone: America/New_York
   assignees:
   - samsmithnz
@@ -51,7 +51,7 @@ updates:
   directory: /
   schedule:
     interval: daily
-    time: 06:00
+    time: ""06:00""
     timezone: America/New_York
   assignees:
   - samsmithnz
