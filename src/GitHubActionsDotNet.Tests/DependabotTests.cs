@@ -1,4 +1,5 @@
 using GitHubActionsDotNet.Helpers;
+using GitHubActionsDotNet.Models.Dependabot;
 using GitHubActionsDotNet.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -320,6 +321,28 @@ updates:
 - package-ecosystem: github-actions
   directory: /";
             Assert.AreEqual(expected, UtilityTests.TrimNewLines(yaml));
+        }
+
+        [TestMethod]
+        public void DeserializationTest()
+        {
+            //Arrange
+            string workingDirectory = Environment.CurrentDirectory;
+            string? projectDirectory = Directory.GetParent(workingDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName;
+            projectDirectory += "\\.github\\dependabot.yml";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                projectDirectory = projectDirectory.Replace("\\", "/");
+            }
+            string contents = File.ReadAllText(projectDirectory);
+
+            //Act
+            DependabotRoot dependabot = DependabotSerialization.Deserialize(contents);
+
+            //Assert
+            Assert.IsNotNull(dependabot);
+            Assert.IsNotNull(dependabot.updates);
+            Assert.AreEqual(2, dependabot.updates.Count);
         }
 
     }
