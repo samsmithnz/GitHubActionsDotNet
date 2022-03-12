@@ -21,7 +21,7 @@ namespace GitHubActionsDotNet.Serialization
                 return "";
             }
 
-            Root root = new Root();
+            DependabotRoot root = new DependabotRoot();
             List<Package> packages = new List<Package>();
             foreach (string file in files)
             {
@@ -50,6 +50,15 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("open_pull_requests_limit", "open-pull-requests-limit");
 
             return yaml;
+        }
+
+        public static DependabotRoot Deserialize(string yaml)
+        {
+            yaml = yaml.Replace("package-ecosystem", "package_ecosystem");
+            yaml = yaml.Replace("open-pull-requests-limit", "open_pull_requests_limit");
+
+            DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
+            return root;
         }
 
         private static Package CreatePackage(string filePath,

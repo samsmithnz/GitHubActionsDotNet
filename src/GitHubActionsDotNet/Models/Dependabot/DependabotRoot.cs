@@ -2,9 +2,9 @@
 
 namespace GitHubActionsDotNet.Models.Dependabot
 {
-    public class Root
+    public class DependabotRoot
     {
-        public Root()
+        public DependabotRoot()
         {
             version = "2";
             updates = new List<Package>();
