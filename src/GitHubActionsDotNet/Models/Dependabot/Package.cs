@@ -15,5 +15,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public string insecure_external_code_execution { get; set; }
         public string registries { get; set; }
         public string[] labels { get; set; }
+        public int? milestone { get; set; }
     }
 }
