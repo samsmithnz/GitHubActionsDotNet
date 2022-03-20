@@ -289,37 +289,37 @@ updates:
         Assert.IsNotNull(dependabot);
     }
 
-    [TestMethod]
-    public void RegistriesTest()
-    {
-        //Arrange
-        string yaml = @"version: 2
-registries:
-  maven-github:
-    type: maven-repository
-    url: https://maven.pkg.github.com/octocat
-    username: octocat
-    password: ${{secrets.MY_ARTIFACTORY_PASSWORD}}
-  npm-npmjs:
-    type: npm-registry
-    url: https://registry.npmjs.org
-    username: octocat
-    password: ${{secrets.MY_NPM_PASSWORD}}
-updates:
-  - package-ecosystem: ""gitsubmodule""
-    directory: ""/""
-    registries:
-      - maven-github
-    schedule:
-      interval: ""monthly""
-";
+//    [TestMethod]
+//    public void RegistriesTest()
+//    {
+//        //Arrange
+//        string yaml = @"version: 2
+//registries:
+//  maven-github:
+//    type: maven-repository
+//    url: https://maven.pkg.github.com/octocat
+//    username: octocat
+//    password: ${{secrets.MY_ARTIFACTORY_PASSWORD}}
+//  npm-npmjs:
+//    type: npm-registry
+//    url: https://registry.npmjs.org
+//    username: octocat
+//    password: ${{secrets.MY_NPM_PASSWORD}}
+//updates:
+//  - package-ecosystem: ""gitsubmodule""
+//    directory: ""/""
+//    registries:
+//      - maven-github
+//    schedule:
+//      interval: ""monthly""
+//";
 
-        //Act
-        DependabotRoot dependabot = DependabotSerialization.Deserialize(yaml);
+//        //Act
+//        DependabotRoot dependabot = DependabotSerialization.Deserialize(yaml);
 
-        //Assert
-        Assert.IsNotNull(dependabot);
-    }
+//        //Assert
+//        Assert.IsNotNull(dependabot);
+//    }
 
     [TestMethod]
     public void ReviewersTest()
@@ -494,6 +494,37 @@ updates:
     # Only allow updates to the lockfile for pip and
     # ignore any version updates that affect the manifest
     versioning-strategy: lockfile-only
+";
+
+        //Act
+        DependabotRoot dependabot = DependabotSerialization.Deserialize(yaml);
+
+        //Assert
+        Assert.IsNotNull(dependabot);
+    }
+
+    [TestMethod]
+    public void InceptionTest()
+    {
+        //Arrange
+        string yaml = @"version: 2
+updates:
+- package-ecosystem: nuget
+  directory: ""/src/GitHubActionsDotNet""
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+  - ""samsmithnz""
+# Maintain dependencies for GitHub Actions
+- package-ecosystem: ""github-actions""
+  directory: ""/""
+  schedule:
+    interval: ""daily""
+  assignees:
+  - ""samsmithnz""
 ";
 
         //Act

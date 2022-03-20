@@ -14,6 +14,7 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public Ignore[] ignore { get; set; }
         public string insecure_external_code_execution { get; set; }
         public string registries { get; set; }
+        //public string[] registries { get; set; }
         public string[] labels { get; set; }
         public int? milestone { get; set; }
         public PullRequestBranchName pull_request_branch_name { get; set; }
