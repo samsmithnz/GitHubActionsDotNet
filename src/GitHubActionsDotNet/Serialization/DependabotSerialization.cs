@@ -47,7 +47,7 @@ namespace GitHubActionsDotNet.Serialization
 
             //I can't use - in variable names, so replace _ with -
             yaml = yaml.Replace("package_ecosystem", "package-ecosystem");
-            yaml = yaml.Replace("open_pull_requests_limit", "open-pull-requests-limit");
+            yaml = yaml.Replace("replaces_base", "replaces-base");
 
             return yaml;
         }
@@ -56,6 +56,7 @@ namespace GitHubActionsDotNet.Serialization
         {
             yaml = yaml.Replace("package-ecosystem", "package_ecosystem");
             yaml = yaml.Replace("open-pull-requests-limit", "open_pull_requests_limit");
+            yaml = yaml.Replace("replaces-base", "replaces_base");
 
             DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
             return root;
