@@ -289,6 +289,7 @@ updates:
         Assert.IsNotNull(dependabot);
     }
 
+    //TODO: Need to refactor deserialization to work with registries, that can be string or string[]
 //    [TestMethod]
 //    public void RegistriesTest()
 //    {
