@@ -13,7 +13,6 @@ public class DependabotRegistryTests
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   composer:
     type: composer-repository
@@ -34,7 +33,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   dockerhub:
     type: docker-registry
@@ -60,7 +58,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   github-octocat:
     type: git
@@ -81,7 +78,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   github-hex-org:
     type: hex-organization
@@ -101,7 +97,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   maven-artifactory:
     type: maven-repository
@@ -122,7 +117,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   npm-npmjs:
     type: npm-registry
@@ -147,7 +141,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   nuget-example:
     type: nuget-feed
@@ -172,7 +165,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   python-example:
     type: python-index
@@ -199,7 +191,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   ruby-example:
     type: rubygems-server
@@ -224,7 +215,6 @@ registries:
     {
         //Arrange
         string yaml = @"version: 2
-version: 2
 registries:
   terraform-example:
     type: terraform-registry

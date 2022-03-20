@@ -12,7 +12,7 @@ namespace GitHubActionsDotNet.Tests
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     [TestClass]
-    public class DependabotTests
+    public class DependabotSerializationTests
     {
 
         [TestMethod]
