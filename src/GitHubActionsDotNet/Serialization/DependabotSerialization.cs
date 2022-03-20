@@ -52,6 +52,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("dependency_type", "dependency-type");
             yaml = yaml.Replace("prefix_development", "prefix-development");
             yaml = yaml.Replace("commit_message", "commit-message");
+            yaml = yaml.Replace("update_types", "update-types");
 
             return yaml;
         }
@@ -65,6 +66,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("dependency-type", "dependency_type");
             yaml = yaml.Replace("prefix-development", "prefix_development");
             yaml = yaml.Replace("commit-message", "commit_message");
+            yaml = yaml.Replace("update-types", "update_types");
 
             DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
             return root;

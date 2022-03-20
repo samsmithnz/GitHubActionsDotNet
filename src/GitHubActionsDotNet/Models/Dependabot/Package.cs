@@ -11,5 +11,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public string open_pull_requests_limit { get; set; }
         public Allow[] allow { get; set; }
         public CommitMessage commit_message {get;set;}
+        public Ignore[] ignore{get;set;}
     }
 }
