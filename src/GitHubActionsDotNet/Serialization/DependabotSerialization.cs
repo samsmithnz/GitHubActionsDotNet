@@ -56,6 +56,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("insecure_external_code_execution", "insecure-external-code-execution");
             yaml = yaml.Replace("pull_request_branch_name", "pull-request-branch-name");
             yaml = yaml.Replace("rebase_strategy", "rebase-strategy");
+            yaml = yaml.Replace("target_branch", "target-branch");
 
             return yaml;
         }
@@ -73,6 +74,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("insecure-external-code-execution", "insecure_external_code_execution");
             yaml = yaml.Replace("pull-request-branch-name", "pull_request_branch_name");
             yaml = yaml.Replace("rebase-strategy", "rebase_strategy");
+            yaml = yaml.Replace("target-branch", "target_branch");
 
             DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
             return root;
