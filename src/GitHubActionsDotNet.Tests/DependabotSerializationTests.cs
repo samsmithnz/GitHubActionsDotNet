@@ -11,6 +11,7 @@ namespace GitHubActionsDotNet.Tests
 {
 
     [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    [TestCategory("Dependabot")]
     [TestClass]
     public class DependabotSerializationTests
     {

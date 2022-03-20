@@ -5,6 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace GitHubActionsDotNet.Tests;
 
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+[TestCategory("Dependabot")]
 [TestClass]
 public class DependabotDeserializationTests
 {
