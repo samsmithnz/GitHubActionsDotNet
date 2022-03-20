@@ -53,6 +53,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("prefix_development", "prefix-development");
             yaml = yaml.Replace("commit_message", "commit-message");
             yaml = yaml.Replace("update_types", "update-types");
+            yaml = yaml.Replace("insecure_external_code_execution", "insecure-external-code-execution");
 
             return yaml;
         }
@@ -67,6 +68,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("prefix-development", "prefix_development");
             yaml = yaml.Replace("commit-message", "commit_message");
             yaml = yaml.Replace("update-types", "update_types");
+            yaml = yaml.Replace("insecure-external-code-execution", "insecure_external_code_execution");
 
             DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
             return root;
