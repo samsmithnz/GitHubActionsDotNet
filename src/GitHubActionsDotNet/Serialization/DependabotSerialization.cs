@@ -47,6 +47,7 @@ namespace GitHubActionsDotNet.Serialization
 
             //I can't use - in variable names, so replace _ with -
             yaml = yaml.Replace("package_ecosystem", "package-ecosystem");
+            yaml = yaml.Replace("open_pull_requests_limit", "open-pull-requests-limit");
             yaml = yaml.Replace("replaces_base", "replaces-base");
             yaml = yaml.Replace("dependency_name", "dependency-name");
             yaml = yaml.Replace("dependency_type", "dependency-type");

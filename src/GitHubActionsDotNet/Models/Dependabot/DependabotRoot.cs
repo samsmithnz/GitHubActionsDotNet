@@ -7,8 +7,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public DependabotRoot()
         {
             version = "2";
-            registries = new Dictionary<string, Registry>();
-            updates = new List<Package>();
         }
 
         public string version { get; set; }
