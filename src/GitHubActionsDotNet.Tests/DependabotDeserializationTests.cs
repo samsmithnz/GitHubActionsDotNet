@@ -535,4 +535,83 @@ updates:
         Assert.IsNotNull(dependabot);
     }
 
+    [TestMethod]
+    public void SSNZTest()
+    {
+        //Arrange
+        string yaml = @"version: 2
+registries:
+  nuget-github:
+    type: nuget-feed
+    url: https://nuget.pkg.github.com/SamSmithNZ-dotcom/index.json
+    username: samsmithnz@gmail.com
+    password: ${{ secrets.PACKAGE_PAT_TOKEN }}
+  nuget-org:
+    type: nuget-feed
+    url: https://api.nuget.org/v3/index.json
+updates:
+- package-ecosystem: nuget
+  directory: ""/SamSmithNZ/SamSmithNZ.Service""
+  registries:
+    - nuget-github
+    - nuget-org
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""samsmithnz""
+- package-ecosystem: nuget
+  directory: ""/SamSmithNZ/SamSmithNZ.Web""
+  registries:
+    - nuget-github
+    - nuget-org
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""samsmithnz""
+- package-ecosystem: nuget
+  directory: ""/SamSmithNZ/SamSmithNZ.Tests""
+  registries:
+    - nuget-github
+    - nuget-org
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""samsmithnz""
+- package-ecosystem: nuget
+  directory: ""/SamSmithNZ/SamSmithNZ.FunctionalTests""
+  registries:
+    - nuget-github
+    - nuget-org
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""samsmithnz""
+# Maintain dependencies for GitHub Actions
+- package-ecosystem: ""github-actions""
+  directory: ""/""
+  schedule:
+    interval: ""daily""
+  assignees:
+  - ""samsmithnz""
+";
+
+        //Act
+        DependabotRoot dependabot = DependabotSerialization.Deserialize(yaml);
+
+        //Assert
+        Assert.IsNotNull(dependabot);
+    }
+
 }
