@@ -16,5 +16,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public string registries { get; set; }
         public string[] labels { get; set; }
         public int? milestone { get; set; }
+        public PullRequestBranchName pull_request_branch_name { get; set; }
     }
 }
