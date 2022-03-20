@@ -18,5 +18,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public int? milestone { get; set; }
         public PullRequestBranchName pull_request_branch_name { get; set; }
         public string rebase_strategy { get; set; }
+        public string[] reviewers { get; set; }
     }
 }
