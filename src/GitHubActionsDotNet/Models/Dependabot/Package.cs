@@ -20,5 +20,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public string rebase_strategy { get; set; }
         public string[] reviewers { get; set; }
         public string target_branch {get;set;}
+        public bool? vendor { get; set; }
     }
 }

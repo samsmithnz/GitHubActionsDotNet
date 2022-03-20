@@ -450,26 +450,12 @@ updates:
         //Arrange
         string yaml = @"version: 2
 updates:
-  - package-ecosystem: ""pip""
-    directory: ""/""
-    schedule:
-      interval: ""daily""
-    # Raise pull requests for version updates
-    # to pip against the `develop` branch
-    target-branch: ""develop""
-    # Labels on pull requests for version updates only
-    labels:
-      - ""pip dependencies""
-
-  - package-ecosystem: ""npm""
+  - package-ecosystem: ""bundler""
+    # Raise pull requests to update vendored dependencies that are checked in to the repository
+    vendor: true
     directory: ""/""
     schedule:
       interval: ""weekly""
-      # Check for npm updates on Sundays
-      day: ""sunday""
-    # Labels on pull requests for security and version updates
-    labels:
-      - ""npm dependencies""
 ";
 
         //Act
