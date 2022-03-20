@@ -518,14 +518,14 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-  - ""samsmithnz""
+  - ""SSNZ""
 # Maintain dependencies for GitHub Actions
 - package-ecosystem: ""github-actions""
   directory: ""/""
   schedule:
     interval: ""daily""
   assignees:
-  - ""samsmithnz""
+  - ""SSNZ""
 ";
 
         //Act
@@ -543,15 +543,15 @@ updates:
 registries:
   nuget-github:
     type: nuget-feed
-    url: https://nuget.pkg.github.com/SamSmithNZ-dotcom/index.json
-    username: samsmithnz@gmail.com
+    url: https://nuget.pkg.github.com/SSNZ-dotcom/index.json
+    username: myemail@gmail.com
     password: ${{ secrets.PACKAGE_PAT_TOKEN }}
   nuget-org:
     type: nuget-feed
     url: https://api.nuget.org/v3/index.json
 updates:
 - package-ecosystem: nuget
-  directory: ""/SamSmithNZ/SamSmithNZ.Service""
+  directory: ""/SSNZ/SSNZ.Service""
   registries:
     - nuget-github
     - nuget-org
@@ -561,9 +561,9 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-    - ""samsmithnz""
+    - ""SSNZ""
 - package-ecosystem: nuget
-  directory: ""/SamSmithNZ/SamSmithNZ.Web""
+  directory: ""/SSNZ/SSNZ.Web""
   registries:
     - nuget-github
     - nuget-org
@@ -573,9 +573,9 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-    - ""samsmithnz""
+    - ""SSNZ""
 - package-ecosystem: nuget
-  directory: ""/SamSmithNZ/SamSmithNZ.Tests""
+  directory: ""/SSNZ/SSNZ.Tests""
   registries:
     - nuget-github
     - nuget-org
@@ -585,9 +585,9 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-    - ""samsmithnz""
+    - ""SSNZ""
 - package-ecosystem: nuget
-  directory: ""/SamSmithNZ/SamSmithNZ.FunctionalTests""
+  directory: ""/SSNZ/SSNZ.FunctionalTests""
   registries:
     - nuget-github
     - nuget-org
@@ -597,14 +597,14 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-    - ""samsmithnz""
+    - ""SSNZ""
 # Maintain dependencies for GitHub Actions
 - package-ecosystem: ""github-actions""
   directory: ""/""
   schedule:
     interval: ""daily""
   assignees:
-  - ""samsmithnz""
+  - ""SSNZ""
 ";
 
         //Act
