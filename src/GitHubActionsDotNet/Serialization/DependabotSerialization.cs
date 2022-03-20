@@ -48,6 +48,10 @@ namespace GitHubActionsDotNet.Serialization
             //I can't use - in variable names, so replace _ with -
             yaml = yaml.Replace("package_ecosystem", "package-ecosystem");
             yaml = yaml.Replace("replaces_base", "replaces-base");
+            yaml = yaml.Replace("dependency_name", "dependency-name");
+            yaml = yaml.Replace("dependency_type", "dependency-type");
+            yaml = yaml.Replace("prefix_development", "prefix-development");
+            yaml = yaml.Replace("commit_message", "commit-message");
 
             return yaml;
         }
@@ -57,6 +61,10 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("package-ecosystem", "package_ecosystem");
             yaml = yaml.Replace("open-pull-requests-limit", "open_pull_requests_limit");
             yaml = yaml.Replace("replaces-base", "replaces_base");
+            yaml = yaml.Replace("dependency-name", "dependency_name");
+            yaml = yaml.Replace("dependency-type", "dependency_type");
+            yaml = yaml.Replace("prefix-development", "prefix_development");
+            yaml = yaml.Replace("commit-message", "commit_message");
 
             DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
             return root;

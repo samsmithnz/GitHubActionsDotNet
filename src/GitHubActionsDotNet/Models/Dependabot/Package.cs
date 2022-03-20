@@ -9,5 +9,7 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public Schedule schedule { get; set; }
         public List<string> assignees { get; set; }
         public string open_pull_requests_limit { get; set; }
+        public Allow[] allow { get; set; }
+        public CommitMessage commit_message {get;set;}
     }
 }
