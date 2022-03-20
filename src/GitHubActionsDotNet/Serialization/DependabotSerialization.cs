@@ -57,6 +57,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("pull_request_branch_name", "pull-request-branch-name");
             yaml = yaml.Replace("rebase_strategy", "rebase-strategy");
             yaml = yaml.Replace("target_branch", "target-branch");
+            yaml = yaml.Replace("versioning_strategy", "versioning-strategy");
 
             return yaml;
         }
@@ -75,6 +76,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("pull-request-branch-name", "pull_request_branch_name");
             yaml = yaml.Replace("rebase-strategy", "rebase_strategy");
             yaml = yaml.Replace("target-branch", "target_branch");
+            yaml = yaml.Replace("versioning-strategy", "versioning_strategy");
 
             DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
             return root;

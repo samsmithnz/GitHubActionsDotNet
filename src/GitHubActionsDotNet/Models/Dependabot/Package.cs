@@ -21,5 +21,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public string[] reviewers { get; set; }
         public string target_branch {get;set;}
         public bool? vendor { get; set; }
+        public string versioning_strategy { get; set; }
     }
 }
