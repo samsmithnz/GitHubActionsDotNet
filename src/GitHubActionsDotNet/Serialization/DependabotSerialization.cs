@@ -22,7 +22,7 @@ namespace GitHubActionsDotNet.Serialization
             }
 
             DependabotRoot root = new DependabotRoot();
-            List<Package> packages = new List<Package>();
+            List<Package<string>> packages = new List<Package<string>>();
             foreach (string file in files)
             {
                 FileInfo fileInfo = new FileInfo(file);
@@ -31,13 +31,13 @@ namespace GitHubActionsDotNet.Serialization
                 cleanedFilePath = cleanedFilePath.Replace(fileInfo.Name, "");
                 cleanedFilePath = "/" + cleanedFilePath.Replace("\\", "/");
                 string packageEcoSystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name);
-                Package package = CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
+                Package<string> package = DependabotPackageSerialization<string>.CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
                 packages.Add(package);
             }
             //Add actions
             if (includeActions == true)
             {
-                Package actionsPackage = CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
+                Package<string> actionsPackage = DependabotPackageSerialization<string>.CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
                 packages.Add(actionsPackage);
             }
             root.updates = packages;
@@ -81,45 +81,6 @@ namespace GitHubActionsDotNet.Serialization
 
             DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
             return root;
-        }
-
-        private static Package CreatePackage(string filePath,
-            string packageEcoSystem,
-            string interval = null,
-            string time = null,
-            string timezone = null,
-            List<string> assignees = null,
-            int openPRLimit = 0)
-        {
-            Package package = new Package()
-            {
-                package_ecosystem = packageEcoSystem,
-                directory = filePath,
-                assignees = assignees
-            };
-            if (interval != null ||
-                time != null ||
-                timezone != null)
-            {
-                package.schedule = new Schedule();
-                if (interval != null)
-                {
-                    package.schedule.interval = interval;
-                }
-                if (time != null)
-                {
-                    package.schedule.time = time;
-                }
-                if (timezone != null)
-                {
-                    package.schedule.timezone = timezone;
-                }
-            }
-            if (openPRLimit > 0)
-            {
-                package.open_pull_requests_limit = openPRLimit.ToString();
-            }
-            return package;
-        }
+        }    
     }
 }

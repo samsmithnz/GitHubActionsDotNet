@@ -2,7 +2,7 @@
 
 namespace GitHubActionsDotNet.Models.Dependabot
 {
-    public class Package
+    public class Package<T>
     {
         public string package_ecosystem { get; set; }
         public string directory { get; set; }
@@ -13,8 +13,8 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public CommitMessage commit_message { get; set; }
         public Ignore[] ignore { get; set; }
         public string insecure_external_code_execution { get; set; }
-        public string registries { get; set; }
-        //public string[] registries { get; set; }
+        //registries can be string or string[]
+        public T registries { get; set; }
         public string[] labels { get; set; }
         public int? milestone { get; set; }
         public PullRequestBranchName pull_request_branch_name { get; set; }
