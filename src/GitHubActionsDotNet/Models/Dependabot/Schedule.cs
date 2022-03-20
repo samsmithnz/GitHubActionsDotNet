@@ -9,5 +9,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         [YamlMember(ScalarStyle = ScalarStyle.DoubleQuoted)]
         public string time { get; set; }
         public string timezone { get; set; }
+        public string day { get; set; }
     }
 }
