@@ -290,37 +290,37 @@ updates:
     }
 
     //TODO: Need to refactor deserialization to work with registries, that can be string or string[]
-//    [TestMethod]
-//    public void RegistriesTest()
-//    {
-//        //Arrange
-//        string yaml = @"version: 2
-//registries:
-//  maven-github:
-//    type: maven-repository
-//    url: https://maven.pkg.github.com/octocat
-//    username: octocat
-//    password: ${{secrets.MY_ARTIFACTORY_PASSWORD}}
-//  npm-npmjs:
-//    type: npm-registry
-//    url: https://registry.npmjs.org
-//    username: octocat
-//    password: ${{secrets.MY_NPM_PASSWORD}}
-//updates:
-//  - package-ecosystem: ""gitsubmodule""
-//    directory: ""/""
-//    registries:
-//      - maven-github
-//    schedule:
-//      interval: ""monthly""
-//";
+    //    [TestMethod]
+    //    public void RegistriesTest()
+    //    {
+    //        //Arrange
+    //        string yaml = @"version: 2
+    //registries:
+    //  maven-github:
+    //    type: maven-repository
+    //    url: https://maven.pkg.github.com/octocat
+    //    username: octocat
+    //    password: ${{secrets.MY_ARTIFACTORY_PASSWORD}}
+    //  npm-npmjs:
+    //    type: npm-registry
+    //    url: https://registry.npmjs.org
+    //    username: octocat
+    //    password: ${{secrets.MY_NPM_PASSWORD}}
+    //updates:
+    //  - package-ecosystem: ""gitsubmodule""
+    //    directory: ""/""
+    //    registries:
+    //      - maven-github
+    //    schedule:
+    //      interval: ""monthly""
+    //";
 
-//        //Act
-//        DependabotRoot dependabot = DependabotSerialization.Deserialize(yaml);
+    //        //Act
+    //        DependabotRoot dependabot = DependabotSerialization.Deserialize(yaml);
 
-//        //Assert
-//        Assert.IsNotNull(dependabot);
-//    }
+    //        //Assert
+    //        Assert.IsNotNull(dependabot);
+    //    }
 
     [TestMethod]
     public void ReviewersTest()

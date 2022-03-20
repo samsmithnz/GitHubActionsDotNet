@@ -20,7 +20,7 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public PullRequestBranchName pull_request_branch_name { get; set; }
         public string rebase_strategy { get; set; }
         public string[] reviewers { get; set; }
-        public string target_branch {get;set;}
+        public string target_branch { get; set; }
         public bool? vendor { get; set; }
         public string versioning_strategy { get; set; }
     }
