@@ -57,8 +57,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
             }
             set
             {
-                //if (value != null && value.GetType().ToString() == "System.Collections.Generic.List`1[System.Object]")
-                //{
                 if (value != null)
                 {
                     _registries = Array.ConvertAll(((List<object>)value).ToArray(), o => (string)o);
@@ -67,11 +65,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
                 {
                     _registries = null;
                 }
-                //}
-                //else
-                //{
-                //    _registries = value;
-                //}
             }
         }
         public string[] labels { get; set; }
