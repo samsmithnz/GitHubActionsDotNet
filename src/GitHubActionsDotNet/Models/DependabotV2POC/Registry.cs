@@ -17,16 +17,6 @@
                 _value = value;
             }
         }
-
-        //public static implicit operator T(Registry<T> value)
-        //{
-        //    return value.Value;
-        //}
-
-        //public static implicit operator Registry<T>(T value)
-        //{
-        //    return new Registry<T> { Value = value };
-        //}
     }
 
     public class RegistryString : Registry<string>
@@ -65,5 +55,3 @@
         }
     }
 }
-
-

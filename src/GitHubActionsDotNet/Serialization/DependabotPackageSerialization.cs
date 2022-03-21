@@ -1,7 +1,5 @@
 ﻿using GitHubActionsDotNet.Models.Dependabot;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GitHubActionsDotNet.Serialization
 {
