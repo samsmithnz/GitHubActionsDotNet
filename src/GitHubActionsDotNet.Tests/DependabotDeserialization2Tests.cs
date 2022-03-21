@@ -50,7 +50,6 @@ packages:
         Assert.IsNotNull(root);
         Assert.AreEqual("test1", root.name);
         Assert.AreEqual("package1", root.packages[0].name);
-        Assert.AreEqual("abc", root.packages[0].registries); 
         Assert.AreEqual(2, ((string[])root.packages[0].registries).Length);
         Assert.AreEqual("abc", ((string[])root.packages[0].registries)[0]);
         Assert.AreEqual("xyz", ((string[])root.packages[0].registries)[1]);
@@ -92,7 +91,7 @@ packages:
             name = "test1",
             packages = new List<IPackage2>()
             {
-                new Package2<string>()
+                new Package2String()
                 {
                     name = "package1",
                     registries = "abc"
@@ -122,7 +121,7 @@ packages:
             name = "test1",
             packages = new List<IPackage2>()
             {
-                new Package2<string[]>()
+                new Package2StringArray()
                 {
                     name = "package1",
                     registries = new string [] {"abc","xyz" }
@@ -154,12 +153,12 @@ packages:
             name = "test1",
             packages = new List<IPackage2>()
             {
-                new Package2<string>()
+                new Package2String()
                 {
                     name = "package1",
                     registries = "abc"
                 },
-                new Package2<string[]>()
+                new Package2StringArray()
                 {
                     name = "package2",
                     registries = new string [] {"abc","xyz" }
