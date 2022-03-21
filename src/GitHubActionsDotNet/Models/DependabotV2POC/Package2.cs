@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GitHubActionsDotNet.Models.DependabotV2POC
 {
@@ -54,4 +52,5 @@ namespace GitHubActionsDotNet.Models.DependabotV2POC
         object registries { get; set; }
         Type Type { get; }
     }
+
 }
