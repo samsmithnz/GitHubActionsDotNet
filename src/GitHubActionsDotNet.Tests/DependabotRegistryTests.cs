@@ -27,6 +27,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -52,6 +53,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -72,6 +74,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -91,6 +94,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -111,6 +115,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -135,6 +140,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -159,6 +165,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -185,6 +192,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -209,6 +217,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -228,6 +237,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
+        Assert.AreEqual(1, dependabot.registries.Count);
     }
 
 

@@ -101,6 +101,23 @@ namespace GitHubActionsDotNet.Serialization
                 }
 
                 //Registries
+                if (jsonObject.TryGetProperty("registries", out jsonElement))
+                {
+                    root.registries = YamlSerialization.DeserializeYaml<IDictionary<string, Registry>>(jsonElement.ToString()); //JsonSerialization.(jsonElement.ToString());
+                    //foreach (JsonElement registriesItem in jsonElement.EnumerateArray())
+                    //{
+                    //    string registryYaml = registriesItem.ToString();
+                    //    if (root.registries == null)
+                    //    {
+                    //        root.registries = new Dictionary<string, Registry>();
+                    //    }
+                    //    KeyValuePair<string, Registry>? registryItem = ProcessRegistry(registryYaml);
+                    //    if (registryItem != null)
+                    //    {
+                    //        root.registries.Add((KeyValuePair<string, Registry>)registryItem);
+                    //    }
+                    //}
+                }
 
                 //Packages
                 if (jsonObject.TryGetProperty("updates", out jsonElement))
@@ -118,11 +135,21 @@ namespace GitHubActionsDotNet.Serialization
             }
 
             return root;
-        }    
+        }
 
         private static string ProcessVersion(string yaml)
         {
             return yaml.Replace("version:", "").Replace(System.Environment.NewLine, "").Trim();
+        }
+
+        private static KeyValuePair<string, Registry>? ProcessRegistry(string registryYaml)
+        {
+            KeyValuePair<string, Registry>? registry = null;
+            if (registryYaml != null)
+            {
+                registry = YamlSerialization.DeserializeYaml<KeyValuePair<string, Registry>>(registryYaml);
+            }
+            return registry;
         }
 
         private static IPackage ProcessPackage(string packageYaml)
