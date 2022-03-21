@@ -12,7 +12,7 @@ namespace GitHubActionsDotNet.Tests;
 public class DependabotDeserialization2Tests
 {
     [TestMethod]
-    public void Packages2DeserializeTest()
+    public void Packages2DeserializeStringTest()
     {
         //Arrange
         string yaml = @"name: test1
@@ -29,7 +29,58 @@ packages:
         Assert.AreEqual("test1", root.name);
         Assert.AreEqual("package1", root.packages[0].name);
         Assert.AreEqual("abc", root.packages[0].registries);
+    }
 
+    [TestMethod]
+    public void Packages2DeserializeStringArrayTest()
+    {
+        //Arrange
+        string yaml = @"name: test1
+packages:
+- name: package1
+  registries:
+  - abc
+  - xyz
+";
+
+        //Act
+        Root2 root = Serialization2.Deserialize(yaml);
+
+        //Assert
+        Assert.IsNotNull(root);
+        Assert.AreEqual("test1", root.name);
+        Assert.AreEqual("package1", root.packages[0].name);
+        Assert.AreEqual("abc", root.packages[0].registries); 
+        Assert.AreEqual(2, ((string[])root.packages[0].registries).Length);
+        Assert.AreEqual("abc", ((string[])root.packages[0].registries)[0]);
+        Assert.AreEqual("xyz", ((string[])root.packages[0].registries)[1]);
+    }
+
+    [TestMethod]
+    public void Packages2DeserializeStringAndStringArrayTest()
+    {
+        //Arrange
+        string yaml = @"name: test1
+packages:
+- name: package1
+  registries: abc
+- name: package2
+  registries:
+  - abc
+  - xyz
+";
+
+        //Act
+        Root2 root = Serialization2.Deserialize(yaml);
+
+        //Assert
+        Assert.IsNotNull(root);
+        Assert.AreEqual("test1", root.name);
+        Assert.AreEqual("package1", root.packages[0].name);
+        Assert.AreEqual("package2", root.packages[1].name);
+        Assert.AreEqual(2, ((string[])root.packages[1].registries).Length);
+        Assert.AreEqual("abc", ((string[])root.packages[1].registries)[0]);
+        Assert.AreEqual("xyz", ((string[])root.packages[1].registries)[1]);
     }
 
     [TestMethod]
