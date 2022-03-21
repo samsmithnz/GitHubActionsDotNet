@@ -9,7 +9,7 @@ namespace GitHubActionsDotNet.Tests;
 [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 [TestCategory("Dependabot")]
 [TestClass]
-public class DependabotDeserialization2Tests
+public class DependabotDeserializationV2POCTests
 {
     [TestMethod]
     public void Packages2DeserializeStringTest()

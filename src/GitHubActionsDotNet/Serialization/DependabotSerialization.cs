@@ -2,6 +2,7 @@
 using GitHubActionsDotNet.Models.Dependabot;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace GitHubActionsDotNet.Serialization
 {
@@ -22,7 +23,7 @@ namespace GitHubActionsDotNet.Serialization
             }
 
             DependabotRoot root = new DependabotRoot();
-            List<Package<string>> packages = new List<Package<string>>();
+            List<IPackage> packages = new List<IPackage>();
             foreach (string file in files)
             {
                 FileInfo fileInfo = new FileInfo(file);
@@ -31,13 +32,13 @@ namespace GitHubActionsDotNet.Serialization
                 cleanedFilePath = cleanedFilePath.Replace(fileInfo.Name, "");
                 cleanedFilePath = "/" + cleanedFilePath.Replace("\\", "/");
                 string packageEcoSystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name);
-                Package<string> package = DependabotPackageSerialization<string>.CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
+                IPackage package = DependabotPackageSerialization.CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
                 packages.Add(package);
             }
             //Add actions
             if (includeActions == true)
             {
-                Package<string> actionsPackage = DependabotPackageSerialization<string>.CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
+                IPackage actionsPackage = DependabotPackageSerialization.CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
                 packages.Add(actionsPackage);
             }
             root.updates = packages;
@@ -79,8 +80,66 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("target-branch", "target_branch");
             yaml = yaml.Replace("versioning-strategy", "versioning_strategy");
 
-            DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
+            //DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
+            //convert the yaml into json, it's easier to parse
+            JsonElement jsonObject = new JsonElement();
+            if (yaml != null)
+            {
+                jsonObject = JsonSerialization.DeserializeStringToJsonElement(yaml);
+            }
+
+            //Build up the GitHub object piece by piece
+            DependabotRoot root = new DependabotRoot();
+
+            if (jsonObject.ValueKind != JsonValueKind.Undefined)
+            {
+                //Version
+                if (jsonObject.TryGetProperty("name", out JsonElement jsonElement))
+                {
+                    string nameYaml = jsonElement.ToString();
+                    root.version = ProcessVersion(nameYaml);
+                }
+
+                //Registries
+
+                //Packages
+                if (jsonObject.TryGetProperty("updates", out jsonElement))
+                {
+                    foreach (JsonElement packagesItem in jsonElement.EnumerateArray())
+                    {
+                        string packageYaml = packagesItem.ToString();
+                        if (root.updates == null)
+                        {
+                            root.updates = new List<IPackage>();
+                        }
+                        root.updates.Add(ProcessPackage(packageYaml));
+                    }
+                }
+            }
+
             return root;
         }    
+
+        private static string ProcessVersion(string yaml)
+        {
+            return yaml.Replace("version:", "").Replace(System.Environment.NewLine, "").Trim();
+        }
+
+        private static IPackage ProcessPackage(string packageYaml)
+        {
+            IPackage package = null;
+            if (packageYaml != null)
+            {
+                try
+                {
+                    package = YamlSerialization.DeserializeYaml<PackageString>(packageYaml);
+                }
+                catch
+                {
+                    package = YamlSerialization.DeserializeYaml<PackageStringArray>(packageYaml);
+                }
+            }
+            return package;
+        }
     }
 }

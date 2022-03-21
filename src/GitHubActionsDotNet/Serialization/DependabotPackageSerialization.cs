@@ -3,22 +3,36 @@ using System.Collections.Generic;
 
 namespace GitHubActionsDotNet.Serialization
 {
-    public static class DependabotPackageSerialization<T>
+    public static class DependabotPackageSerialization
     {
-        public static Package<T> CreatePackage(string filePath,
+        public static IPackage CreatePackage(string filePath,
            string packageEcoSystem,
            string interval = null,
            string time = null,
            string timezone = null,
            List<string> assignees = null,
-           int openPRLimit = 0)
+           int openPRLimit = 0,
+           string registryString = null,
+           string[] registryStringArray = null)
         {
-            Package<T> package = new Package<T>()
+            IPackage package;
+            if (registryString != null)
             {
-                package_ecosystem = packageEcoSystem,
-                directory = filePath,
-                assignees = assignees
-            };
+                package = new PackageString
+                {
+                    registries = registryString
+                };
+            }
+            else
+            {
+                package = new PackageStringArray
+                {
+                    registries = registryStringArray
+                };
+            }
+            package.package_ecosystem = packageEcoSystem;
+            package.directory = filePath;
+            package.assignees = assignees;
             if (interval != null ||
                 time != null ||
                 timezone != null)

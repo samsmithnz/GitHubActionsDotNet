@@ -38,7 +38,7 @@ namespace GitHubActionsDotNet.Models.DependabotV2POC
             }
             set
             {
-                if (value.GetType().ToString() == "System.Collections.Generic.List`1[System.Object]")//typeof(List<object>).GetType().ToString())
+                if (value.GetType().ToString() == "System.Collections.Generic.List`1[System.Object]")
                 {
                     _result = Array.ConvertAll(((List<object>)value).ToArray(), o => (string)o);
                 }
