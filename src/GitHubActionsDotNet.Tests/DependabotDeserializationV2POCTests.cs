@@ -1,6 +1,4 @@
-using GitHubActionsDotNet.Models.Dependabot;
 using GitHubActionsDotNet.Models.DependabotV2POC;
-using GitHubActionsDotNet.Serialization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
