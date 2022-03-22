@@ -3,17 +3,16 @@ using System.Collections.Generic;
 
 namespace GitHubActionsDotNet.Models.DependabotV2POC
 {
-    public interface IPackage2
-    {
-        string name { get; set; }
-        dynamic registries { get; set; }
-    }
-
-    public class Package2String : IPackage2
+    public class Package2
     {
         public string name { get; set; }
+        public dynamic registries { get; set; }
+    }
+
+    public class Package2String : Package2
+    {
         private string _result;
-        public dynamic registries
+        public new dynamic registries
         {
             get
             {
@@ -26,11 +25,10 @@ namespace GitHubActionsDotNet.Models.DependabotV2POC
         }
     }
 
-    public class Package2StringArray : IPackage2
+    public class Package2StringArray : Package2
     {
-        public string name { get; set; }
         private string[] _result;
-        public dynamic registries
+        public new dynamic registries
         {
             get
             {

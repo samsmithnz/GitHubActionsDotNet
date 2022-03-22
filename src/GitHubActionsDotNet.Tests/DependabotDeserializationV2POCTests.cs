@@ -87,7 +87,7 @@ packages:
         Root2 root = new()
         {
             name = "test1",
-            packages = new List<IPackage2>()
+            packages = new List<Package2>()
             {
                 new Package2String()
                 {
@@ -117,7 +117,7 @@ packages:
         Root2 root = new()
         {
             name = "test1",
-            packages = new List<IPackage2>()
+            packages = new List<Package2>()
             {
                 new Package2StringArray()
                 {
@@ -149,7 +149,7 @@ packages:
         Root2 root = new()
         {
             name = "test1",
-            packages = new List<IPackage2>()
+            packages = new List<Package2>()
             {
                 new Package2String()
                 {

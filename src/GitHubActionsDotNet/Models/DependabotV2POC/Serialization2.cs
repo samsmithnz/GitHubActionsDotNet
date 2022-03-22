@@ -39,7 +39,7 @@ namespace GitHubActionsDotNet.Models.DependabotV2POC
                         string packageYaml = packagesItem.ToString();
                         if (root.packages == null)
                         {
-                            root.packages = new List<IPackage2>();
+                            root.packages = new List<Package2>();
                         }
                         root.packages.Add(ProcessPackage(packageYaml));
                     }
@@ -54,18 +54,18 @@ namespace GitHubActionsDotNet.Models.DependabotV2POC
             return nameYaml.Replace("name:", "").Replace(System.Environment.NewLine, "").Trim();
         }
 
-        public static IPackage2 ProcessPackage(string packageYaml)
+        public static Package2 ProcessPackage(string packageYaml)
         {
-            IPackage2 package = null;
+            Package2 package = null;
             if (packageYaml != null)
             {
                 try
                 {
-                    package = YamlSerialization.DeserializeYaml<Package2String>(packageYaml);
+                    package = YamlSerialization.DeserializeYaml<Package2StringArray>(packageYaml);
                 }
                 catch
                 {
-                    package = YamlSerialization.DeserializeYaml<Package2StringArray>(packageYaml);
+                    package = YamlSerialization.DeserializeYaml<Package2String>(packageYaml);
                 }
             }
             return package;
