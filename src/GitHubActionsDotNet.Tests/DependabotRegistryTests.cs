@@ -28,6 +28,11 @@ registries:
         //Assert
         Assert.IsNotNull(dependabot);
         Assert.AreEqual(1, dependabot.registries.Count);
+        Assert.IsTrue(dependabot.registries.ContainsKey("composer"));
+        Assert.AreEqual("composer-repository", dependabot.registries["composer"].type);
+        Assert.AreEqual("https://repo.packagist.com/example-company/", dependabot.registries["composer"].url);
+        Assert.AreEqual("octocat", dependabot.registries["composer"].username);
+        Assert.AreEqual("${{secrets.MY_PACKAGIST_PASSWORD}}", dependabot.registries["composer"].password);
     }
 
     [TestMethod]
@@ -53,7 +58,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
-        Assert.AreEqual(1, dependabot.registries.Count);
+        Assert.AreEqual(2, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -140,7 +145,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
-        Assert.AreEqual(1, dependabot.registries.Count);
+        Assert.AreEqual(2, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -165,7 +170,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
-        Assert.AreEqual(1, dependabot.registries.Count);
+        Assert.AreEqual(2, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -192,7 +197,7 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
-        Assert.AreEqual(1, dependabot.registries.Count);
+        Assert.AreEqual(2, dependabot.registries.Count);
     }
 
     [TestMethod]
@@ -217,7 +222,8 @@ registries:
 
         //Assert
         Assert.IsNotNull(dependabot);
-        Assert.AreEqual(1, dependabot.registries.Count);
+        Assert.AreEqual(2, dependabot.registries.Count);
+        Assert.AreEqual("rubygems-server", dependabot.registries["ruby-example"].type);
     }
 
     [TestMethod]
