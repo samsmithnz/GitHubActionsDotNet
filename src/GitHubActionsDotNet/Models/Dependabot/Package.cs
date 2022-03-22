@@ -48,7 +48,7 @@ namespace GitHubActionsDotNet.Models.Dependabot
     }
 
     //The base package class implementation
-    public class Package 
+    public class Package
     {
         public string package_ecosystem { get; set; }
         public string directory { get; set; }
