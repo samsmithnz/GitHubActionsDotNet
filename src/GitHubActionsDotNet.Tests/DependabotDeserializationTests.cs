@@ -518,14 +518,93 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-  - ""samsmithnz""
+  - ""SSNZ""
 # Maintain dependencies for GitHub Actions
 - package-ecosystem: ""github-actions""
   directory: ""/""
   schedule:
     interval: ""daily""
   assignees:
-  - ""samsmithnz""
+  - ""SSNZ""
+";
+
+        //Act
+        DependabotRoot dependabot = DependabotSerialization.Deserialize(yaml);
+
+        //Assert
+        Assert.IsNotNull(dependabot);
+    }
+
+    [TestMethod]
+    public void SSNZTest()
+    {
+        //Arrange
+        string yaml = @"version: 2
+registries:
+  nuget-github:
+    type: nuget-feed
+    url: https://nuget.pkg.github.com/SSNZ-dotcom/index.json
+    username: myemail@gmail.com
+    password: ${{ secrets.PACKAGE_PAT_TOKEN }}
+  nuget-org:
+    type: nuget-feed
+    url: https://api.nuget.org/v3/index.json
+updates:
+- package-ecosystem: nuget
+  directory: ""/SSNZ/SSNZ.Service""
+  registries:
+    - nuget-github
+    - nuget-org
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""SSNZ""
+- package-ecosystem: nuget
+  directory: ""/SSNZ/SSNZ.Web""
+  registries:
+    - nuget-github
+    - nuget-org
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""SSNZ""
+- package-ecosystem: nuget
+  directory: ""/SSNZ/SSNZ.Tests""
+  registries:
+    - nuget-github
+    - nuget-org
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""SSNZ""
+- package-ecosystem: nuget
+  directory: ""/SSNZ/SSNZ.FunctionalTests""
+  registries:
+    - nuget-github
+    - nuget-org
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""SSNZ""
+# Maintain dependencies for GitHub Actions
+- package-ecosystem: ""github-actions""
+  directory: ""/""
+  schedule:
+    interval: ""daily""
+  assignees:
+  - ""SSNZ""
 ";
 
         //Act

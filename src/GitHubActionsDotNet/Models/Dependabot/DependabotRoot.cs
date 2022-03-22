@@ -10,7 +10,9 @@ namespace GitHubActionsDotNet.Models.Dependabot
         }
 
         public string version { get; set; }
-        public Dictionary<string, Registry> registries { get; set; }
+        //Using IDictornary allows me to use the .Add functionality
+        public IDictionary<string, Registry> registries { get; set; }
+        //Using IPackage, allows me to have multiple class implementations in the same list
         public List<Package> updates { get; set; }
     }
 }

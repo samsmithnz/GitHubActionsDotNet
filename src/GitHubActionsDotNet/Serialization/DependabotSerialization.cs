@@ -2,6 +2,7 @@
 using GitHubActionsDotNet.Models.Dependabot;
 using System.Collections.Generic;
 using System.IO;
+using System.Text.Json;
 
 namespace GitHubActionsDotNet.Serialization
 {
@@ -79,24 +80,96 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("target-branch", "target_branch");
             yaml = yaml.Replace("versioning-strategy", "versioning_strategy");
 
-            DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
+            //DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
+            //convert the yaml into json, it's easier to parse
+            JsonElement jsonObject = new JsonElement();
+            if (yaml != null)
+            {
+                jsonObject = JsonSerialization.DeserializeStringToJsonElement(yaml);
+            }
+
+            //Build up the GitHub object piece by piece
+            DependabotRoot root = new DependabotRoot();
+
+            if (jsonObject.ValueKind != JsonValueKind.Undefined)
+            {
+                //Version
+                if (jsonObject.TryGetProperty("name", out JsonElement jsonElement))
+                {
+                    root.version = jsonElement.ToString().Replace("version:", "").Replace(System.Environment.NewLine, "").Trim();
+                }
+
+                //Registries
+                if (jsonObject.TryGetProperty("registries", out jsonElement))
+                {
+                    root.registries = YamlSerialization.DeserializeYaml<IDictionary<string, Registry>>(jsonElement.ToString()); //JsonSerialization.(jsonElement.ToString());
+                }
+
+                //Packages
+                if (jsonObject.TryGetProperty("updates", out jsonElement))
+                {
+                    foreach (JsonElement packagesItem in jsonElement.EnumerateArray())
+                    {
+                        string packageYaml = packagesItem.ToString();
+                        if (root.updates == null)
+                        {
+                            root.updates = new List<Package>();
+                        }
+                        root.updates.Add(ProcessPackage(packageYaml));
+                    }
+                }
+            }
+
             return root;
         }
 
-        private static Package CreatePackage(string filePath,
-            string packageEcoSystem,
-            string interval = null,
-            string time = null,
-            string timezone = null,
-            List<string> assignees = null,
-            int openPRLimit = 0)
+        private static Package ProcessPackage(string packageYaml)
         {
-            Package package = new Package()
+            Package package = null;
+            if (packageYaml != null)
             {
-                package_ecosystem = packageEcoSystem,
-                directory = filePath,
-                assignees = assignees
-            };
+                //Try the string[] variable first - I think that will be the most common
+                try
+                {
+                    package = YamlSerialization.DeserializeYaml<PackageStringArray>(packageYaml);
+                }
+                catch
+                {
+                    //If it didn't work, try the simple string one, the next most common
+                    package = YamlSerialization.DeserializeYaml<PackageString>(packageYaml);
+                }
+            }
+            return package;
+        }
+
+        private static Package CreatePackage(string filePath,
+           string packageEcoSystem,
+           string interval = null,
+           string time = null,
+           string timezone = null,
+           List<string> assignees = null,
+           int openPRLimit = 0,
+           string registryString = null,
+           string[] registryStringArray = null)
+        {
+            Package package;
+            if (registryString != null)
+            {
+                package = new PackageString
+                {
+                    registries = registryString
+                };
+            }
+            else
+            {
+                package = new PackageStringArray
+                {
+                    registries = registryStringArray
+                };
+            }
+            package.package_ecosystem = packageEcoSystem;
+            package.directory = filePath;
+            package.assignees = assignees;
             if (interval != null ||
                 time != null ||
                 timezone != null)
