@@ -5,7 +5,7 @@ namespace GitHubActionsDotNet.Serialization
 {
     public static class DependabotPackageSerialization
     {
-        public static IPackage CreatePackage(string filePath,
+        public static Package CreatePackage(string filePath,
            string packageEcoSystem,
            string interval = null,
            string time = null,
@@ -15,7 +15,7 @@ namespace GitHubActionsDotNet.Serialization
            string registryString = null,
            string[] registryStringArray = null)
         {
-            IPackage package;
+            Package package;
             if (registryString != null)
             {
                 package = new PackageString

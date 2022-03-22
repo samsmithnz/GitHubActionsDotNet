@@ -23,7 +23,7 @@ namespace GitHubActionsDotNet.Serialization
             }
 
             DependabotRoot root = new DependabotRoot();
-            List<IPackage> packages = new List<IPackage>();
+            List<Package> packages = new List<Package>();
             foreach (string file in files)
             {
                 FileInfo fileInfo = new FileInfo(file);
@@ -32,13 +32,13 @@ namespace GitHubActionsDotNet.Serialization
                 cleanedFilePath = cleanedFilePath.Replace(fileInfo.Name, "");
                 cleanedFilePath = "/" + cleanedFilePath.Replace("\\", "/");
                 string packageEcoSystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name);
-                IPackage package = DependabotPackageSerialization.CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
+                Package package = DependabotPackageSerialization.CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
                 packages.Add(package);
             }
             //Add actions
             if (includeActions == true)
             {
-                IPackage actionsPackage = DependabotPackageSerialization.CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
+                Package actionsPackage = DependabotPackageSerialization.CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
                 packages.Add(actionsPackage);
             }
             root.updates = packages;
@@ -96,27 +96,13 @@ namespace GitHubActionsDotNet.Serialization
                 //Version
                 if (jsonObject.TryGetProperty("name", out JsonElement jsonElement))
                 {
-                    string nameYaml = jsonElement.ToString();
-                    root.version = ProcessVersion(nameYaml);
+                    root.version = jsonElement.ToString().Replace("version:", "").Replace(System.Environment.NewLine, "").Trim();
                 }
 
                 //Registries
                 if (jsonObject.TryGetProperty("registries", out jsonElement))
                 {
                     root.registries = YamlSerialization.DeserializeYaml<IDictionary<string, Registry>>(jsonElement.ToString()); //JsonSerialization.(jsonElement.ToString());
-                    //foreach (JsonElement registriesItem in jsonElement.EnumerateArray())
-                    //{
-                    //    string registryYaml = registriesItem.ToString();
-                    //    if (root.registries == null)
-                    //    {
-                    //        root.registries = new Dictionary<string, Registry>();
-                    //    }
-                    //    KeyValuePair<string, Registry>? registryItem = ProcessRegistry(registryYaml);
-                    //    if (registryItem != null)
-                    //    {
-                    //        root.registries.Add((KeyValuePair<string, Registry>)registryItem);
-                    //    }
-                    //}
                 }
 
                 //Packages
@@ -127,7 +113,7 @@ namespace GitHubActionsDotNet.Serialization
                         string packageYaml = packagesItem.ToString();
                         if (root.updates == null)
                         {
-                            root.updates = new List<IPackage>();
+                            root.updates = new List<Package>();
                         }
                         root.updates.Add(ProcessPackage(packageYaml));
                     }
@@ -137,33 +123,20 @@ namespace GitHubActionsDotNet.Serialization
             return root;
         }
 
-        private static string ProcessVersion(string yaml)
+        private static Package ProcessPackage(string packageYaml)
         {
-            return yaml.Replace("version:", "").Replace(System.Environment.NewLine, "").Trim();
-        }
-
-        private static KeyValuePair<string, Registry>? ProcessRegistry(string registryYaml)
-        {
-            KeyValuePair<string, Registry>? registry = null;
-            if (registryYaml != null)
-            {
-                registry = YamlSerialization.DeserializeYaml<KeyValuePair<string, Registry>>(registryYaml);
-            }
-            return registry;
-        }
-
-        private static IPackage ProcessPackage(string packageYaml)
-        {
-            IPackage package = null;
+            Package package = null;
             if (packageYaml != null)
             {
+                //Try the string[] variable first - I think that will be the most common
                 try
                 {
-                    package = YamlSerialization.DeserializeYaml<PackageString>(packageYaml);
+                    package = YamlSerialization.DeserializeYaml<PackageStringArray>(packageYaml);
                 }
                 catch
                 {
-                    package = YamlSerialization.DeserializeYaml<PackageStringArray>(packageYaml);
+                    //If it didn't work, try the simple string one, the next most common
+                    package = YamlSerialization.DeserializeYaml<PackageString>(packageYaml);
                 }
             }
             return package;
