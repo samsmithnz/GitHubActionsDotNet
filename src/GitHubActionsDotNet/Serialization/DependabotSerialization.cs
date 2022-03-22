@@ -32,13 +32,13 @@ namespace GitHubActionsDotNet.Serialization
                 cleanedFilePath = cleanedFilePath.Replace(fileInfo.Name, "");
                 cleanedFilePath = "/" + cleanedFilePath.Replace("\\", "/");
                 string packageEcoSystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name);
-                Package package = DependabotPackageSerialization.CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
+                Package package = CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
                 packages.Add(package);
             }
             //Add actions
             if (includeActions == true)
             {
-                Package actionsPackage = DependabotPackageSerialization.CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
+                Package actionsPackage = CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
                 packages.Add(actionsPackage);
             }
             root.updates = packages;
@@ -138,6 +138,59 @@ namespace GitHubActionsDotNet.Serialization
                     //If it didn't work, try the simple string one, the next most common
                     package = YamlSerialization.DeserializeYaml<PackageString>(packageYaml);
                 }
+            }
+            return package;
+        }
+
+        private static Package CreatePackage(string filePath,
+           string packageEcoSystem,
+           string interval = null,
+           string time = null,
+           string timezone = null,
+           List<string> assignees = null,
+           int openPRLimit = 0,
+           string registryString = null,
+           string[] registryStringArray = null)
+        {
+            Package package;
+            if (registryString != null)
+            {
+                package = new PackageString
+                {
+                    registries = registryString
+                };
+            }
+            else
+            {
+                package = new PackageStringArray
+                {
+                    registries = registryStringArray
+                };
+            }
+            package.package_ecosystem = packageEcoSystem;
+            package.directory = filePath;
+            package.assignees = assignees;
+            if (interval != null ||
+                time != null ||
+                timezone != null)
+            {
+                package.schedule = new Schedule();
+                if (interval != null)
+                {
+                    package.schedule.interval = interval;
+                }
+                if (time != null)
+                {
+                    package.schedule.time = time;
+                }
+                if (timezone != null)
+                {
+                    package.schedule.timezone = timezone;
+                }
+            }
+            if (openPRLimit > 0)
+            {
+                package.open_pull_requests_limit = openPRLimit.ToString();
             }
             return package;
         }
