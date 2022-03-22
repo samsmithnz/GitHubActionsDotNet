@@ -61,11 +61,11 @@ namespace GitHubActionsDotNet.Models.DependabotV2POC
             {
                 try
                 {
-                    package = YamlSerialization.DeserializeYaml<Package2StringArray>(packageYaml);
+                    package = YamlSerialization.DeserializeYaml<Package2String>(packageYaml);
                 }
                 catch
                 {
-                    package = YamlSerialization.DeserializeYaml<Package2String>(packageYaml);
+                    package = YamlSerialization.DeserializeYaml<Package2StringArray>(packageYaml);
                 }
             }
             return package;
