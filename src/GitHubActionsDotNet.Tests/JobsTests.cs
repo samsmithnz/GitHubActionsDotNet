@@ -40,7 +40,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 30
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: echo ""hello world""
       shell: cmd
 ";
@@ -82,7 +82,7 @@ jobs:
     env:
       Variable1: new variable
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: echo ""hello world""
 ";
 
@@ -138,7 +138,7 @@ jobs:
       targetArtifactName: nuget-windows-signed
       pathToNugetPackages: '**/*.nupkg'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: echo ""hello world""
 ";
         expected = UtilityTests.TrimNewLines(expected);
@@ -191,7 +191,7 @@ jobs:
       targetArtifactName: nuget-windows-signed
       pathToNugetPackages: '**/*.nupkg'
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: echo ""hello world""
 ";
         expected = UtilityTests.TrimNewLines(expected);
@@ -237,7 +237,7 @@ jobs:
     env:
       Variable1: new variable
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: echo ""hello world""
 ";
 
@@ -283,7 +283,7 @@ jobs:
     env:
       Variable1: new variable
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: echo ""hello world""
 ";
         expected = UtilityTests.TrimNewLines(expected);
@@ -317,12 +317,12 @@ jobs:
     name: Build job
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3
       with:
         repository: git://MyProject/MyRepo
     - name: GitHub checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: MyGitHubRepo
 ";
@@ -366,7 +366,7 @@ jobs:
     environment:
       name: prod
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: echo ""hello world""
 ";
         //url: https://abel-node-gh-accelerator.azurewebsites.net

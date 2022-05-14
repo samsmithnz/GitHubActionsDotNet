@@ -61,7 +61,7 @@ jobs:
     name: Build job
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - run: echo ""hello world""
       shell: cmd
   release:
