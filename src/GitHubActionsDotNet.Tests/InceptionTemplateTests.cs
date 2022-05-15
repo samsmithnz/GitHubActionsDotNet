@@ -128,7 +128,7 @@ jobs:
     - name: .NET pack
       run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'
     - name: Upload nuget package back to GitHub
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: nugetPackage
         path: src/GitHubActionsDotNet/bin/Release

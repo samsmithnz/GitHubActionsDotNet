@@ -46,7 +46,7 @@ namespace GitHubActionsDotNet.Helpers
         }
 
         //- name: Upload nuget package back to GitHub
-        //  uses: actions/upload-artifact@v2
+        //  uses: actions/upload-artifact@v3
         //  if: runner.OS == 'Linux' #Only pack the Linux nuget package
         //  with:
         //    name: nugetPackage
@@ -58,7 +58,7 @@ namespace GitHubActionsDotNet.Helpers
             Dictionary<string, string> env = null)
         {
             Step step = BaseStep.AddBaseStep(name, _if, env);
-            step.uses = "actions/upload-artifact@v2";
+            step.uses = "actions/upload-artifact@v3";
             step.with = new Dictionary<string, string>()
             {
                 { "name", packageName },
