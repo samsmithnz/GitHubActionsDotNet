@@ -16,7 +16,7 @@ namespace GitHubActionsDotNet.Helpers
                 name = "Setup .NET SDK";
             }
             Step step = BaseStep.AddBaseStep(name, _if, env);
-            step.uses = "actions/setup-dotnet@v1";
+            step.uses = "actions/setup-dotnet@v2";
             step.with = new Dictionary<string, string>();
             step.with.Add("dotnet-version", dotnetVersion);
             return step;

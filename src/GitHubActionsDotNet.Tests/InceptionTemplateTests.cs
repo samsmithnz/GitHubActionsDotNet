@@ -120,7 +120,7 @@ jobs:
         echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
         echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x
     - name: .NET test
@@ -150,7 +150,7 @@ jobs:
         name: nugetPackage
         path: nugetPackage
     - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: 6.x
     - name: Create Release
