@@ -7,7 +7,7 @@ namespace GitHubActionsDotNet.Models
     {
         public string name { get; set; }
         public Trigger on { get; set; }
-        public Dictionary<string, string> env { get; set; }
+        public List<KeyValuePair<string, string>> env { get; set; } //While technically this should be a Dictionary<string,string> type, there are a few situations with Azure DevOps migrations that we want to translate over completely
         public Dictionary<string, Job> jobs { get; set; }
 
         //This is used for tracking errors, so we don't want it to convert to YAML
