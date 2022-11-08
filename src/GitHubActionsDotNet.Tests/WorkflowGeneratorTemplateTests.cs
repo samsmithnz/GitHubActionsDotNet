@@ -34,6 +34,7 @@ public class WorkflowGeneratorTemplateTests
         List<KeyValuePair<string, string>> envList = new()
         {
             new("AZURE_FUNCTIONAPP_NAME", azure_resource_name),
+            new("AZURE_FUNCTIONAPP_NAME", azure_resource_name+"_1"),
             new("AZURE_FUNCTIONAPP_PACKAGE_PATH", package_path),
             new("CONFIGURATION", "Release"),
             new("DOTNET_CORE_VERSION", dotnet_version),
@@ -76,6 +77,7 @@ on:
     - main
 env:
   AZURE_FUNCTIONAPP_NAME: myazurefunction
+  AZURE_FUNCTIONAPP_NAME: myazurefunction_1
   AZURE_FUNCTIONAPP_PACKAGE_PATH: function/function.zip
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 3.1.x
