@@ -41,14 +41,14 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: .NET test
-      run: dotnet test src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj -c Release --nologo -p:CollectCoverage=true -p:CoverletOutput=TestResults/ -p:CoverletOutputFormat=lcov 
+      run: dotnet test src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj -c Release --nologo -e:CollectCoverage=true -e:CoverletOutput=TestResults/ -e:CoverletOutputFormat=lcov 
 
-    #- name: Publish coverage report to coveralls.io
-    #  uses: coverallsapp/github-action@master
-    #  if: runner.OS == 'Linux' #Only push the Linux coverage
-    #  with:
-    #    github-token: ${{ secrets.GITHUB_TOKEN }}
-    #    path-to-lcov: src/GitHubActionsDotNet.Tests/TestResults/coverage.info
+    - name: Publish coverage report to coveralls.io
+      uses: coverallsapp/github-action@master
+      if: runner.OS == 'Linux' #Only push the Linux coverage
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        path-to-lcov: src/GitHubActionsDotNet.Tests/TestResults/coverage.info
 
     #Pack the code into a NuGet package
     - name: .NET pack
