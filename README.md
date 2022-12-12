@@ -2,8 +2,10 @@
 A project that contains models and helper templates to create GitHub Actions with .NET, and then convert/serialize it to a yaml file. Also supports creation of Dependabot configuration yaml.
 
 [![CI/ CD](https://github.com/samsmithnz/GitHubActionsDotNet/actions/workflows/CICD.yml/badge.svg)](https://github.com/samsmithnz/GitHubActionsDotNet/actions/workflows/CICD.yml)
+[![Coverage Status](https://coveralls.io/repos/github/samsmithnz/GitHubActionsDotNet/badge.svg?branch=main)](https://coveralls.io/github/samsmithnz/GitHubActionsDotNet?branch=main)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=samsmithnz_GitHubActionsDotNet&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=samsmithnz_GitHubActionsDotNet)
 [![Latest NuGet package](https://img.shields.io/nuget/v/GitHubActionsDotNet)](https://www.nuget.org/packages/GitHubActionsDotNet/)
-![Current Release](https://img.shields.io/github/release/samsmithnz/GitHubActionsDotNet/all.svg)
+[![Current Release](https://img.shields.io/github/release/samsmithnz/GitHubActionsDotNet/all.svg)](https://github.com/samsmithnz/GitHubActionsDotNet/releases)
 
 Work in progress. 
 - Currently contains models for most GitHub Actions 
