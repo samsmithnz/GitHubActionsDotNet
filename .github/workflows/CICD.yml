@@ -68,7 +68,7 @@ jobs:
     if: github.ref == 'refs/heads/main' 
     steps:
       - name: Run Sonarcloud test
-        uses: samsmithnz@SamsDotNetSonarCloudAction@1.04
+        uses: samsmithnz/SamsDotNetSonarCloudAction@1.04
         with:
           projects: 'Sample\ConsoleApp1\ConsoleApp1.csproj'
           dotnet-version: '7.0.x'
