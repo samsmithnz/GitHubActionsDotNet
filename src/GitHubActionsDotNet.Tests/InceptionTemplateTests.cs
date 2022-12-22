@@ -150,9 +150,9 @@ jobs:
         name: nugetPackage
         path: nugetPackage
     - name: Setup .NET
-      uses: actions/setup-dotnet@v2
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.x
+        dotnet-version: 7.x
     - name: Create Release
       uses: actions/create-release@v1
       env:
