@@ -1,6 +1,8 @@
 ﻿using GitHubActionsDotNet.Helpers;
 using GitHubActionsDotNet.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace GitHubActionsDotNet.Tests;
 
@@ -23,23 +25,30 @@ public class WorkflowGeneratorTemplateTests
 
         //Arrange
         JobHelper jobHelper = new();
-        GitHubActionsRoot root = new();
-        root.name = workflow_name;
-        root.on = TriggerHelper.AddStandardPushTrigger(branch_name);
-        root.env = new()
+        GitHubActionsRoot root = new()
         {
-            { "AZURE_FUNCTIONAPP_NAME", azure_resource_name },
-            { "AZURE_FUNCTIONAPP_PACKAGE_PATH", package_path },
-            { "CONFIGURATION", "Release" },
-            { "DOTNET_CORE_VERSION", dotnet_version },
-            { "WORKING_DIRECTORY", project_root },
-            { "DOTNET_CLI_TELEMETRY_OPTOUT", "1" },
-            { "DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1" },
-            { "DOTNET_NOLOGO", "true" },
-            { "DOTNET_GENERATE_ASPNET_CERTIFICATE", "false" },
-            { "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH", "false" },
-            { "DOTNET_MULTILEVEL_LOOKUP", "0" }
+            name = workflow_name,
+            on = TriggerHelper.AddStandardPushTrigger(branch_name)
         };
+
+        List<KeyValuePair<string, string>> envList = new()
+        {
+            new("AZURE_FUNCTIONAPP_NAME", azure_resource_name),
+            new("AZURE_FUNCTIONAPP_NAME", azure_resource_name+"_1"),
+            new("AZURE_FUNCTIONAPP_PACKAGE_PATH", package_path),
+            new("CONFIGURATION", "Release"),
+            new("DOTNET_CORE_VERSION", dotnet_version),
+            new("WORKING_DIRECTORY", project_root),
+            new("DOTNET_CLI_TELEMETRY_OPTOUT", "1"),
+            new("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1"),
+            new("DOTNET_NOLOGO", "true"),
+            new("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
+            new("DOTNET_ADD_GLOBAL_TOOLS_TO_PATH", "false"),
+            new("DOTNET_MULTILEVEL_LOOKUP", "0")
+        };
+        root.env = (IDictionary<string, string>)envList.ToDictionary(x => x.Key, x => x.Value);
+
+
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             DotNetStepHelper.AddDotNetSetupStep("Setup .NET Core","${{ env.DOTNET_CORE_VERSION }}"),
@@ -68,6 +77,7 @@ on:
     - main
 env:
   AZURE_FUNCTIONAPP_NAME: myazurefunction
+  AZURE_FUNCTIONAPP_NAME: myazurefunction_1
   AZURE_FUNCTIONAPP_PACKAGE_PATH: function/function.zip
   CONFIGURATION: Release
   DOTNET_CORE_VERSION: 3.1.x
@@ -122,23 +132,28 @@ jobs:
 
         //Arrange
         JobHelper jobHelper = new();
-        GitHubActionsRoot root = new();
-        root.name = workflow_name;
-        root.on = TriggerHelper.AddStandardPushTrigger(branch_name);
-        root.env = new()
+        GitHubActionsRoot root = new()
         {
-            { "AZURE_WEBAPP_NAME", azure_resource_name },
-            { "AZURE_WEBAPP_PACKAGE_PATH", package_path },
-            { "CONFIGURATION", "Release" },
-            { "DOTNET_CORE_VERSION", dotnet_version },
-            { "WORKING_DIRECTORY", project_root },
-            { "DOTNET_CLI_TELEMETRY_OPTOUT", "1" },
-            { "DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1" },
-            { "DOTNET_NOLOGO", "true" },
-            { "DOTNET_GENERATE_ASPNET_CERTIFICATE", "false" },
-            { "DOTNET_ADD_GLOBAL_TOOLS_TO_PATH", "false" },
-            { "DOTNET_MULTILEVEL_LOOKUP", "0" }
+            name = workflow_name,
+            on = TriggerHelper.AddStandardPushTrigger(branch_name)
         };
+
+        List<KeyValuePair<string, string>> envList = new()
+        {
+            new("AZURE_WEBAPP_NAME", azure_resource_name),
+            new("AZURE_WEBAPP_PACKAGE_PATH", package_path),
+            new("CONFIGURATION", "Release"),
+            new("DOTNET_CORE_VERSION", dotnet_version),
+            new("WORKING_DIRECTORY", project_root),
+            new("DOTNET_CLI_TELEMETRY_OPTOUT", "1"),
+            new("DOTNET_SKIP_FIRST_TIME_EXPERIENCE", "1"),
+            new("DOTNET_NOLOGO", "true"),
+            new("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
+            new("DOTNET_ADD_GLOBAL_TOOLS_TO_PATH", "false"),
+            new("DOTNET_MULTILEVEL_LOOKUP", "0")
+        };
+        root.env = (IDictionary<string, string>)envList.ToDictionary(x => x.Key, x => x.Value);
+
         Step[] buildSteps = new Step[] {
             CommonStepHelper.AddCheckoutStep(),
             DotNetStepHelper.AddDotNetSetupStep("Setup .NET Core","${{ env.DOTNET_CORE_VERSION }}"),
