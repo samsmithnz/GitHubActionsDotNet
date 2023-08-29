@@ -3,6 +3,7 @@ using GitHubActionsDotNet.Models.Dependabot;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace GitHubActionsDotNet.Serialization
 {
@@ -38,7 +39,11 @@ namespace GitHubActionsDotNet.Serialization
                 Package package = CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
                 if (groupName != null)
                 {
-                    package.groups.Add(groupName, new Group() { patterns = groupPatterns, update_types = groupUpdateTypes });
+                    if (package.groups == null)
+                    {
+                        package.groups = new Dictionary<string, Models.Dependabot.Group>();
+                    }
+                    package.groups.Add(groupName, new Models.Dependabot.Group() { patterns = groupPatterns, update_types = groupUpdateTypes });
                 }
                 packages.Add(package);
             }
@@ -48,7 +53,11 @@ namespace GitHubActionsDotNet.Serialization
                 Package actionsPackage = CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
                 if (groupName != null)
                 {
-                    actionsPackage.groups.Add("actions", new Group() { patterns = groupPatterns, update_types = groupUpdateTypes });
+                    if (actionsPackage.groups == null)
+                    {
+                        actionsPackage.groups = new Dictionary<string, Models.Dependabot.Group>();
+                    }
+                    actionsPackage.groups.Add("actions", new Models.Dependabot.Group() { patterns = groupPatterns, update_types = groupUpdateTypes });
                 }
                 packages.Add(actionsPackage);
             }
