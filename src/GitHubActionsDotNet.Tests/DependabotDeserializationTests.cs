@@ -518,14 +518,14 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-  - ""SSNZ""
+  - ""MyWebsite""
 # Maintain dependencies for GitHub Actions
 - package-ecosystem: ""github-actions""
   directory: ""/""
   schedule:
     interval: ""daily""
   assignees:
-  - ""SSNZ""
+  - ""MyWebsite""
 ";
 
         //Act
@@ -536,14 +536,14 @@ updates:
     }
 
     [TestMethod]
-    public void SSNZTest()
+    public void MyWebsiteTest()
     {
         //Arrange
         string yaml = @"version: 2
 registries:
   nuget-github:
     type: nuget-feed
-    url: https://nuget.pkg.github.com/SSNZ-dotcom/index.json
+    url: https://nuget.pkg.github.com/MyWebsite-dotcom/index.json
     username: myemail@gmail.com
     password: ${{ secrets.PACKAGE_PAT_TOKEN }}
   nuget-org:
@@ -551,7 +551,7 @@ registries:
     url: https://api.nuget.org/v3/index.json
 updates:
 - package-ecosystem: nuget
-  directory: ""/SSNZ/SSNZ.Service""
+  directory: ""/MyWebsite/MyWebsite.Service""
   registries:
     - nuget-github
     - nuget-org
@@ -561,9 +561,9 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-    - ""SSNZ""
+    - ""MyWebsite""
 - package-ecosystem: nuget
-  directory: ""/SSNZ/SSNZ.Web""
+  directory: ""/MyWebsite/MyWebsite.Web""
   registries:
     - nuget-github
     - nuget-org
@@ -573,9 +573,9 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-    - ""SSNZ""
+    - ""MyWebsite""
 - package-ecosystem: nuget
-  directory: ""/SSNZ/SSNZ.Tests""
+  directory: ""/MyWebsite/MyWebsite.Tests""
   registries:
     - nuget-github
     - nuget-org
@@ -585,9 +585,9 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-    - ""SSNZ""
+    - ""MyWebsite""
 - package-ecosystem: nuget
-  directory: ""/SSNZ/SSNZ.FunctionalTests""
+  directory: ""/MyWebsite/MyWebsite.FunctionalTests""
   registries:
     - nuget-github
     - nuget-org
@@ -597,14 +597,14 @@ updates:
     timezone: America/New_York
   open-pull-requests-limit: 10
   assignees:
-    - ""SSNZ""
+    - ""MyWebsite""
 # Maintain dependencies for GitHub Actions
 - package-ecosystem: ""github-actions""
   directory: ""/""
   schedule:
     interval: ""daily""
   assignees:
-  - ""SSNZ""
+  - ""MyWebsite""
 ";
 
         //Act
