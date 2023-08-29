@@ -46,6 +46,10 @@ namespace GitHubActionsDotNet.Serialization
             if (includeActions == true)
             {
                 Package actionsPackage = CreatePackage("/", "github-actions", interval, time, timezone, assignees, openPRLimit);
+                if (groupName != null)
+                {
+                    actionsPackage.groups.Add("actions", new Group() { patterns = groupPatterns, update_types = groupUpdateTypes });
+                }
                 packages.Add(actionsPackage);
             }
             root.updates = packages;
