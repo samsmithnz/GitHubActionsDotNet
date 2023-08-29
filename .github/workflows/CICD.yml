@@ -33,7 +33,7 @@ jobs:
 
     - name: Display GitVersion outputs
       run: |
-        echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
+        echo "Version: v${{ steps.gitversion.outputs.SemVer }}"
         echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
     
     - name: Setup .NET
@@ -52,7 +52,7 @@ jobs:
 
     #Pack the code into a NuGet package
     - name: .NET pack
-      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --nologo --include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'
+      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --nologo --include-symbols -p:Version='v${{ steps.gitversion.outputs.SemVer }}'
 
     - name: Upload nuget package back to GitHub
       uses: actions/upload-artifact@v3
