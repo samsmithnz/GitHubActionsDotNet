@@ -15,7 +15,10 @@ namespace GitHubActionsDotNet.Serialization
             string timezone = null,
             List<string> assignees = null,
             int openPRLimit = 0,
-            bool includeActions = true)
+            bool includeActions = true,
+            string groupName = null,
+            string[] groupPatterns = null,
+            string[] groupUpdateTypes = null)
         {
             if (startingDirectory == null)
             {
@@ -33,6 +36,10 @@ namespace GitHubActionsDotNet.Serialization
                 cleanedFilePath = "/" + cleanedFilePath.Replace("\\", "/");
                 string packageEcoSystem = DependabotCommon.GetPackageEcoSystemFromFileName(fileInfo.Name);
                 Package package = CreatePackage(cleanedFilePath, packageEcoSystem, interval, time, timezone, assignees, openPRLimit);
+                if (groupName != null)
+                {
+                    package.groups.Add(groupName, new Group() { patterns = groupPatterns, update_types = groupUpdateTypes });
+                }
                 packages.Add(package);
             }
             //Add actions
