@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
+using static System.Net.WebRequestMethods;
 
 namespace GitHubActionsDotNet.Tests
 {
@@ -335,7 +336,7 @@ updates:
             {
                 projectDirectory = projectDirectory.Replace("\\", "/");
             }
-            string contents = File.ReadAllText(projectDirectory);
+            string contents = System.IO.File.ReadAllText(projectDirectory);
 
             //Act
             DependabotRoot dependabot = DependabotSerialization.Deserialize(contents);
@@ -355,6 +356,32 @@ updates:
             Assert.AreEqual("minor", dependabot.updates[0].groups["core"].update_types[0]);
             Assert.AreEqual("patch", dependabot.updates[0].groups["core"].update_types[1]);
 
+        }
+
+        [TestMethod]
+        public void SerializationToYamlTest()
+        {
+            //Arrange
+            string workingDirectory = System.Environment.CurrentDirectory;
+            string? projectDirectory = Directory.GetParent(workingDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName;
+            projectDirectory += "\\dependabotSamples";
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+            {
+                projectDirectory = projectDirectory?.Replace("\\", "/");
+            }
+
+            //Act
+            List<string> files = FileSearch.GetFilesForDirectory(projectDirectory);
+            string yaml = DependabotSerialization.Serialize(projectDirectory, files,
+                "daily",
+                "06:00",
+                "America/New_York",
+                new() { "samsmithnz" },
+                20,
+                true,
+                "core",
+                new string[] { "*" },
+                new string[] { "minor", "patch" });
         }
 
     }
