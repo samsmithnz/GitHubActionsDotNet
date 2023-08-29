@@ -13,7 +13,7 @@ jobs:
         os: [ubuntu-latest] #windows-latest, 
     runs-on: ${{matrix.os}}
     outputs: # https://stackoverflow.com/questions/59175332/using-output-from-a-previous-job-in-a-new-one-in-a-github-action
-      Version: "v${{ steps.gitversion.outputs.SemVer }}"
+      Version: ${{ steps.gitversion.outputs.SemVer }}
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}  
     steps:
 
@@ -33,7 +33,7 @@ jobs:
 
     - name: Display GitVersion outputs
       run: |
-        echo "Version: v${{ steps.gitversion.outputs.SemVer }}"
+        echo "Version: ${{ steps.gitversion.outputs.SemVer }}"
         echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
     
     - name: Setup .NET
@@ -52,7 +52,7 @@ jobs:
 
     #Pack the code into a NuGet package
     - name: .NET pack
-      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --nologo --include-symbols -p:Version='v${{ steps.gitversion.outputs.SemVer }}'
+      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --nologo --include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'
 
     - name: Upload nuget package back to GitHub
       uses: actions/upload-artifact@v3
@@ -104,8 +104,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: ${{ needs.build.outputs.Version }}
-        release_name: ${{ needs.build.outputs.Version }}
+        tag_name: "v${{ needs.build.outputs.Version }}"
+        release_name: "v${{ needs.build.outputs.Version }}"
     - name: Publish nuget package to nuget.org
       if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only publish a NuGet package if there has been a commit/version change
       run: dotnet nuget push nugetPackage\*.nupkg --api-key "${{ secrets.GHPackagesToken }}" --source "https://api.nuget.org/v3/index.json"
