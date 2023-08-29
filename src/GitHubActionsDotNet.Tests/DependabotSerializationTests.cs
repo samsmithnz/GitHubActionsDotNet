@@ -344,6 +344,17 @@ updates:
             Assert.IsNotNull(dependabot);
             Assert.IsNotNull(dependabot.updates);
             Assert.AreEqual(2, dependabot.updates.Count);
+            Assert.AreEqual("nuget", dependabot.updates[0].package_ecosystem);
+            Assert.AreEqual("/src/GitHubActionsDotNet", dependabot.updates[0].directory);
+            Assert.AreEqual("daily", dependabot.updates[0].schedule.interval);
+            Assert.AreEqual("06:00", dependabot.updates[0].schedule.time);
+            Assert.AreEqual("America/New_York", dependabot.updates[0].schedule.timezone);
+            Assert.AreEqual("10", dependabot.updates[0].open_pull_requests_limit);
+            Assert.AreEqual("samsmithnz", dependabot.updates[0].assignees[0]);
+            Assert.AreEqual("*", dependabot.updates[0].groups["core"].patterns[0]);
+            Assert.AreEqual("minor", dependabot.updates[0].groups["core"].update_types[0]);
+            Assert.AreEqual("patch", dependabot.updates[0].groups["core"].update_types[1]);
+
         }
 
     }

@@ -68,5 +68,6 @@ namespace GitHubActionsDotNet.Models.Dependabot
         public string target_branch { get; set; }
         public bool? vendor { get; set; }
         public string versioning_strategy { get; set; }
+        public Dictionary<string, Group> groups { get; set; }
     }
 }
