@@ -60,6 +60,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("rebase_strategy", "rebase-strategy");
             yaml = yaml.Replace("target_branch", "target-branch");
             yaml = yaml.Replace("versioning_strategy", "versioning-strategy");
+            yaml = yaml.Replace("update_types", "update-types");
 
             return yaml;
         }
@@ -79,6 +80,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("rebase-strategy", "rebase_strategy");
             yaml = yaml.Replace("target-branch", "target_branch");
             yaml = yaml.Replace("versioning-strategy", "versioning_strategy");
+            yaml = yaml.Replace("update-types", "update_types");
 
             //DependabotRoot root = YamlSerialization.DeserializeYaml<DependabotRoot>(yaml);
             //convert the yaml into json, it's easier to parse
