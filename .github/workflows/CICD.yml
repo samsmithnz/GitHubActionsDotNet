@@ -13,7 +13,7 @@ jobs:
         os: [ubuntu-latest] #windows-latest, 
     runs-on: ${{matrix.os}}
     outputs: # https://stackoverflow.com/questions/59175332/using-output-from-a-previous-job-in-a-new-one-in-a-github-action
-      Version: "v${{ steps.gitversion.outputs.SemVer }}"
+      Version: ${{ steps.gitversion.outputs.SemVer }}
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}  
     steps:
 
@@ -104,8 +104,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
       with:
-        tag_name: ${{ needs.build.outputs.Version }}
-        release_name: Release ${{ needs.build.outputs.Version }}
+        tag_name: "v${{ needs.build.outputs.Version }}"
+        release_name: "v${{ needs.build.outputs.Version }}"
     - name: Publish nuget package to nuget.org
       if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only publish a NuGet package if there has been a commit/version change
       run: dotnet nuget push nugetPackage\*.nupkg --api-key "${{ secrets.GHPackagesToken }}" --source "https://api.nuget.org/v3/index.json"
