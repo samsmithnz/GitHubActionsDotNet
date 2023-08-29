@@ -536,6 +536,34 @@ updates:
     }
 
     [TestMethod]
+    public void GroupsTest()
+    {
+        //Arrange
+        string yaml = @"version: 2
+updates:
+- package-ecosystem: nuget
+  directory: ""/MandMCounter/MandMCounter.Core""
+  schedule:
+    interval: daily
+    time: ""06:00""
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+    - ""samsmithnz""
+  groups:
+    core: 
+      patterns: [""*""]
+      update-types: [""minor"",""patch""]
+";
+
+        //Act
+        DependabotRoot dependabot = DependabotSerialization.Deserialize(yaml);
+
+        //Assert
+        Assert.IsNotNull(dependabot);
+    }
+
+    [TestMethod]
     public void MyWebsiteTest()
     {
         //Arrange
