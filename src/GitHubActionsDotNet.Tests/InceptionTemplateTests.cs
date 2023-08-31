@@ -155,11 +155,10 @@ jobs:
         dotnet-version: 7.x
     - name: Create Release
       uses: ncipollo/release-action@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: v${{ needs.build.outputs.Version }}
         release_name: v${{ needs.build.outputs.Version }}
+        token: ${{ secrets.GITHUB_TOKEN }}
       if: needs.build.outputs.CommitsSinceVersionSource > 0
     - name: Publish nuget package to nuget.org
       run: dotnet nuget push nugetPackage\*.nupkg --source ""https://api.nuget.org/v3/index.json"" --api-key ""${{ secrets.GHPackagesToken }}""
