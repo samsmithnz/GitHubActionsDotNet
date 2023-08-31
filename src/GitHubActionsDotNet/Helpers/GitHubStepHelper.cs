@@ -24,11 +24,6 @@ namespace GitHubActionsDotNet.Helpers
             }
             Step step = BaseStep.AddBaseStep(name, _if, env);
             step.uses = "ncipollo/release-action@v1";
-            if (step.env == null)
-            {
-                step.env = new Dictionary<string, string>();
-            }
-            step.env.Add("GITHUB_TOKEN", "${{ secrets.GITHUB_TOKEN }}");
             step.with = new Dictionary<string, string>
             {
                 { "tag_name", tagName },
