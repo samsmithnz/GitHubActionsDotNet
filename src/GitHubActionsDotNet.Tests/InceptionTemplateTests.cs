@@ -61,8 +61,8 @@ echo ""CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSou
             CommonStepHelper.AddDownloadArtifactStep("Download nuget package artifact","nugetPackage","nugetPackage"),
             DotNetStepHelper.AddDotNetSetupStep("Setup .NET"),
             GitHubStepHelper.AddCreateReleaseStep("Create Release",
-                "${{ needs.build.outputs.Version }}",
-                "Release ${{ needs.build.outputs.Version }}",
+                "v${{ needs.build.outputs.Version }}",
+                "v${{ needs.build.outputs.Version }}",
                 "needs.build.outputs.CommitsSinceVersionSource > 0"),
             DotNetStepHelper.AddDotNetNuGetPushStep("Publish nuget package to nuget.org",
                 "nugetPackage\\*.nupkg",
@@ -109,12 +109,12 @@ jobs:
       with:
         fetch-depth: 0
     - name: Setup GitVersion
-      uses: gittools/actions/gitversion/setup@v0.9.15
+      uses: gittools/actions/gitversion/setup@v0.10.2
       with:
         versionSpec: 5.x
     - name: Determine Version
       id: gitversion
-      uses: gittools/actions/gitversion/execute@v0.9.15
+      uses: gittools/actions/gitversion/execute@v0.10.2
     - name: Display GitVersion outputs
       run: |
         echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
@@ -154,12 +154,11 @@ jobs:
       with:
         dotnet-version: 7.x
     - name: Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: ncipollo/release-action@v1
       with:
-        tag_name: ${{ needs.build.outputs.Version }}
-        release_name: Release ${{ needs.build.outputs.Version }}
+        tag_name: v${{ needs.build.outputs.Version }}
+        release_name: v${{ needs.build.outputs.Version }}
+        token: ${{ secrets.GITHUB_TOKEN }}
       if: needs.build.outputs.CommitsSinceVersionSource > 0
     - name: Publish nuget package to nuget.org
       run: dotnet nuget push nugetPackage\*.nupkg --source ""https://api.nuget.org/v3/index.json"" --api-key ""${{ secrets.GHPackagesToken }}""
