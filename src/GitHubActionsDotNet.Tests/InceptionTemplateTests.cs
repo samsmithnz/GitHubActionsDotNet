@@ -154,7 +154,7 @@ jobs:
       with:
         dotnet-version: 7.x
     - name: Create Release
-      uses: actions/create-release@v1
+      uses: ncipollo/release-action@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
