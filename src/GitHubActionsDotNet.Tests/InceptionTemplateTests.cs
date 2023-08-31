@@ -158,8 +158,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ""v${{ needs.build.outputs.Version }}""
-        release_name: ""v${{ needs.build.outputs.Version }}""
+        tag_name: v${{ needs.build.outputs.Version }}
+        release_name: v${{ needs.build.outputs.Version }}
       if: needs.build.outputs.CommitsSinceVersionSource > 0
     - name: Publish nuget package to nuget.org
       run: dotnet nuget push nugetPackage\*.nupkg --source ""https://api.nuget.org/v3/index.json"" --api-key ""${{ secrets.GHPackagesToken }}""
