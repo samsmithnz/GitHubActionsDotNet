@@ -27,7 +27,7 @@ namespace GitHubActionsDotNet.Helpers
             Dictionary<string, string> env = null)
         {
             Step step = BaseStep.AddBaseStep(name, _if, env);
-            step.uses = "actions/checkout@v3";
+            step.uses = "actions/checkout@v4";
             Dictionary<string, string> with = null;
             if (repository != null || fetchDepth != null)
             {
