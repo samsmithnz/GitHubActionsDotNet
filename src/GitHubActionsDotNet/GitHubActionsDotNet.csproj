@@ -13,7 +13,7 @@
 	<ItemGroup>
 		<PackageReference Include="System.IO" Version="4.3.0" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
-		<PackageReference Include="YamlDotNet" Version="16.0.0" />
+		<PackageReference Include="YamlDotNet" Version="16.2.1" />
 		<PackageReference Include="Microsoft.CSharp" Version="4.7.0" />	
 	</ItemGroup>
 
