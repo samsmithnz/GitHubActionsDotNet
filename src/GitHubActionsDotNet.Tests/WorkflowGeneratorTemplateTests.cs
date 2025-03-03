@@ -85,7 +85,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
     - name: Restore
@@ -184,7 +184,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{ env.DOTNET_CORE_VERSION }}
     - name: Restore
