@@ -22,9 +22,9 @@ public class StepsDotNetTests
         //Assert
         string expected = @"
 - name: Setup .NET SDK
-  uses: actions/setup-dotnet@v3
+  uses: actions/setup-dotnet@v4
   with:
-    dotnet-version: 7.x
+    dotnet-version: 8.x
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
