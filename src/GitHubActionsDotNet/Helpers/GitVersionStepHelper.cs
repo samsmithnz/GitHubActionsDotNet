@@ -19,7 +19,7 @@ namespace GitHubActionsDotNet.Helpers
                 name = "Setup GitVersion";
             }
             Step step = BaseStep.AddBaseStep(name, _if, env);
-            step.uses = "gittools/actions/gitversion/setup@v0.10.2";
+            step.uses = "gittools/actions/gitversion/setup@v3.1.11";
             step.with = new Dictionary<string, string>()
             {
                 { "versionSpec", versionSpec }
@@ -40,7 +40,7 @@ namespace GitHubActionsDotNet.Helpers
                 name = "Determine Version";
             }
             Step step = BaseStep.AddBaseStep(name, _if, env);
-            step.uses = "gittools/actions/gitversion/execute@v0.10.2";
+            step.uses = "gittools/actions/gitversion/execute@v3.1.11";
             step.id = id;
             return step;
         }

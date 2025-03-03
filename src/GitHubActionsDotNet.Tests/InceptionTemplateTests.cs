@@ -27,7 +27,7 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             GitVersionStepHelper.AddGitVersionSetupStep(),
             GitVersionStepHelper.AddGitVersionDetermineVersionStep(),
             CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayBuildGitVersionScript),
-            DotNetStepHelper.AddDotNetSetupStep("Setup .NET","7.x"),
+            DotNetStepHelper.AddDotNetSetupStep("Setup .NET","8.x"),
             DotNetStepHelper.AddDotNetTestStep(".NET test","src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj","Release",null,true),
             DotNetStepHelper.AddDotNetPackStep(".NET pack","src/GitHubActionsDotNet/GitHubActionsDotNet.csproj","Release",null,"--include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'", true),
             CommonStepHelper.AddUploadArtifactStep("Upload nuget package back to GitHub","nugetPackage","src/GitHubActionsDotNet/bin/Release","runner.OS == 'Linux'")
@@ -109,26 +109,26 @@ jobs:
       with:
         fetch-depth: 0
     - name: Setup GitVersion
-      uses: gittools/actions/gitversion/setup@v0.10.2
+      uses: gittools/actions/gitversion/setup@v3.1.11
       with:
         versionSpec: 5.x
     - name: Determine Version
       id: gitversion
-      uses: gittools/actions/gitversion/execute@v0.10.2
+      uses: gittools/actions/gitversion/execute@v3.1.11
     - name: Display GitVersion outputs
       run: |
         echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
         echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.x
+        dotnet-version: 8.x
     - name: .NET test
       run: dotnet test src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj -c Release
     - name: .NET pack
       run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'
     - name: Upload nuget package back to GitHub
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: nugetPackage
         path: src/GitHubActionsDotNet/bin/Release
@@ -150,9 +150,9 @@ jobs:
         name: nugetPackage
         path: nugetPackage
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.x
+        dotnet-version: 8.x
     - name: Create Release
       uses: ncipollo/release-action@v1
       with:
