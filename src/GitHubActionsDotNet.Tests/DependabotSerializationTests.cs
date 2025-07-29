@@ -344,7 +344,7 @@ updates:
             //Assert
             Assert.IsNotNull(dependabot);
             Assert.IsNotNull(dependabot.updates);
-            Assert.AreEqual(2, dependabot.updates.Count);
+            Assert.AreEqual(3, dependabot.updates.Count);
             Assert.AreEqual("nuget", dependabot.updates[0].package_ecosystem);
             Assert.AreEqual("/src/GitHubActionsDotNet", dependabot.updates[0].directory);
             Assert.AreEqual("daily", dependabot.updates[0].schedule.interval);
