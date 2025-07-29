@@ -13,6 +13,19 @@ updates:
     core: 
       patterns: ["*"]
       update-types: ["minor","patch"]
+- package-ecosystem: nuget
+  directory: "/src/GitHubActionsDotNet.Tests"
+  schedule:
+    interval: daily
+    time: "06:00"
+    timezone: America/New_York
+  open-pull-requests-limit: 10
+  assignees:
+  - "samsmithnz"
+  groups:
+    core: 
+      patterns: ["*"]
+      update-types: ["minor","patch"]
 # Maintain dependencies for GitHub Actions
 - package-ecosystem: "github-actions"
   directory: "/"
