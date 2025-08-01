@@ -12,7 +12,7 @@ public class PackageModelTests
     public void PackageStringRegistriesTest()
     {
         // Arrange
-        var package = new PackageString();
+        PackageString package = new PackageString();
         string expectedRegistry = "my-registry";
 
         // Act
@@ -26,8 +26,8 @@ public class PackageModelTests
     public void PackageStringArrayRegistriesTest()
     {
         // Arrange
-        var package = new PackageStringArray();
-        var registryList = new List<object> { "registry1", "registry2" };
+        PackageStringArray package = new PackageStringArray();
+        List<object> registryList = new List<object> { "registry1", "registry2" };
 
         // Act
         package.registries = registryList;
@@ -44,7 +44,7 @@ public class PackageModelTests
     public void PackageStringArrayRegistriesNullTest()
     {
         // Arrange
-        var package = new PackageStringArray();
+        PackageStringArray package = new PackageStringArray();
 
         // Act
         package.registries = null;
@@ -57,7 +57,7 @@ public class PackageModelTests
     public void PackageBasePropertiesTest()
     {
         // Arrange & Act
-        var package = new Package
+        Package package = new Package
         {
             package_ecosystem = "npm",
             directory = "/",
@@ -94,7 +94,7 @@ public class PackageModelTests
     public void PackageWithAllowIgnoreTest()
     {
         // Arrange & Act
-        var package = new Package
+        Package package = new Package
         {
             allow = new Allow[]
             {
@@ -119,7 +119,7 @@ public class PackageModelTests
     public void PackageWithCommitMessageTest()
     {
         // Arrange & Act
-        var package = new Package
+        Package package = new Package
         {
             commit_message = new CommitMessage 
             { 
@@ -138,7 +138,7 @@ public class PackageModelTests
     public void PackageWithPullRequestBranchNameTest()
     {
         // Arrange & Act
-        var package = new Package
+        Package package = new Package
         {
             pull_request_branch_name = new PullRequestBranchName 
             { 
@@ -155,7 +155,7 @@ public class PackageModelTests
     public void PackageWithGroupsTest()
     {
         // Arrange & Act
-        var package = new Package
+        Package package = new Package
         {
             groups = new Dictionary<string, Group>
             {
@@ -175,7 +175,7 @@ public class PackageModelTests
     public void PackageReviewersTest()
     {
         // Arrange & Act
-        var package = new Package
+        Package package = new Package
         {
             reviewers = new string[] { "reviewer1", "reviewer2" }
         };
@@ -191,7 +191,7 @@ public class PackageModelTests
     public void PackageRebaseStrategyTest()
     {
         // Arrange & Act
-        var package = new Package
+        Package package = new Package
         {
             rebase_strategy = "disabled"
         };

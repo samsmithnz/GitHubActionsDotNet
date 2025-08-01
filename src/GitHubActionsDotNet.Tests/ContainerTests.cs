@@ -12,7 +12,7 @@ public class ContainerTests
     public void ContainerImagePropertyTest()
     {
         // Arrange
-        var container = new Container();
+        Container container = new Container();
         string expectedImage = "node:10.16-jessie";
 
         // Act
@@ -26,8 +26,8 @@ public class ContainerTests
     public void ContainerEnvironmentVariablesTest()
     {
         // Arrange
-        var container = new Container();
-        var expectedEnv = new Dictionary<string, string>
+        Container container = new Container();
+        Dictionary<string, string> expectedEnv = new Dictionary<string, string>
         {
             { "NODE_ENV", "development" },
             { "DEBUG", "true" }
@@ -46,7 +46,7 @@ public class ContainerTests
     public void ContainerPortsTest()
     {
         // Arrange
-        var container = new Container();
+        Container container = new Container();
         string[] expectedPorts = { "80", "443", "8080" };
 
         // Act
@@ -64,7 +64,7 @@ public class ContainerTests
     public void ContainerVolumesTest()
     {
         // Arrange
-        var container = new Container();
+        Container container = new Container();
         string[] expectedVolumes = { "my_docker_volume:/volume_mount", "/host/path:/container/path" };
 
         // Act
@@ -81,7 +81,7 @@ public class ContainerTests
     public void ContainerOptionsTest()
     {
         // Arrange
-        var container = new Container();
+        Container container = new Container();
         string expectedOptions = "--cpus 1 --memory 512m";
 
         // Act
@@ -95,7 +95,7 @@ public class ContainerTests
     public void ContainerFullConfigurationTest()
     {
         // Arrange & Act
-        var container = new Container
+        Container container = new Container
         {
             image = "node:10.16-jessie",
             env = new Dictionary<string, string>
@@ -122,7 +122,7 @@ public class ContainerTests
     public void ContainerDefaultValuesTest()
     {
         // Arrange & Act
-        var container = new Container();
+        Container container = new Container();
 
         // Assert
         Assert.IsNull(container.image);
