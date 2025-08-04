@@ -137,7 +137,7 @@ updates:
       - dependency-name: ""lodash""
         # For AWS SDK, ignore all patch updates
       - dependency-name: ""aws-sdk""
-        update-types: [""version-update:semver-patch""]
+        update-types: [""version-update:MajorMinorPatch-patch""]
 ";
 
         //Act
