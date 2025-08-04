@@ -111,7 +111,7 @@ jobs:
     - name: Setup GitVersion
       uses: gittools/actions/gitversion/setup@v4.0.1
       with:
-        versionSpec: 5.x
+        versionSpec: 6.x
     - name: Determine Version
       id: gitversion
       uses: gittools/actions/gitversion/execute@v4.0.1
