@@ -8,7 +8,7 @@ namespace GitHubActionsDotNet.Helpers
         //- name: Setup GitVersion
         //  uses: gittools/actions/gitversion/setup@v0.10.2
         //  with:
-        //    versionSpec: 5.x
+        //    versionSpec: 6.x
         public static Step AddGitVersionSetupStep(string name = null,
             string versionSpec = "6.x",
             string _if = null,
