@@ -19,7 +19,7 @@ public class InceptionTemplateTests
         root.on = TriggerHelper.AddStandardPushAndPullTrigger("main");
 
         string displayBuildGitVersionScript = @"
-echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
+echo ""Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}""
 echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""";
 
         Step[] buildSteps = new Step[] {
@@ -29,7 +29,7 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
             CommonStepHelper.AddScriptStep("Display GitVersion outputs", displayBuildGitVersionScript),
             DotNetStepHelper.AddDotNetSetupStep("Setup .NET","8.x"),
             DotNetStepHelper.AddDotNetTestStep(".NET test","src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj","Release",null,true),
-            DotNetStepHelper.AddDotNetPackStep(".NET pack","src/GitHubActionsDotNet/GitHubActionsDotNet.csproj","Release",null,"--include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'", true),
+            DotNetStepHelper.AddDotNetPackStep(".NET pack","src/GitHubActionsDotNet/GitHubActionsDotNet.csproj","Release",null,"--include-symbols -p:Version='${{ steps.gitversion.outputs.MajorMinorPatch }}'", true),
             CommonStepHelper.AddUploadArtifactStep("Upload nuget package back to GitHub","nugetPackage","src/GitHubActionsDotNet/bin/Release","runner.OS == 'Linux'")
         };
         root.jobs = new();
@@ -47,7 +47,7 @@ echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersi
         };
         buildJob.outputs = new()
         {
-            { "Version", "${{ steps.gitversion.outputs.SemVer }}" },
+            { "Version", "${{ steps.gitversion.outputs.MajorMinorPatch }}" },
             { "CommitsSinceVersionSource", "${{ steps.gitversion.outputs.CommitsSinceVersionSource }}" }
         };
         root.jobs.Add("build", buildJob);
@@ -102,22 +102,22 @@ jobs:
         - windows-latest
     runs-on: ${{matrix.os}}
     outputs:
-      Version: ${{ steps.gitversion.outputs.SemVer }}
+      Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}
     steps:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
     - name: Setup GitVersion
-      uses: gittools/actions/gitversion/setup@v3.1.11
+      uses: gittools/actions/gitversion/setup@v4.0.1
       with:
         versionSpec: 5.x
     - name: Determine Version
       id: gitversion
-      uses: gittools/actions/gitversion/execute@v3.1.11
+      uses: gittools/actions/gitversion/execute@v4.0.1
     - name: Display GitVersion outputs
       run: |
-        echo ""Version: ${{ steps.gitversion.outputs.SemVer }}""
+        echo ""Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}""
         echo ""CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}""
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -126,7 +126,7 @@ jobs:
     - name: .NET test
       run: dotnet test src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj -c Release
     - name: .NET pack
-      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --include-symbols -p:Version='${{ steps.gitversion.outputs.SemVer }}'
+      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --include-symbols -p:Version='${{ steps.gitversion.outputs.MajorMinorPatch }}'
     - name: Upload nuget package back to GitHub
       uses: actions/upload-artifact@v4
       with:

@@ -10,7 +10,7 @@ namespace GitHubActionsDotNet.Helpers
         //  with:
         //    versionSpec: 5.x
         public static Step AddGitVersionSetupStep(string name = null,
-            string versionSpec = "5.x",
+            string versionSpec = "6.x",
             string _if = null,
             Dictionary<string, string> env = null)
         {
@@ -19,7 +19,7 @@ namespace GitHubActionsDotNet.Helpers
                 name = "Setup GitVersion";
             }
             Step step = BaseStep.AddBaseStep(name, _if, env);
-            step.uses = "gittools/actions/gitversion/setup@v3.1.11";
+            step.uses = "gittools/actions/gitversion/setup@v4.0.1";
             step.with = new Dictionary<string, string>()
             {
                 { "versionSpec", versionSpec }
@@ -40,7 +40,7 @@ namespace GitHubActionsDotNet.Helpers
                 name = "Determine Version";
             }
             Step step = BaseStep.AddBaseStep(name, _if, env);
-            step.uses = "gittools/actions/gitversion/execute@v3.1.11";
+            step.uses = "gittools/actions/gitversion/execute@v4.0.1";
             step.id = id;
             return step;
         }
