@@ -13,8 +13,8 @@ jobs:
         os: [ubuntu-latest] #windows-latest, 
     runs-on: ${{matrix.os}}
     outputs: # https://stackoverflow.com/questions/59175332/using-output-from-a-previous-job-in-a-new-one-in-a-github-action
-      Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}
-      CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}  
+      Version: ${{ needs.build.outputs.MajorMinorPatch }}
+      CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSource }}  
     steps:
 
     - uses: actions/checkout@v5
@@ -33,8 +33,8 @@ jobs:
 
     - name: Display GitVersion outputs
       run: |
-        echo "Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}"
-        echo "CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}"
+        echo "Version: ${{ needs.build.outputs.MajorMinorPatch }}"
+        echo "CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSource }}"
     
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
@@ -52,7 +52,7 @@ jobs:
 
     #Pack the code into a NuGet package
     - name: .NET pack
-      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --nologo --include-symbols -p:Version='${{ steps.gitversion.outputs.MajorMinorPatch }}'
+      run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --nologo --include-symbols -p:Version='${{ needs.build.outputs.MajorMinorPatch }}'
 
     - name: Upload nuget package back to GitHub
       uses: actions/upload-artifact@v4
@@ -106,6 +106,36 @@ jobs:
       with:
         tag_name: "v${{ needs.build.outputs.Version }}"
         release_name: "v${{ needs.build.outputs.Version }}"
+    - name: Update major version tag
+      uses: richardsimko/update-tag@v1
+      if: needs.build.outputs.CommitsSinceVersionSource > 0
+      with:
+        tag_name: "v${{ needs.build.outputs.Major }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Major version Release (update) #Create or Update the major version release. e.g. 'v2'
+      uses: ncipollo/release-action@v1
+      if: needs.build.outputs.CommitsSinceVersionSource > 0 
+      with:
+        tag: "v${{ needs.build.outputs.Major }}"
+        name: "v${{ needs.build.outputs.Major }}"
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }} 
+    - name: Update minor version tag
+      uses: richardsimko/update-tag@v1
+      if: needs.build.outputs.CommitsSinceVersionSource > 0
+      with:
+        tag_name: "v${{ needs.build.outputs.Major }}.${{ needs.build.outputs.Minor }}"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Minor version Release (update) #Create or Update the minor version release. e.g. 'v2.1'
+      uses: ncipollo/release-action@v1
+      if: needs.build.outputs.CommitsSinceVersionSource > 0 
+      with:
+        tag: "v${{ needs.build.outputs.Major }}.${{ needs.build.outputs.Minor }}"
+        name: "v${{ needs.build.outputs.Major }}.${{ needs.build.outputs.Minor }}"
+        allowUpdates: true
+        token: ${{ secrets.GITHUB_TOKEN }} 
     - name: Publish nuget package to nuget.org
       if: needs.build.outputs.CommitsSinceVersionSource > 0 #Only publish a NuGet package if there has been a commit/version change
       run: dotnet nuget push nugetPackage\*.nupkg --api-key "${{ secrets.GHPackagesToken }}" --source "https://api.nuget.org/v3/index.json"
