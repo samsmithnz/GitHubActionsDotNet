@@ -14,6 +14,8 @@ jobs:
     runs-on: ${{matrix.os}}
     outputs: # https://stackoverflow.com/questions/59175332/using-output-from-a-previous-job-in-a-new-one-in-a-github-action
       Version: ${{ steps.gitversion.outputs.MajorMinorPatch }}
+      Major: ${{ steps.gitversion.outputs.Major }}
+      Minor: ${{ steps.gitversion.outputs.Minor }}
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}  
     steps:
 
