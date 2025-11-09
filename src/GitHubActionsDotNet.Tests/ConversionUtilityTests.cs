@@ -89,7 +89,7 @@ public class ConversionUtilityTests
         string yaml = "invalid yaml without colon";
 
         // Act & Assert
-        Assert.ThrowsException<Exception>(() => ConversionUtility.CleanYamlBeforeDeserializationV2(yaml));
+        Assert.Throws<Exception>(() => ConversionUtility.CleanYamlBeforeDeserializationV2(yaml));
     }
 
     [TestMethod]
