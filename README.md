@@ -73,6 +73,81 @@ jobs:
       run: echo 'hello world'
 ```
 
+**Example with workflow_dispatch trigger with inputs:**
+```C#
+GitHubActionsRoot root = new();
+root.jobs = new();
+root.on = new()
+{ 
+    push = new() 
+    { 
+        branches= new string[]
+        {
+            "main"
+        }
+    },
+    workflow_dispatch = new()
+    {
+        inputs = new Dictionary<string, WorkflowDispatchInput>
+        {
+            { "environment", new WorkflowDispatchInput
+                {
+                    description = "Select the environment",
+                    required = true,
+                    _default = "staging",
+                    type = "choice",
+                    options = new string[] { "staging", "production" }
+                }
+            },
+            { "version", new WorkflowDispatchInput
+                {
+                    description = "Version to deploy",
+                    required = true,
+                    type = "string"
+                }
+            }
+        }
+    }
+};
+Job buildJob = JobHelper.AddJob(
+    null,
+    "ubuntu-latest",
+    new Step[]
+    {
+        CommonStepHelper.AddScriptStep("Deploy", 
+            "echo 'Deploying version ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }}'")
+    });
+root.jobs.Add("deploy", buildJob);
+```
+
+**The resultant yaml with workflow_dispatch inputs:**
+```YAML
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select the environment
+        required: true
+        default: staging
+        type: choice
+        options:
+        - staging
+        - production
+      version:
+        description: Version to deploy
+        required: true
+        type: string
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy
+      run: echo 'Deploying version ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }}'
+```
+
 
 ## Architecture
 - Class library project/logic: .NET Standard 2.0

@@ -75,5 +75,88 @@ jobs:
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
     }
+
+    [TestMethod]
+    public void WorkflowDispatchWithInputsExampleTest()
+    {
+        //Arrange
+        JobHelper jobHelper = new();
+        GitHubActionsRoot root = new();
+        root.jobs = new();
+        root.on = new()
+        { 
+            push = new() 
+            { 
+                branches= new string[]
+                {
+                    "main"
+                }
+            },
+            workflow_dispatch = new()
+            {
+                inputs = new System.Collections.Generic.Dictionary<string, WorkflowDispatchInput>
+                {
+                    { "environment", new WorkflowDispatchInput
+                        {
+                            description = "Select the environment",
+                            required = true,
+                            _default = "staging",
+                            type = "choice",
+                            options = new string[] { "staging", "production" }
+                        }
+                    },
+                    { "version", new WorkflowDispatchInput
+                        {
+                            description = "Version to deploy",
+                            required = true,
+                            type = "string"
+                        }
+                    }
+                }
+            }
+        };
+        Job buildJob = jobHelper.AddJob(
+            null,
+            "ubuntu-latest",
+            new Step[]
+            {
+                CommonStepHelper.AddScriptStep("Deploy", 
+                    "echo 'Deploying version ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }}'")
+            });
+        root.jobs.Add("deploy", buildJob);
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select the environment
+        required: true
+        default: staging
+        type: choice
+        options:
+        - staging
+        - production
+      version:
+        description: Version to deploy
+        required: true
+        type: string
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Deploy
+      run: echo 'Deploying version ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }}'
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
 }
 
