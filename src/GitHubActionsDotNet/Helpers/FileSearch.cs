@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace GitHubActionsDotNet.Helpers
 {
-    public class FileSearch
+    public static class FileSearch
     {
         public static List<string> GetFilesForDirectory(string startingDirectory)
         {
