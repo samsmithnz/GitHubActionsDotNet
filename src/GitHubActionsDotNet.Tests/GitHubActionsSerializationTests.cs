@@ -190,7 +190,7 @@ jobs:
             name = "Manual Workflow",
             on = new Trigger
             {
-                workflow_dispatch = ""
+                workflow_dispatch = new()
             },
             jobs = new Dictionary<string, Job>
             {
