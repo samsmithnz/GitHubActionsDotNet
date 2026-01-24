@@ -123,6 +123,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("_ref", "ref");
             yaml = yaml.Replace("continue_on_error", "continue-on-error");
             yaml = yaml.Replace("timeout_minutes", "timeout-minutes");
+            yaml = yaml.Replace("_default", "default");
             yaml = yaml.Replace("step_message:", "#");
             yaml = yaml.Replace("job_message:", "#");
             yaml = yaml.Replace("step_message", "#");
@@ -144,6 +145,8 @@ namespace GitHubActionsDotNet.Serialization
 
             //Fix the workflow dispatch empty string to be [nothing]
             yaml = yaml.Replace("workflow_dispatch: ''", "workflow_dispatch:");
+            //Fix the workflow dispatch empty object to be [nothing] for backward compatibility
+            yaml = yaml.Replace("workflow_dispatch: {}", "workflow_dispatch:");
 
             return yaml;
         }

@@ -19,7 +19,7 @@ jobs:
       CommitsSinceVersionSource: ${{ steps.gitversion.outputs.CommitsSinceVersionSource }}  
     steps:
 
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
       with:
         fetch-depth: 0 #fetch-depth is needed for GitVersion
         
@@ -41,12 +41,12 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 10.0.x
     - name: .NET test
       run: dotnet test src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj -c Release --nologo -e:CollectCoverage=true -e:CoverletOutput=TestResults/ -e:CoverletOutputFormat=lcov 
 
     - name: Publish coverage report to coveralls.io
-      uses: coverallsapp/github-action@v2.3.6
+      uses: coverallsapp/github-action@v2.3.7
       if: runner.OS == 'Linux' #Only push the Linux coverage
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -57,7 +57,7 @@ jobs:
       run: dotnet pack src/GitHubActionsDotNet/GitHubActionsDotNet.csproj -c Release --nologo --include-symbols -p:Version='${{ steps.gitversion.outputs.MajorMinorPatch }}'
 
     - name: Upload nuget package back to GitHub
-      uses: actions/upload-artifact@v5
+      uses: actions/upload-artifact@v6
       if: runner.OS == 'Linux' #Only pack the Linux nuget package
       with:
         name: nugetPackage
@@ -73,7 +73,7 @@ jobs:
         uses: samsmithnz/SamsDotNetSonarCloudAction@v2.1
         with:
           projects: 'src/GitHubActionsDotNet/GitHubActionsDotNet.csproj,src/GitHubActionsDotNet/GitHubActionsDotNet.Tests.csproj'
-          dotnet-version: '8.0.x'
+          dotnet-version: '10.0.x'
           sonarcloud-organization: samsmithnz-github
           sonarcloud-project: samsmithnz_GitHubActionsDotNet
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -91,14 +91,14 @@ jobs:
         echo "Version: ${{ needs.build.outputs.Version }}" 
         echo "CommitsSinceVersionSource: ${{ needs.build.outputs.CommitsSinceVersionSource }}" 
     - name: Download nuget package artifact
-      uses: actions/download-artifact@v6
+      uses: actions/download-artifact@v7
       with:
         name: nugetPackage 
         path: nugetPackage
     - name: Setup .NET
       uses: actions/setup-dotnet@v5
       with:
-        dotnet-version: 8.0.x   
+        dotnet-version: 10.0.x   
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1

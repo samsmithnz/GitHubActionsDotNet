@@ -11,7 +11,7 @@ Work in progress.
 - Currently contains models for most GitHub Actions 
     - Helpers to create triggers and common steps. (Could definitely support more steps - [add an issue](https://github.com/samsmithnz/GitHubActionsDotNet/issues/new) if there is one you'd like to see!)
     - Also includes models to create Dependabot configurations 
-- Tests current include code to create Actions:
+- Tests currently include code to create Actions:
     - Pipelines and triggers
     - Basic jobs
     - Common .NET build steps
@@ -44,7 +44,8 @@ root.on = new()
         }
     }
 };
-Job buildJob = JobHelper.AddJob(
+JobHelper jobHelper = new();
+Job buildJob = jobHelper.AddJob(
     null,
     "windows-latest",
     new Step[]
