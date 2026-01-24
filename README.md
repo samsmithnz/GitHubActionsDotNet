@@ -44,7 +44,8 @@ root.on = new()
         }
     }
 };
-Job buildJob = JobHelper.AddJob(
+JobHelper jobHelper = new();
+Job buildJob = jobHelper.AddJob(
     null,
     "windows-latest",
     new Step[]
