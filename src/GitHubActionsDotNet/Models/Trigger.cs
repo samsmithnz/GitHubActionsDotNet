@@ -33,6 +33,6 @@
         public TriggerDetail push { get; set; }
         public TriggerDetail pull_request { get; set; }
         public string[] schedule { get; set; }
-        public string workflow_dispatch { get; set; }
+        public WorkflowDispatchTrigger workflow_dispatch { get; set; }
     }
 }

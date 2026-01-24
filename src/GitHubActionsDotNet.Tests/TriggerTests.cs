@@ -433,7 +433,7 @@ on:
         trigger.push = new();
         trigger.push.branches = new string[1];
         trigger.push.branches[0] = "main";
-        trigger.workflow_dispatch = "";
+        trigger.workflow_dispatch = new();
         root.on = trigger;
 
         //Act
@@ -459,7 +459,7 @@ on:
         GitHubActionsRoot root = new();
         root.name = "test trigger pipelines";
         Trigger trigger = new();
-        trigger.workflow_dispatch = "";
+        trigger.workflow_dispatch = new();
         root.on = trigger;
 
         //Act
@@ -470,6 +470,178 @@ on:
 name: test trigger pipelines
 on:
   workflow_dispatch:
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void TriggerWorkflowDispatchWithStringInputTest()
+    {
+        //Arrange
+        GitHubActionsRoot root = new();
+        Trigger trigger = new();
+        trigger.workflow_dispatch = new();
+        trigger.workflow_dispatch.inputs = new System.Collections.Generic.Dictionary<string, WorkflowDispatchInput>();
+        trigger.workflow_dispatch.inputs.Add("version", new WorkflowDispatchInput
+        {
+            description = "Version to deploy",
+            required = true,
+            type = "string"
+        });
+        root.on = trigger;
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to deploy
+        required: true
+        type: string
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void TriggerWorkflowDispatchWithChoiceInputTest()
+    {
+        //Arrange
+        GitHubActionsRoot root = new();
+        Trigger trigger = new();
+        trigger.workflow_dispatch = new();
+        trigger.workflow_dispatch.inputs = new System.Collections.Generic.Dictionary<string, WorkflowDispatchInput>();
+        trigger.workflow_dispatch.inputs.Add("environment", new WorkflowDispatchInput
+        {
+            description = "Select the environment",
+            required = true,
+            _default = "staging",
+            type = "choice",
+            options = new string[] { "staging", "production" }
+        });
+        root.on = trigger;
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select the environment
+        required: true
+        default: staging
+        type: choice
+        options:
+        - staging
+        - production
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void TriggerWorkflowDispatchWithMultipleInputsTest()
+    {
+        //Arrange
+        GitHubActionsRoot root = new();
+        Trigger trigger = new();
+        trigger.workflow_dispatch = new();
+        trigger.workflow_dispatch.inputs = new System.Collections.Generic.Dictionary<string, WorkflowDispatchInput>();
+        trigger.workflow_dispatch.inputs.Add("environment", new WorkflowDispatchInput
+        {
+            description = "Select the environment",
+            required = true,
+            _default = "staging",
+            type = "choice",
+            options = new string[] { "staging", "production" }
+        });
+        trigger.workflow_dispatch.inputs.Add("version", new WorkflowDispatchInput
+        {
+            description = "Version to deploy",
+            required = true,
+            type = "string"
+        });
+        trigger.workflow_dispatch.inputs.Add("dry_run", new WorkflowDispatchInput
+        {
+            description = "Run in dry-run mode",
+            required = false,
+            _default = "false",
+            type = "boolean"
+        });
+        root.on = trigger;
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Select the environment
+        required: true
+        default: staging
+        type: choice
+        options:
+        - staging
+        - production
+      version:
+        description: Version to deploy
+        required: true
+        type: string
+      dry_run:
+        description: Run in dry-run mode
+        required: false
+        default: false
+        type: boolean
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void TriggerWorkflowDispatchWithInputsAndPushTest()
+    {
+        //Arrange
+        GitHubActionsRoot root = new();
+        Trigger trigger = new();
+        trigger.push = new();
+        trigger.push.branches = new string[1];
+        trigger.push.branches[0] = "main";
+        trigger.workflow_dispatch = new();
+        trigger.workflow_dispatch.inputs = new System.Collections.Generic.Dictionary<string, WorkflowDispatchInput>();
+        trigger.workflow_dispatch.inputs.Add("environment", new WorkflowDispatchInput
+        {
+            description = "Target environment",
+            required = true,
+            type = "string"
+        });
+        root.on = trigger;
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: Target environment
+        required: true
+        type: string
 ";
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
