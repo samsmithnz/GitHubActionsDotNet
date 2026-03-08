@@ -7,6 +7,7 @@ namespace GitHubActionsDotNet.Models
         public string name { get; set; } //https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idname
         public Strategy strategy { get; set; } //https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idstrategy
         public string runs_on { get; set; } //https://help.github.com/en/articles/workflow-syntax-for-github-actions#jobsjob_idruns-on
+        public Permissions permissions { get; set; } //https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-syntax#jobsjob_idpermissions
         //public T container { get; set; }
         public Dictionary<string, string> outputs { get; set; } //https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions#jobsjob_idoutputs
         public Container container { get; set; } //https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schemaview=azure-devops&tabs=schema#job

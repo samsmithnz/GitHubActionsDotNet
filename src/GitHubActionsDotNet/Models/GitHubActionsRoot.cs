@@ -7,6 +7,7 @@ namespace GitHubActionsDotNet.Models
     {
         public string name { get; set; }
         public Trigger on { get; set; }
+        public Permissions permissions { get; set; }
         public Dictionary<string, string> env { get; set; }
         public Dictionary<string, Job> jobs { get; set; }
 

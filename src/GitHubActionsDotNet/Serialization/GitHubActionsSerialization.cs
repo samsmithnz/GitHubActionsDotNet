@@ -104,6 +104,9 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("ref", "_ref");
             yaml = yaml.Replace("continue-on-error", "continue_on_error");
             yaml = yaml.Replace("timeout-minutes", "timeout_minutes");
+            yaml = yaml.Replace("id-token", "id_token");
+            yaml = yaml.Replace("pull-requests", "pull_requests");
+            yaml = yaml.Replace("security-events", "security_events");
 
             return YamlSerialization.DeserializeYaml<GitHubActionsRoot>(yaml);
         }
@@ -124,6 +127,9 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("continue_on_error", "continue-on-error");
             yaml = yaml.Replace("timeout_minutes", "timeout-minutes");
             yaml = yaml.Replace("_default", "default");
+            yaml = yaml.Replace("id_token", "id-token");
+            yaml = yaml.Replace("pull_requests", "pull-requests");
+            yaml = yaml.Replace("security_events", "security-events");
             yaml = yaml.Replace("step_message:", "#");
             yaml = yaml.Replace("job_message:", "#");
             yaml = yaml.Replace("step_message", "#");
