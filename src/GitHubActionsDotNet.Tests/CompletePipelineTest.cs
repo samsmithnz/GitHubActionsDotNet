@@ -158,5 +158,107 @@ jobs:
         expected = UtilityTests.TrimNewLines(expected);
         Assert.AreEqual(expected, yaml);
     }
+
+    [TestMethod]
+    public void WorkflowWithTopLevelPermissionsTest()
+    {
+        //Arrange
+        JobHelper jobHelper = new();
+        GitHubActionsRoot root = new()
+        {
+            name = "CI",
+            on = TriggerHelper.AddStandardPushAndPullTrigger(),
+            permissions = new Permissions
+            {
+                contents = "read",
+                packages = "write"
+            },
+            jobs = new()
+        };
+        Step[] buildSteps = new Step[] {
+            CommonStepHelper.AddCheckoutStep(),
+        };
+        Job buildJob = jobHelper.AddJob(
+            null,
+            "ubuntu-latest",
+            buildSteps);
+        root.jobs.Add("build", buildJob);
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+name: CI
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+permissions:
+  contents: read
+  packages: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
+
+    [TestMethod]
+    public void JobWithPermissionsTest()
+    {
+        //Arrange
+        JobHelper jobHelper = new();
+        GitHubActionsRoot root = new()
+        {
+            name = "CI",
+            on = TriggerHelper.AddStandardPushAndPullTrigger(),
+            jobs = new()
+        };
+        Step[] buildSteps = new Step[] {
+            CommonStepHelper.AddCheckoutStep(),
+        };
+        Job buildJob = jobHelper.AddJob(
+            null,
+            "ubuntu-latest",
+            buildSteps);
+        buildJob.permissions = new Permissions
+        {
+            issues = "write",
+            pull_requests = "write"
+        };
+        root.jobs.Add("stale", buildJob);
+
+        //Act
+        string yaml = Serialization.GitHubActionsSerialization.Serialize(root);
+
+        //Assert
+        string expected = @"
+name: CI
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+jobs:
+  stale:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/checkout@v4
+";
+        expected = UtilityTests.TrimNewLines(expected);
+        Assert.AreEqual(expected, yaml);
+    }
 }
 
