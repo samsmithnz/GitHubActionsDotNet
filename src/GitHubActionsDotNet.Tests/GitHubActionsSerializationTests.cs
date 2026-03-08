@@ -238,4 +238,109 @@ jobs:
         Assert.IsTrue(yaml.Contains("echo 'line1'"));
         Assert.IsTrue(yaml.Contains("echo 'line2'"));
     }
+
+    [TestMethod]
+    public void SerializeStrategyWithExcludeTest()
+    {
+        // Arrange
+        GitHubActionsRoot root = new GitHubActionsRoot
+        {
+            name = "Matrix with Exclude",
+            jobs = new Dictionary<string, Job>
+            {
+                { 
+                    "build", 
+                    new Job 
+                    { 
+                        runs_on = "${{ matrix.os }}",
+                        strategy = new Strategy
+                        {
+                            matrix = new Dictionary<string, string[]>
+                            {
+                                { "os", new string[] { "ubuntu-latest", "windows-latest" } },
+                                { "node", new string[] { "14", "16" } }
+                            },
+                            exclude = new Dictionary<string, string>[]
+                            {
+                                new Dictionary<string, string>
+                                {
+                                    { "os", "windows-latest" },
+                                    { "node", "16" }
+                                }
+                            }
+                        },
+                        steps = new Step[]
+                        {
+                            new Step { uses = "actions/checkout@v4" },
+                            new Step { run = "npm test" }
+                        }
+                    } 
+                }
+            }
+        };
+
+        // Act
+        string yaml = GitHubActionsSerialization.Serialize(root);
+
+        // Assert
+        Assert.IsNotNull(yaml);
+        Assert.IsTrue(yaml.Contains("exclude:"));
+        Assert.IsTrue(yaml.Contains("os: windows-latest"));
+        Assert.IsTrue(yaml.Contains("node: 16") || yaml.Contains("node: '16'"));
+    }
+
+    [TestMethod]
+    public void SerializeStrategyWithMultipleExcludesTest()
+    {
+        // Arrange
+        GitHubActionsRoot root = new GitHubActionsRoot
+        {
+            name = "Matrix with Multiple Excludes",
+            jobs = new Dictionary<string, Job>
+            {
+                { 
+                    "build", 
+                    new Job 
+                    { 
+                        runs_on = "${{ matrix.os }}",
+                        strategy = new Strategy
+                        {
+                            matrix = new Dictionary<string, string[]>
+                            {
+                                { "os", new string[] { "ubuntu-latest", "windows-latest", "macos-latest" } },
+                                { "node", new string[] { "14", "16", "18" } }
+                            },
+                            exclude = new Dictionary<string, string>[]
+                            {
+                                new Dictionary<string, string>
+                                {
+                                    { "os", "windows-latest" },
+                                    { "node", "14" }
+                                },
+                                new Dictionary<string, string>
+                                {
+                                    { "os", "macos-latest" },
+                                    { "node", "18" }
+                                }
+                            }
+                        },
+                        steps = new Step[]
+                        {
+                            new Step { uses = "actions/checkout@v4" }
+                        }
+                    } 
+                }
+            }
+        };
+
+        // Act
+        string yaml = GitHubActionsSerialization.Serialize(root);
+
+        // Assert
+        Assert.IsNotNull(yaml);
+        Assert.IsTrue(yaml.Contains("exclude:"));
+        // Verify both exclusions are present
+        Assert.IsTrue(yaml.Contains("os: windows-latest"));
+        Assert.IsTrue(yaml.Contains("os: macos-latest"));
+    }
 }

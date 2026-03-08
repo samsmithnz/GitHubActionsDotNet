@@ -77,4 +77,4 @@ jobs:
 
 ## Architecture
 - Class library project/logic: .NET Standard 2.0
-- MSTest/unit tests: .NET 6
+- MSTest/unit tests: .NET 10
