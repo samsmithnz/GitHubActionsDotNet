@@ -123,7 +123,7 @@ namespace GitHubActionsDotNet.Serialization
             yaml = yaml.Replace("paths_ignore", "paths-ignore");
             yaml = yaml.Replace("tags_ignore", "tags-ignore");
             yaml = yaml.Replace("max_parallel", "max-parallel");
-            yaml = yaml.Replace("_ref", "ref");
+            yaml = yaml.Replace("_ref:", "ref:");
             yaml = yaml.Replace("continue_on_error", "continue-on-error");
             yaml = yaml.Replace("timeout_minutes", "timeout-minutes");
             yaml = yaml.Replace("_default", "default");
