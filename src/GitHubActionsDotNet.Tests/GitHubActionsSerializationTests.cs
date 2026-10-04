@@ -102,6 +102,23 @@ jobs:
     }
 
     [TestMethod]
+    public void SerializeStepPreservesGitHubBaseRefExpressionTest()
+    {
+        // Arrange
+        Step step = new Step
+        {
+            run = "echo ${{ github.base_ref }}"
+        };
+
+        // Act
+        string yaml = GitHubActionsSerialization.SerializeStep(step);
+
+        // Assert
+        Assert.IsTrue(yaml.Contains("github.base_ref"));
+        Assert.IsFalse(yaml.Contains("github.baseref"));
+    }
+
+    [TestMethod]
     public void SerializeStepWithVariablesTest()
     {
         // Arrange
