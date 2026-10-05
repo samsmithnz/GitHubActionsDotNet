@@ -109,7 +109,7 @@ jobs:
         tag_name: "v${{ needs.build.outputs.Version }}"
         release_name: "v${{ needs.build.outputs.Version }}"
     - name: Update major version tag
-      uses: richardsimko/update-tag@v1
+      uses: richardsimko/update-tag@v3
       if: needs.build.outputs.CommitsSinceVersionSource > 0
       with:
         tag_name: "v${{ needs.build.outputs.Major }}"
@@ -124,7 +124,7 @@ jobs:
         allowUpdates: true
         token: ${{ secrets.GITHUB_TOKEN }} 
     - name: Update minor version tag
-      uses: richardsimko/update-tag@v1
+      uses: richardsimko/update-tag@v3
       if: needs.build.outputs.CommitsSinceVersionSource > 0
       with:
         tag_name: "v${{ needs.build.outputs.Major }}.${{ needs.build.outputs.Minor }}"
