@@ -25,12 +25,12 @@ jobs:
         
     #Install and calculate the new version with GitVersion  
     - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v4.4.1
+      uses: gittools/actions/gitversion/setup@v4.7.0
       with:
         versionSpec: 6.x
 
     - name: Determine Version
-      uses: gittools/actions/gitversion/execute@v4.4.1
+      uses: gittools/actions/gitversion/execute@v4.7.0
       id: gitversion # step id used as reference for output values
 
     - name: Display GitVersion outputs
@@ -46,7 +46,7 @@ jobs:
       run: dotnet test src/GitHubActionsDotNet.Tests/GitHubActionsDotNet.Tests.csproj -c Release --nologo -e:CollectCoverage=true -e:CoverletOutput=TestResults/ -e:CoverletOutputFormat=lcov 
 
     - name: Publish coverage report to coveralls.io
-      uses: coverallsapp/github-action@v2.3.7
+      uses: coverallsapp/github-action@v2.3.8
       if: runner.OS == 'Linux' #Only push the Linux coverage
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
